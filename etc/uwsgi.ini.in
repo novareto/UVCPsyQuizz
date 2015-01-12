@@ -1,0 +1,15 @@
+[uwsgi]
+socket = /tmp/roissy_invoice.sock
+http = 0.0.0.0:1982
+processes = 5
+master = true
+http-websockets = true
+pythonpath = ${buildout:directory}/eggs/*.egg
+pythonpath = ${buildout:directory}/checkouts/*/src
+pythonpath = ${buildout:directory}/checkouts/crom/
+pythonpath = ${buildout:directory}/checkouts/grokker/
+mypaste = ${deploy_ini:output}
+paste = config:%(mypaste)
+paste-logger = %(mypaste)
+gevent = 20
+die-on-term = true

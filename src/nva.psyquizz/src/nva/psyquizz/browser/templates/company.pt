@@ -1,0 +1,13 @@
+<div>
+  <h1 tal:content="context.name" />
+  <dl>
+    <dt>Access</dt>
+    <dd>
+      <ul>
+	<li tal:repeat="student context.students">
+	  <span tal:content="student.access" />
+	</li>
+      </ul>
+    </dd>
+  </dl>
+</div>
