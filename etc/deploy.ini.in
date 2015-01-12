@@ -45,7 +45,7 @@ timeout = 6000
 next = courses
 
 [app:courses]
-use = egg:nva.courses#app
+use = egg:nva.psyquizz#app
 files = ${settings:datadir}
 session_key = nva
 zcml = ${zcml:output}

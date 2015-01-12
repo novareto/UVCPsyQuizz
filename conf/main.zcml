@@ -3,6 +3,6 @@
     i18n_domain="treegital.af.input_invoices">
 
   
-<include package="nva.courses" />
+<include package="nva.psyquizz" />
 
 </configure>
