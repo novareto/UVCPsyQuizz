@@ -1,18 +1,30 @@
 # -*- coding: utf-8 -*-
 
+import transaction
 from cromlech.browser import redirect_response
 from cromlech.webob.response import Response
 from uvclight import Page, Form, Fields, SUCCESS, FAILURE
-from uvclight import action, name, context, get_template
+from uvclight import action, layer, name, context, title, get_template
 from uvclight.auth import require
-from ..wsgi import School
-from ..models.course import Company, Student
+from ..wsgi import School, QuizzBoard, QuizzAlreadyCompleted
+from ..models import Company, Student, IQuizz
+from ..interfaces import IAnonymousRequest, IManagingRequest
 from zope.interface import Interface
 from zope.schema import Int, TextLine
 from cromlech.sqlalchemy import get_session
 from uvc.design.canvas import IContextualActionsMenu
 from dolmen.menu import menuentry
 from dolmen.location import get_absolute_url
+from cromlech.browser import exceptions
+
+
+class QuizzErrorPage(Page):
+    name('')
+    context(QuizzAlreadyCompleted)
+    require('zope.Public')
+
+    def render(self):
+        return u"This quizz is already completed and therefore closed."
 
 
 class ICreateCompany(Interface):
@@ -52,12 +64,32 @@ class CompanyHomepage(Page):
     template = get_template('company.pt', __file__)
 
 
+class StudentHomepage(Page):
+    name('index')
+    context(Student)
+    layer(IManagingRequest)
+    require('zope.Public')
+    
+    quizz = IQuizz
+    template = get_template('student.pt', __file__)
+
+
+class QuizzHomepage(Page):
+    name('index')
+    context(QuizzBoard)
+    require('zope.Public')
+    
+    def __call__(self):
+        raise exceptions.HTTPForbidden(self.context)
+
+
 @menuentry(IContextualActionsMenu)
 class CreateCompany(Form):
-    name('add.company')
     context(School)
+    name('add.company')
     require('manage.school')
-    
+    title('Add a company')
+
     fields = Fields(ICreateCompany)
 
     @property
@@ -82,12 +114,13 @@ class CreateCompany(Form):
         self.redirect('%s/%s' % (self.application_url(), company.name))
         return SUCCESS
 
-    
+
 @menuentry(IContextualActionsMenu)
 class PopulateCompany(Form):
-    name('populate')
     context(Company)
+    name('populate')
     require('zope.Public')
+    title('Add accesses')
 
     fields = Fields(IPopulateCompany)
 
@@ -106,3 +139,34 @@ class PopulateCompany(Form):
             self.context.students.append(student)
         self.flash('Added %s accesses with success.' % data['nb_students'])
         return self.redirect(self.url(self.context))
+
+
+class AnswerQuizz(Form):
+    context(Student)
+    layer(IAnonymousRequest)
+    name('index')
+    require('zope.Public')
+    title('Answer the quizz')
+
+    fields = Fields(IQuizz)
+
+    for field in fields:
+        field.mode = 'radio'
+
+    @property
+    def action_url(self):
+        return '%s/%s' % (self.request.script_name, self.context.access)
+
+    @action(u'Answer')
+    def handle_save(self):
+        print self.context.completion_date
+        data, errors = self.extractData()
+        if errors:
+            self.flash(u'An error occurred.')
+            return FAILURE
+        self.context.complete_quizz(**data)
+        session = get_session('school')
+        session.add(self.context)
+        self.flash(u'Thank you for answering the quizz')
+        self.redirect(self.request.url)
+        return SUCCESS

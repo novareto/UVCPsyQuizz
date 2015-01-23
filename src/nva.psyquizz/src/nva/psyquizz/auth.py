@@ -4,7 +4,7 @@ from ul.auth import ICredentials
 from uvclight import GlobalUtility, name
 from zope.interface import implementer
 from cromlech.sqlalchemy import get_session
-from .models.course import Company
+from .models import Company
 
 
 @implementer(ICredentials)

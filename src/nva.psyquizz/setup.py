@@ -17,6 +17,7 @@ install_requires = [
     'uvclight[auth]',
     'ul.auth',
     'uvc.themes.dguv',
+    'dolmen.message',
     ]
 
 tests_require = [

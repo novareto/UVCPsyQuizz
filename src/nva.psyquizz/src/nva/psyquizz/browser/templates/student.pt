@@ -1,0 +1,18 @@
+<h1>Student access <span tal:content="context.access" /></h1>
+<div tal:condition="context.completion_date is None">
+  <h2>The student has not filled the quizz yet</h2>
+</div>
+
+<div tal:condition="context.completion_date is not None">
+  <h2>
+    The student filled the quizz on
+    <span tal:content="context.completion_date" />
+  </h2>
+  <h3>Answers</h3>
+  <dl>
+    <dt tal:content="view.quizz['question1'].title" />
+    <dd tal:content="context.question1" />
+    <dt tal:content="view.quizz['question2'].title" />
+    <dd tal:content="context.question2" /> 
+  </dl>
+</div>

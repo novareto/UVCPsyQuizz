@@ -2,7 +2,8 @@
 
 import uvclight
 from . import Base
-from .models.course import Company, Student
+from .models import Company, Student
+from .interfaces import IManagingRequest, IAnonymousRequest
 from cromlech.browser import IPublicationRoot
 from cromlech.browser import exceptions
 from cromlech.security import Principal, Interaction, unauthenticated_principal
@@ -46,12 +47,23 @@ class School(SQLContainer):
         return getGlobalSiteManager()
 
 
+class QuizzAlreadyCompleted(exceptions.HTTPForbidden):
+    pass
+
+
 @implementer(IContent, IPublicationRoot)
 class QuizzBoard(SQLContainer):
     model = Student
+    assert_key = 'completion_date'
 
     def getSiteManager(self):
         return getGlobalSiteManager()
+
+    def __getitem__(self, id):
+        content = SQLContainer.__getitem__(self, id)
+        if getattr(content, 'completion_date') is not None:
+            raise QuizzAlreadyCompleted(content)
+        return content
 
 
 @uvclight.subscribe(Company, IBeforeTraverseEvent)
@@ -64,8 +76,10 @@ def secure(obj, event):
     else:
         raise exceptions.HTTPForbidden(obj)
 
-        
+
 class AdminPublisher(SQLPublication, SecurePublication):
+
+    layers = [IManagingRequest,]
 
     def setup_database(self, engine):
         pass
@@ -81,12 +95,16 @@ class AdminPublisher(SQLPublication, SecurePublication):
         return Site(School(None, '', self.name))
 
     @classmethod
-    def create(cls, gc, name, session_key, zcml_file, dsn='sqlite:////tmp/test.db'):
+    def create(cls, gc, name, session_key, zcml_file,
+               dsn='sqlite:////tmp/test.db'):
         return super(AdminPublisher, cls).create(
-            gc, session_key, dsn=dsn, name=name, base=Base, zcml_file=zcml_file)
+            gc, session_key, dsn=dsn, name=name,
+            base=Base, zcml_file=zcml_file)
 
 
 class Publisher(SQLPublication):
+
+    layers = [IAnonymousRequest,]
 
     def setup_database(self, engine):
         pass
@@ -95,9 +113,11 @@ class Publisher(SQLPublication):
         return Site(QuizzBoard(None, '', self.name))
 
     @classmethod
-    def create(cls, gc, name, session_key, zcml_file, dsn='sqlite:////tmp/test.db'):
+    def create(cls, gc, name, session_key, zcml_file,
+               dsn='sqlite:////tmp/test.db'):
         return super(Publisher, cls).create(
-            gc, session_key, dsn=dsn, name=name, base=Base, zcml_file=zcml_file)
+            gc, session_key, dsn=dsn, name=name,
+            base=Base, zcml_file=zcml_file)
 
 
     

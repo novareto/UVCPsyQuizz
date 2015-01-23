@@ -1,11 +1,23 @@
-<div>
+<div tal:define="baseurl view.url(context)">
   <h1 tal:content="context.name" />
   <dl>
-    <dt>Access</dt>
+    <dt>Completed questionaries</dt>
     <dd>
       <ul>
-	<li tal:repeat="student context.students">
-	  <span tal:content="student.access" />
+	<li tal:repeat="student context.complete">
+	  <a tal:attributes="href '%s/%s' % (baseurl, student.access)"
+	      tal:content="student.access" />
+	</li>
+      </ul>
+    </dd>
+  </dl>
+  <dl>
+    <dt>Pending questionaries</dt>
+    <dd>
+      <ul>
+	<li tal:repeat="student context.uncomplete">
+	  <a tal:attributes="href '%s/%s' % (baseurl, student.access)"
+	      tal:content="student.access" />
 	</li>
       </ul>
     </dd>
