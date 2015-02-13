@@ -18,6 +18,7 @@ install_requires = [
     'ul.auth',
     'uvc.themes.dguv',
     'dolmen.message',
+    'zope.cachedescriptors',
     ]
 
 tests_require = [

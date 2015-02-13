@@ -15,4 +15,6 @@
     <dt tal:content="view.quizz['question2'].title" />
     <dd tal:content="context.question2" /> 
   </dl>
+  <h3>Answers to the extra questions</h3>
+  <div tal:content="context.extra_questions" />
 </div>

@@ -1,131 +1,32 @@
 # -*- coding: utf-8 -*-
 
-import uvclight
 from . import Base
-from .models import Company, Student
-from .interfaces import IManagingRequest, IAnonymousRequest
-from cromlech.browser import IPublicationRoot
-from cromlech.browser import exceptions
-from cromlech.security import Principal, Interaction, unauthenticated_principal
-from cromlech.sqlalchemy import get_session
-from dolmen.sqlcontainer import SQLContainer
 from paste.urlmap import URLMap
-from sqlalchemy import String, Integer, Column
-from sqlalchemy.ext.declarative import declarative_base
-from ul.auth import SecurePublication, GenericSecurityPolicy
-from ul.browser.decorators import with_zcml, with_i18n, sessionned
-from ul.browser.publication import IBeforeTraverseEvent
-from uvc.content.interfaces import IContent
-from uvclight.backends.sql import SQLPublication
-from uvclight.utils import current_principal
-from zope.component import getGlobalSiteManager
-from zope.component.hooks import setSite
-from zope.interface import implementer
-from zope.location import Location, ILocation
+from ul.auth import GenericSecurityPolicy
+from ul.browser.decorators import with_zcml
 from zope.security.management import setSecurityPolicy
+from .apps import admin, company, anonymous
+from cromlech.sqlalchemy import create_and_register_engine
 
 
-class Site(object):
-
-    def __init__(self, root):
-        self.root = root
-
-    def __enter__(self):
-        setSite(self.root)
-        return self.root
-
-    def __exit__(self, exc_type, exc_value, traceback):
-        setSite()
-
-
-@implementer(IContent, IPublicationRoot)
-class School(SQLContainer):
-    model = Company
-    credentials = ('managers',)
-    
-    def getSiteManager(self):
-        return getGlobalSiteManager()
-
-
-class QuizzAlreadyCompleted(exceptions.HTTPForbidden):
-    pass
-
-
-@implementer(IContent, IPublicationRoot)
-class QuizzBoard(SQLContainer):
-    model = Student
-    assert_key = 'completion_date'
-
-    def getSiteManager(self):
-        return getGlobalSiteManager()
-
-    def __getitem__(self, id):
-        content = SQLContainer.__getitem__(self, id)
-        if getattr(content, 'completion_date') is not None:
-            raise QuizzAlreadyCompleted(content)
-        return content
-
-
-@uvclight.subscribe(Company, IBeforeTraverseEvent)
-def secure(obj, event):
-    principal = current_principal()
-    if 'manage.school' in principal.permissions:
-        pass
-    elif principal.id == obj.name:
-        pass
-    else:
-        raise exceptions.HTTPForbidden(obj)
-
-
-class AdminPublisher(SQLPublication, SecurePublication):
-
-    layers = [IManagingRequest,]
-
-    def setup_database(self, engine):
-        pass
-
-    def principal_factory(self, username):
-        principal = SecurePublication.principal_factory(self, username)
-        if username == 'admin':
-            principal.permissions = set(('manage.school',))
-            principal.roles = set()
-        return principal
-    
-    def site_manager(self, environ):
-        return Site(School(None, '', self.name))
-
-    @classmethod
-    def create(cls, gc, name, session_key, zcml_file,
-               dsn='sqlite:////tmp/test.db'):
-        return super(AdminPublisher, cls).create(
-            gc, session_key, dsn=dsn, name=name,
-            base=Base, zcml_file=zcml_file)
-
-
-class Publisher(SQLPublication):
-
-    layers = [IAnonymousRequest,]
-
-    def setup_database(self, engine):
-        pass
-
-    def site_manager(self, environ):
-        return Site(QuizzBoard(None, '', self.name))
-
-    @classmethod
-    def create(cls, gc, name, session_key, zcml_file,
-               dsn='sqlite:////tmp/test.db'):
-        return super(Publisher, cls).create(
-            gc, session_key, dsn=dsn, name=name,
-            base=Base, zcml_file=zcml_file)
-
-
-    
-def routing(conf, files, session_key, zcml):
+@with_zcml('zcml')
+def routing(conf, files, session_key, **kwargs):
     setSecurityPolicy(GenericSecurityPolicy)
-    prof = AdminPublisher.create(conf, 'school', session_key, zcml_file=zcml)
-    stud = Publisher.create(conf, 'school', session_key, zcml_file=zcml)
+    name = 'school'
+
+    # We register our SQLengine under a given name
+    dsn = "sqlite:////tmp/test.db"
+    engine = create_and_register_engine(dsn, name)
+
+    # We use a declarative base, if it exists we bind it and create
+    engine.bind(Base)
+    metadata = Base.metadata
+    metadata.create_all(engine.engine, checkfirst=True)
+
+    # Router
     root = URLMap()
-    root['/admin'] = prof
-    root['/quizz'] = stud
+    root['/'] = company.Application(session_key, engine, name)
+    root['/admin'] = admin.Application(session_key, engine, name)
+    root['/quizz'] = anonymous.Application(session_key, engine, name)
+
     return root

@@ -4,6 +4,7 @@
 
   <include package="uvclight" />
   <include package="uvc.themes.dguv" />
+  <include package="cromlech.dawnlight" file="consumers.zcml" />
   <grok:grok package="." />
 
 </configure>

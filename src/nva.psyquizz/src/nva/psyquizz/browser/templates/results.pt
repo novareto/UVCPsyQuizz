@@ -1,0 +1,12 @@
+<h1>Current results</h1>
+
+<div tal:repeat="question view.display()">
+  <h2 tal:content="question['title']" />
+  <ul>
+    <li tal:repeat="answer question['answers']">
+      <span tal:content="answer['title']" /> :
+      <b tal:content="answer['value']" />
+      <i tal:content="'(%.2f%%)' % answer['percent']" />
+    </li>
+  </ul>
+</div>
