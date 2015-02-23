@@ -20,6 +20,7 @@ from dolmen.menu import menuentry
 from dolmen.location import get_absolute_url
 from cromlech.browser import exceptions
 from zope.cachedescriptors.property import CachedProperty
+from zope.schema import getFieldsInOrder
 
 
 class QuizzErrorPage(Page):
@@ -211,7 +212,7 @@ class QuizzHomepage(Page):
 class CreateCompany(Form):
     context(admin.School)
     name('add.company')
-    require('manage.school')
+    require('zope.Public')
     title('Add a company')
 
     fields = Fields(ICompany).select('name', 'password')
@@ -295,6 +296,10 @@ class PopulateCourse(Form):
         return self.redirect(self.url(self.context))
 
 
+from collections import OrderedDict
+
+
+
 class AnswerQuizz(Form):
     context(Student)
     layer(IAnonymousRequest)
@@ -302,10 +307,20 @@ class AnswerQuizz(Form):
     require('zope.Public')
     title('Answer the quizz')
     dataValidators = []
-    
+    template = get_template('wizard.pt', __file__)
+
     @property
     def action_url(self):
         return '%s/%s' % (self.request.script_name, self.context.access)
+
+    def updateWidgets(self):
+        Form.updateWidgets(self)
+        groups = OrderedDict()
+        for widget in self.fieldWidgets:
+            iface = widget.component.interface
+            group = groups.setdefault(iface, [])
+            group.append(widget)
+        self.groups = groups
 
     @property
     def fields(self):
