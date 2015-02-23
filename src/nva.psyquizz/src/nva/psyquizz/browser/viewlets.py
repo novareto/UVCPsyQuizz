@@ -2,7 +2,11 @@
 
 import uvclight
 from uvc.design.canvas import IAboveContent
+from uvc.design.canvas import menus
 from dolmen.message import receive
+from dolmen.template import ITemplate
+from grokcore.component import adapter, implementer
+from ..interfaces import IQuizzLayer
 
 
 class FlashMessages(uvclight.Viewlet):
@@ -18,3 +22,9 @@ class FlashMessages(uvclight.Viewlet):
             self.messages = list(received)
         else:
             self.messages = []
+
+
+@adapter(menus.IContextualActionsMenu, IQuizzLayer)
+@implementer(ITemplate)
+def object_template(context, request):
+    return uvclight.get_template('objectmenu.cpt', __file__)

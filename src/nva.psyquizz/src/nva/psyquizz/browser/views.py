@@ -16,10 +16,11 @@ from zope.interface import Interface
 from zope.schema import Int, TextLine, Password, Choice
 from cromlech.sqlalchemy import get_session
 from uvc.design.canvas import IContextualActionsMenu
-from dolmen.menu import menuentry
+from dolmen.menu import menuentry, order
 from dolmen.location import get_absolute_url
 from cromlech.browser import exceptions
 from zope.cachedescriptors.property import CachedProperty
+from zope.schema import getFieldsInOrder
 
 
 class QuizzErrorPage(Page):
@@ -38,18 +39,23 @@ class IPopulateCourse(Interface):
         required=True,
         )
 
-    
+
+@menuentry(IContextualActionsMenu, order=0)
 class SchoolHomepage(Page):
     name('index')
+    title('Frontpage')
     context(admin.School)
     layer(IManagingRequest)
     require('manage.school')
+    order(0)
 
     template = get_template('school.pt', __file__)
 
 
+@menuentry(IContextualActionsMenu, order=0)
 class SchoolCompanyHomepage(Page):
     name('index')
+    title('Frontpage')
     context(Company)
     layer(IManagingRequest)
     require('manage.school')
@@ -57,17 +63,21 @@ class SchoolCompanyHomepage(Page):
     template = get_template('company.pt', __file__)
 
 
+@menuentry(IContextualActionsMenu, order=0)
 class SchoolCourseHomepage(Page):
     name('index')
+    title('Frontpage')
     context(Course)
     layer(IManagingRequest)
     require('manage.school')
-    
+
     template = get_template('course.pt', __file__)
 
 
+@menuentry(IContextualActionsMenu, order=0)
 class CompanyHomepage(Page):
     name('index')
+    title('Frontpage')
     context(Company)
     layer(ICompanyRequest)
     require('manage.company')
@@ -75,8 +85,10 @@ class CompanyHomepage(Page):
     template = get_template('company.pt', __file__)
 
 
+@menuentry(IContextualActionsMenu, order=0)
 class CompanyCourseHomepage(Page):
     name('index')
+    title('Frontpage')
     context(Course)
     layer(ICompanyRequest)
     require('manage.company')
@@ -151,11 +163,13 @@ class QuizzStats(object):
             yield question
 
 
+@menuentry(IContextualActionsMenu, order=20)
 class CompanyCourseResults(Page):
     name('results')
     context(Course)
     layer(ICompanyRequest)
     require('manage.company')
+    title('Results for the course')
 
     template = get_template('results.pt', __file__)
 
@@ -169,11 +183,13 @@ class CompanyCourseResults(Page):
         return self.stats.get_answers()
 
 
+@menuentry(IContextualActionsMenu, order=20)
 class CompanyResults(CompanyCourseResults):
     name('results')
     context(Company)
     layer(ICompanyRequest)
     require('manage.company')
+    title('Company wide results')
 
     def update(self):
         total = 0
@@ -207,13 +223,13 @@ class QuizzHomepage(Page):
         raise exceptions.HTTPForbidden(self.context)
 
 
-@menuentry(IContextualActionsMenu)
+@menuentry(IContextualActionsMenu, order=10)
 class CreateCompany(Form):
     context(admin.School)
     name('add.company')
-    require('manage.school')
     title(u'Firma hinzufügen')
     title = u"Firma hinzufügen"
+    require('zope.Public')
 
     fields = Fields(ICompany).select('name', 'password')
 
@@ -240,7 +256,7 @@ class CreateCompany(Form):
         return SUCCESS
 
 
-@menuentry(IContextualActionsMenu)
+@menuentry(IContextualActionsMenu, order=10)
 class CreateCourse(Form):
     context(Company)
     name('add.course')
@@ -270,7 +286,7 @@ class CreateCourse(Form):
         return SUCCESS
 
 
-@menuentry(IContextualActionsMenu)
+@menuentry(IContextualActionsMenu, order=10)
 class PopulateCourse(Form):
     context(Course)
     name('populate')
@@ -296,6 +312,10 @@ class PopulateCourse(Form):
         return self.redirect(self.url(self.context))
 
 
+from collections import OrderedDict
+
+
+
 class AnswerQuizz(Form):
     context(Student)
     layer(IAnonymousRequest)
@@ -303,10 +323,20 @@ class AnswerQuizz(Form):
     require('zope.Public')
     title('Answer the quizz')
     dataValidators = []
-    
+    template = get_template('wizard.pt', __file__)
+
     @property
     def action_url(self):
         return '%s/%s' % (self.request.script_name, self.context.access)
+
+    def updateWidgets(self):
+        Form.updateWidgets(self)
+        groups = OrderedDict()
+        for widget in self.fieldWidgets:
+            iface = widget.component.interface
+            group = groups.setdefault(iface, [])
+            group.append(widget)
+        self.groups = groups
 
     @property
     def fields(self):

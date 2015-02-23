@@ -4,15 +4,19 @@ from cromlech.browser import exceptions
 from uvc.themes.dguv import IDGUVRequest
 
 
-class IManagingRequest(IDGUVRequest):
+class IQuizzLayer(IDGUVRequest):
     pass
 
 
-class ICompanyRequest(IDGUVRequest):
+class IManagingRequest(IQuizzLayer):
     pass
 
 
-class IAnonymousRequest(IDGUVRequest):
+class ICompanyRequest(IQuizzLayer):
+    pass
+
+
+class IAnonymousRequest(IQuizzLayer):
     pass
 
 

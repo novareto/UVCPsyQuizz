@@ -75,7 +75,8 @@ class IStudent(ILocation, IContent):
         )
 
 
-class IQuizz(Interface):
+
+class IGroup1(Interface):
 
     question1 = schema.Choice(
         title=u"1.1",
@@ -154,6 +155,9 @@ class IQuizz(Interface):
         required=True,
         )
 
+
+class IGroup2(Interface):
+
     question12 = schema.Choice(
         title=u"2.1",
         description=u"Ist ein kontinuierliches Arbeiten ohne häufige Störungen möglich?",
@@ -197,6 +201,9 @@ class IQuizz(Interface):
         required=True,
         )
 
+
+class IGroup3(Interface):
+
     question18 = schema.Choice(
         title=u"3.1",
         description=u"Bietet Ihre Tätigkeit die Möglichkeit zur Zusammenarbeit mit Kolleginnen / Kollegen?",
@@ -210,6 +217,16 @@ class IQuizz(Interface):
         vocabulary=TrueOrFalse,
         required=True,
         )
+
+
+IGroup1.setTaggedValue('label', 'Questions 1')
+IGroup2.setTaggedValue('label', 'Questions 2')
+IGroup3.setTaggedValue('label', 'Questions 3')
+
+
+class IQuizz(IGroup1, IGroup2, IGroup3):
+    pass
+
 
 @implementer(IQuizz, IStudent)
 class Student(Base, Location):
