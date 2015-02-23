@@ -28,12 +28,12 @@ TrueOrFalse = SimpleVocabulary([
 class ICompany(ILocation, IContent):
 
     name = schema.TextLine(
-        title=u"Company name",
+        title=u"Firmenname",
         required=True,
         )
 
     password = schema.Password(
-        title=u"Password for observation access",
+        title=u"Passwort",
         required=True,
         )
 
@@ -46,17 +46,17 @@ class ICompany(ILocation, IContent):
 class ICourse(ILocation, IContent):
 
     name = schema.TextLine(
-        title=u"Course name",
+        title=u"Lehrgang",
         required=True,
         )
     
     students = schema.Set(
-        title=u"Students",
+        title=u"Teilnehmer",
         required=False,
         )
 
     extra_questions = schema.Text(
-        title=u"Complementary questions for the course",
+        title=u"Zusatzfragen für diesen Lehrgang",
         description=u"Type your questions : one per line.",
         required=False,
         )

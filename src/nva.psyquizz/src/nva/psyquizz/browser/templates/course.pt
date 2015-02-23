@@ -1,7 +1,7 @@
 <div tal:define="baseurl view.url(context)">
   <h1 tal:content="context.name" />
   <dl>
-    <dt>Completed questionaries</dt>
+    <dt>Abgeschlossene Fragebögen</dt>
     <dd>
       <ul>
 	<li tal:repeat="student context.complete">
@@ -12,7 +12,7 @@
     </dd>
   </dl>
   <dl>
-    <dt>Pending questionaries</dt>
+    <dt>Ausstehende Fragebögen</dt>
     <dd>
       <ul>
 	<li tal:repeat="student context.uncomplete">

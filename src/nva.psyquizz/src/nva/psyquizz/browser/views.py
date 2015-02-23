@@ -212,7 +212,8 @@ class CreateCompany(Form):
     context(admin.School)
     name('add.company')
     require('manage.school')
-    title('Add a company')
+    title(u'Firma hinzufügen')
+    title = u"Firma hinzufügen"
 
     fields = Fields(ICompany).select('name', 'password')
 
@@ -244,7 +245,7 @@ class CreateCourse(Form):
     context(Company)
     name('add.course')
     require('manage.company')
-    title('Add a course')
+    title(u'Kurs hinzufügen')
 
     fields = Fields(ICourse).select('name', 'extra_questions')
 
@@ -274,7 +275,7 @@ class PopulateCourse(Form):
     context(Course)
     name('populate')
     require('zope.Public')
-    title('Add accesses')
+    title(u'Kennungen erzeugen')
 
     fields = Fields(IPopulateCourse)
 
