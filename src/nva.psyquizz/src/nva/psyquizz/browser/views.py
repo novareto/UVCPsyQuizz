@@ -21,6 +21,7 @@ from dolmen.location import get_absolute_url
 from cromlech.browser import exceptions
 from zope.cachedescriptors.property import CachedProperty
 from zope.schema import getFieldsInOrder
+from collections import OrderedDict
 
 
 class QuizzErrorPage(Page):
@@ -35,7 +36,7 @@ class QuizzErrorPage(Page):
 class IPopulateCourse(Interface):
     
     nb_students = Int(
-        title=u"Number of students",
+        title=u"Anzahl Fragebogen",
         required=True,
         )
 
@@ -43,7 +44,7 @@ class IPopulateCourse(Interface):
 @menuentry(IContextualActionsMenu, order=0)
 class SchoolHomepage(Page):
     name('index')
-    title('Frontpage')
+    title('Startseite')
     context(admin.School)
     layer(IManagingRequest)
     require('manage.school')
@@ -55,7 +56,7 @@ class SchoolHomepage(Page):
 @menuentry(IContextualActionsMenu, order=0)
 class SchoolCompanyHomepage(Page):
     name('index')
-    title('Frontpage')
+    title('Startseite')
     context(Company)
     layer(IManagingRequest)
     require('manage.school')
@@ -66,7 +67,7 @@ class SchoolCompanyHomepage(Page):
 @menuentry(IContextualActionsMenu, order=0)
 class SchoolCourseHomepage(Page):
     name('index')
-    title('Frontpage')
+    title('Startseite')
     context(Course)
     layer(IManagingRequest)
     require('manage.school')
@@ -77,7 +78,7 @@ class SchoolCourseHomepage(Page):
 @menuentry(IContextualActionsMenu, order=0)
 class CompanyHomepage(Page):
     name('index')
-    title('Frontpage')
+    title('Startseite')
     context(Company)
     layer(ICompanyRequest)
     require('manage.company')
@@ -88,7 +89,7 @@ class CompanyHomepage(Page):
 @menuentry(IContextualActionsMenu, order=0)
 class CompanyCourseHomepage(Page):
     name('index')
-    title('Frontpage')
+    title('Startseite')
     context(Course)
     layer(ICompanyRequest)
     require('manage.company')
@@ -108,8 +109,8 @@ class QuizzStats(object):
 
     @staticmethod
     def compute(forms, fields):
-        questions = {}
-        extras = {}
+        questions = OrderedDict()
+        extras = OrderedDict()
 
         for form in forms:
             for field in fields:
@@ -129,9 +130,10 @@ class QuizzStats(object):
     def get_answers(self):
         computed, extras = self.compute(self.completed, list(self.quizz))
 
-        for key in list(self.quizz):
+        for key, field in getFieldsInOrder(self.quizz):
             question = {
                 'title': self.quizz[key].title,
+                'description': self.quizz[key].description,
                 'answers': [],
                 }
             for term in self.quizz[key].vocabulary:
@@ -151,6 +153,7 @@ class QuizzStats(object):
 
             question = {
                 'title': title,
+                'description': '',
                 'answers': [],
                 }
             for term in TrueOrFalse:
@@ -169,7 +172,7 @@ class CompanyCourseResults(Page):
     context(Course)
     layer(ICompanyRequest)
     require('manage.company')
-    title('Results for the course')
+    title('Auswertung Unternehmensbereich')
 
     template = get_template('results.pt', __file__)
 
@@ -189,7 +192,7 @@ class CompanyResults(CompanyCourseResults):
     context(Company)
     layer(ICompanyRequest)
     require('manage.company')
-    title('Company wide results')
+    title('Auswertung Unternehmen')
 
     def update(self):
         total = 0
@@ -227,8 +230,8 @@ class QuizzHomepage(Page):
 class CreateCompany(Form):
     context(admin.School)
     name('add.company')
-    title(u'Firma hinzufügen')
-    title = u"Firma hinzufügen"
+    title(u'Unternehmen registrieren')
+    title = u"Unternehmen registrieren"
     require('zope.Public')
 
     fields = Fields(ICompany).select('name', 'password')
@@ -237,7 +240,7 @@ class CreateCompany(Form):
     def action_url(self):
         return self.request.path
 
-    @action(u'add')
+    @action(u'Registrieren')
     def handle_save(self):
         data, errors = self.extractData()
         if errors:
@@ -251,7 +254,7 @@ class CreateCompany(Form):
         session.add(company)
         session.flush()
         session.refresh(company)
-        self.flash('Company added with success.')
+        self.flash('Unternehmen erfolgreich registriert.')
         self.redirect('%s/%s' % (self.application_url(), company.name))
         return SUCCESS
 
@@ -261,7 +264,7 @@ class CreateCourse(Form):
     context(Company)
     name('add.course')
     require('manage.company')
-    title(u'Kurs hinzufügen')
+    title(u'Unternehmensbereich hinzufügen')
 
     fields = Fields(ICourse).select('name', 'extra_questions')
 
@@ -269,7 +272,7 @@ class CreateCourse(Form):
     def action_url(self):
         return self.request.path
 
-    @action(u'add')
+    @action(u'Anlegen')
     def handle_save(self):
         data, errors = self.extractData()
         if errors:
@@ -281,7 +284,7 @@ class CreateCourse(Form):
         session.add(course)
         session.flush()
         session.refresh(course)
-        self.flash('Course added with success.')
+        self.flash('Der Unternehemnsbereich wurde erfolgreich angelegt.')
         self.redirect('%s/%s' % (self.application_url(), course.id))
         return SUCCESS
 
@@ -291,7 +294,7 @@ class PopulateCourse(Form):
     context(Course)
     name('populate')
     require('zope.Public')
-    title(u'Kennungen erzeugen')
+    title(u'Fragebogen anlegen')
 
     fields = Fields(IPopulateCourse)
 
@@ -299,7 +302,7 @@ class PopulateCourse(Form):
     def action_url(self):
         return self.request.path
 
-    @action(u'Populate')
+    @action(u'Anlegen')
     def handle_save(self):
         data, errors = self.extractData()
         if errors:
@@ -308,12 +311,14 @@ class PopulateCourse(Form):
         session = get_session('school')
         for student in self.context.generate_students(data['nb_students']):
             self.context.append(student)
-        self.flash('Added %s accesses with success.' % data['nb_students'])
+        self.flash('%s Fragebogen erfolgreich angelegt.' % data['nb_students'])
         return self.redirect(self.url(self.context))
 
 
-from collections import OrderedDict
+class IExtra(Interface):
+    pass
 
+IExtra.setTaggedValue('label', u'Zusatzfragen')
 
 
 class AnswerQuizz(Form):
@@ -334,6 +339,8 @@ class AnswerQuizz(Form):
         groups = OrderedDict()
         for widget in self.fieldWidgets:
             iface = widget.component.interface
+	    if iface is None:
+	        iface = IExtra
             group = groups.setdefault(iface, [])
             group.append(widget)
         self.groups = groups
@@ -357,11 +364,12 @@ class AnswerQuizz(Form):
                     vocabulary=TrueOrFalse,
                     required=True,
                     )
+	        extra_field.mode = 'radio'
                 questions_fields.append(extra_field)
         
         return fields + Fields(*questions_fields)
 
-    @action(u'Answer')
+    @action(u'Abschicken')
     def handle_save(self):
         print self.context.completion_date
         data, errors = self.extractData()
@@ -385,3 +393,27 @@ class AnswerQuizz(Form):
         self.flash(u'Thank you for answering the quizz')
         self.redirect(self.request.url)
         return SUCCESS
+
+
+@menuentry(IContextualActionsMenu, order=20)
+class AllResults(CompanyCourseResults):
+    name('results')
+    context(admin.School)
+    layer(IManagingRequest)
+    require('manage.school')
+    title(u'Auswertung über alle Unternehmen')
+
+    def update(self):
+        total = 0
+        extra_questions = ""
+        completed = []
+        for company in self.context:
+            for course in company.courses:
+                total += len(course._students)
+                extra_questions += course.extra_questions
+                completed += course.complete
+        self.stats = QuizzStats(total, completed, extra_questions)
+
+    def display(self):
+        return self.stats.get_answers()
+

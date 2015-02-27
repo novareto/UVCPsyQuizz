@@ -1,7 +1,10 @@
 <h1>Ergebnisse</h1>
 
 <div tal:repeat="question view.display()">
-  <h2 tal:content="question['title']" />
+  <p>
+  <b tal:content="question['title']" />
+  <span tal:content="question['description']" />
+  </p>
   <ul>
     <li tal:repeat="answer question['answers']">
       <span tal:content="answer['title']" /> :

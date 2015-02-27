@@ -28,7 +28,7 @@ TrueOrFalse = SimpleVocabulary([
 class ICompany(ILocation, IContent):
 
     name = schema.TextLine(
-        title=u"Firmenname",
+        title=u"Name des Unternehmens",
         required=True,
         )
 
@@ -46,7 +46,7 @@ class ICompany(ILocation, IContent):
 class ICourse(ILocation, IContent):
 
     name = schema.TextLine(
-        title=u"Lehrgang",
+        title=u"Unternehmensbereich",
         required=True,
         )
     
@@ -56,8 +56,8 @@ class ICourse(ILocation, IContent):
         )
 
     extra_questions = schema.Text(
-        title=u"Zusatzfragen für diesen Lehrgang",
-        description=u"Type your questions : one per line.",
+        title=u"Zusatzfragen für diesen Unternehmensbereich (optional)",
+        description=u"Zusatzfragen eingeben. Für jede Frage eine neue Zeile beginnen.",
         required=False,
         )
 
@@ -219,9 +219,9 @@ class IGroup3(Interface):
         )
 
 
-IGroup1.setTaggedValue('label', 'Questions 1')
-IGroup2.setTaggedValue('label', 'Questions 2')
-IGroup3.setTaggedValue('label', 'Questions 3')
+IGroup1.setTaggedValue('label', u'Fragen zur Tätigkeit')
+IGroup2.setTaggedValue('label', u'Fragen zur Arbeitsorganisation')
+IGroup3.setTaggedValue('label', u'Fragen zum sozialen Umfeld')
 
 
 class IQuizz(IGroup1, IGroup2, IGroup3):
