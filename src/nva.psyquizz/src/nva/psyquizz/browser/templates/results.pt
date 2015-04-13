@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <div id="result">
   <h1>Current results</h1>
   <div class="panel" tal:define="quizz dict(view.display())">
@@ -28,20 +27,4 @@
     </div>
 
   </div>
-=======
-<h1>Ergebnisse</h1>
-
-<div tal:repeat="question view.display()">
-  <p>
-  <b tal:content="question['title']" />
-  <span tal:content="question['description']" />
-  </p>
-  <ul>
-    <li tal:repeat="answer question['answers']">
-      <span tal:content="answer['title']" /> :
-      <b tal:content="answer['value']" />
-      <i tal:content="'(%.2f%%)' % answer['percent']" />
-    </li>
-  </ul>
->>>>>>> 0ad39c6983b7b484f81d38da06ff84545b908fad
 </div>

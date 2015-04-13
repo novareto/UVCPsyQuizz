@@ -1,16 +1,23 @@
 # -*- coding: utf-8 -*-
 
+import json
+
 from ..apps import anonymous, admin
 from ..i18n import _
 from ..interfaces import ICompanyRequest, IManagingRequest
 from ..models import Company, Student, Course
 from ..models import IQuizz
+
+from collections import OrderedDict
 from cromlech.browser import exceptions
+from cromlech.sqlalchemy import get_session
 from dolmen.menu import menuentry, order
 from uvc.design.canvas import IContextualActionsMenu
 from uvclight import Page
 from uvclight import layer, name, context, title, get_template
 from uvclight.auth import require
+from zope.component import getUtility
+from zope.schema import getFieldsInOrder
 
 
 @menuentry(IContextualActionsMenu, order=0)
@@ -74,8 +81,17 @@ class StudentHomepage(Page):
     context(Student)
     require('zope.Public')
     
-    quizz = IQuizz
     template = get_template('student.pt', __file__)
+
+    def update(self):
+        session = get_session('school')
+        quizz = getUtility(IQuizz, name=self.context.quizz_type)
+        answers = list(session.query(quizz).filter(
+            quizz.student_id == self.context.access))
+        if len(answers) == 1:
+            self.answers = answers[0]
+            self.fields = OrderedDict(getFieldsInOrder(quizz.__schema__))
+            self.extra = json.loads(self.answers.extra_questions)
 
 
 class QuizzHomepage(Page):

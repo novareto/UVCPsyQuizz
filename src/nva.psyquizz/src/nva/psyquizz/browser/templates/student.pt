@@ -4,17 +4,22 @@
 </div>
 
 <div tal:condition="context.completion_date is not None">
-  <h2>
+  <p>
     The student filled the quizz on
     <span tal:content="context.completion_date" />
-  </h2>
-  <h3>Answers</h3>
+  </p>
+  <h2>Answers for <span tal:content="context.quizz_type" /></h2>
   <dl>
-    <dt tal:content="view.quizz['question1'].title" />
-    <dd tal:content="context.question1" />
-    <dt tal:content="view.quizz['question2'].title" />
-    <dd tal:content="context.question2" /> 
+    <tal:loop repeat="field view.fields.values()">
+      <dt tal:content="'%s - %s' % (field.title, field.description)" />
+      <dd tal:content="getattr(view.answers, field.__name__, '')" />
+    </tal:loop>
   </dl>
-  <h3>Answers to the extra questions</h3>
-  <div tal:content="context.extra_questions" />
+  <h2>Answers to the extra questions</h2>
+  <dl>
+    <tal:loop repeat="extra view.extra.items()">
+      <dt tal:content="extra[0]" />
+      <dd tal:content="extra[1]" />
+    </tal:loop>
+  </dl>
 </div>
