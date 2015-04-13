@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from cromlech.browser import exceptions
-from uvc.themes.dguv import IDGUVRequest
+from siguvtheme.uvclight import IDGUVRequest
 
 
 class IQuizzLayer(IDGUVRequest):

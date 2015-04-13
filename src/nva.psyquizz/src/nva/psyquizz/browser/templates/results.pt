@@ -1,12 +1,30 @@
-<h1>Current results</h1>
+<div id="result">
+  <h1>Current results</h1>
+  <div class="panel" tal:define="quizz dict(view.display())">
+    <tal:quizz repeat="qname quizz.keys()">
+      <a data-toggle="collapse" href="" class="btn btn-primary"
+	 tal:content="qname"
+	 tal:attributes="href '#' + qname;
+	                 aria-expanded repeat['qname'].start and 'true' or 'false';
+			 aria-controls qname" />
+    </tal:quizz>
 
-<div tal:repeat="question view.display()">
-  <h2 tal:content="question['title']" />
-  <ul>
-    <li tal:repeat="answer question['answers']">
-      <span tal:content="answer['title']" /> :
-      <b tal:content="answer['value']" />
-      <i tal:content="'(%.2f%%)' % answer['percent']" />
-    </li>
-  </ul>
+    <div tal:repeat="qname quizz.keys()" 
+	 tal:attributes="id qname;
+	                 class repeat['qname'].start and 'collapse in' or 'collapse'">
+      <dl tal:repeat="question quizz[qname]">
+	<dt tal:content="question['title']" />
+	<dd>
+	  <ul>
+	    <li tal:repeat="answer question['answers']">
+	      <span tal:content="answer['title']" /> :
+	      <b tal:content="answer['value']" />
+	      <i tal:content="'(%.2f%%)' % answer['percent']" />
+	    </li>
+	  </ul>
+	</dd>
+      </dl>
+    </div>
+
+  </div>
 </div>

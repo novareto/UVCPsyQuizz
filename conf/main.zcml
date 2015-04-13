@@ -1,8 +1,5 @@
-<configure
-    xmlns="http://namespaces.zope.org/zope"
-    i18n_domain="treegital.af.input_invoices">
+<configure xmlns="http://namespaces.zope.org/zope">
 
-  
-<include package="nva.psyquizz" />
+  <include package="nva.psyquizz" />
 
 </configure>

@@ -1,5 +1,6 @@
 <div tal:define="baseurl view.url(context)">
   <h1 tal:content="context.name" />
+  <h2 tal:content="context.quizz_type" />
   <dl>
     <dt>Completed questionaries</dt>
     <dd>

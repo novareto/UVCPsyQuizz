@@ -16,9 +16,9 @@ install_requires = [
     'uvclight[sql]',
     'uvclight[auth]',
     'ul.auth',
-    'uvc.themes.dguv',
     'dolmen.message',
     'zope.cachedescriptors',
+    'siguvtheme.uvclight',
     ]
 
 tests_require = [

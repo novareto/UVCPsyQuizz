@@ -1,10 +1,17 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
     xmlns:grok="http://namespaces.zope.org/grok">
 
   <include package="uvclight" />
-  <include package="uvc.themes.dguv" />
+  <include package="siguvtheme.uvclight" />
   <include package="cromlech.dawnlight" file="consumers.zcml" />
+
+  <include package="cromlech.i18n" file="default.zcml" />
+  <include package="zope.i18n" />
+  <include package="zope.i18n" file="meta.zcml" />
+  <i18n:registerTranslations directory="translations" />
+
   <grok:grok package="." />
 
 </configure>

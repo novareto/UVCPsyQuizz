@@ -49,6 +49,7 @@ use = egg:nva.psyquizz#app
 files = ${settings:datadir}
 session_key = nva
 zcml = ${zcml:output}
+langs = de,fr,en
 
 [server:main]
 use = egg:Paste#http
