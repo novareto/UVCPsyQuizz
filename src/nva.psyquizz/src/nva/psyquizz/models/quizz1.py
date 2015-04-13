@@ -20,6 +20,68 @@ from zope import schema
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 
 
+<<<<<<< HEAD:src/nva.psyquizz/src/nva/psyquizz/models/quizz1.py
+=======
+TrueOrFalse = SimpleVocabulary([
+    SimpleTerm(value=True,
+               title='eher Ja'),
+    SimpleTerm(value=False,
+               title='eher Nein'),
+    ])
+
+
+class ICompany(ILocation, IContent):
+
+    name = schema.TextLine(
+        title=u"Name des Unternehmens",
+        required=True,
+        )
+
+    password = schema.Password(
+        title=u"Passwort",
+        required=True,
+        )
+
+    courses = schema.Set(
+        title=u"Courses",
+        required=False,
+        )
+
+
+class ICourse(ILocation, IContent):
+
+    name = schema.TextLine(
+        title=u"Unternehmensbereich",
+        required=True,
+        )
+    
+    students = schema.Set(
+        title=u"Teilnehmer",
+        required=False,
+        )
+
+    extra_questions = schema.Text(
+        title=u"Zusatzfragen für diesen Unternehmensbereich (optional)",
+        description=u"Zusatzfragen eingeben. Für jede Frage eine neue Zeile beginnen.",
+        required=False,
+        )
+
+
+class IStudent(ILocation, IContent):
+
+    access = schema.TextLine(
+        title=u"Access string",
+        required=True,
+        )
+
+    email = schema.TextLine(
+        title=u"Email",
+        required=True,
+        )
+
+
+
+>>>>>>> 0ad39c6983b7b484f81d38da06ff84545b908fad:src/nva.psyquizz/src/nva/psyquizz/models.py
 class IGroup1(Interface):
 
     question1 = schema.Choice(
@@ -162,9 +224,9 @@ class IGroup3(Interface):
         )
 
 
-IGroup1.setTaggedValue('label', 'Questions 1')
-IGroup2.setTaggedValue('label', 'Questions 2')
-IGroup3.setTaggedValue('label', 'Questions 3')
+IGroup1.setTaggedValue('label', u'Fragen zur Tätigkeit')
+IGroup2.setTaggedValue('label', u'Fragen zur Arbeitsorganisation')
+IGroup3.setTaggedValue('label', u'Fragen zum sozialen Umfeld')
 
 
 class IQuizz1(IQuizz, IGroup1, IGroup2, IGroup3):

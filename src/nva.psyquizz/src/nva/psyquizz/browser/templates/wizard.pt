@@ -69,12 +69,12 @@
 	     class="btn btn-primary"
 	     data-parent="#wizard"
 	     aria-expanded="false" aria-control="validate"
-	     tal:condition="view.actionWidgets">Confirm and validate</a>
+	     tal:condition="view.actionWidgets">Abschließen</a>
 	  
 	  <div class= "collapse" id="validate"
 	       tal:condition="view.actionWidgets">
-	    <p>Some text.
-	    </p>
+	    <h2>Vielen Dank für Ihre Teilnahem am Fragegoben. Ihre Antworten werden ausschließlich anonymisiert verarbeitet.
+	    </h2>
             <div class="action" tal:repeat="widget view.actionWidgets">
               <tal:widget tal:content="structure widget.render()" />
             </div>

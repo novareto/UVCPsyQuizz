@@ -2,7 +2,7 @@
   <h1 tal:content="context.name" />
   <h2 tal:content="context.quizz_type" />
   <dl>
-    <dt>Completed questionaries</dt>
+    <dt>Abgeschlossene Fragebogen</dt>
     <dd>
       <ul>
 	<li tal:repeat="student context.complete">
@@ -13,7 +13,7 @@
     </dd>
   </dl>
   <dl>
-    <dt>Pending questionaries</dt>
+    <dt>Ausstehende Fragebogen</dt>
     <dd>
       <ul>
 	<li tal:repeat="student context.uncomplete">
