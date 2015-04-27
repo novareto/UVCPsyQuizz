@@ -4,6 +4,7 @@
     xmlns:grok="http://namespaces.zope.org/grok">
 
   <include package="uvclight" />
+  <include package="ul.auth" />
   <include package="siguvtheme.uvclight" />
   <include package="cromlech.dawnlight" file="consumers.zcml" />
 

@@ -110,7 +110,7 @@ class PopulateCourse(Form):
     def action_url(self):
         return self.request.path
 
-    @action(u'Populate')
+    @action(_(u'Populate'))
     def handle_save(self):
         data, errors = self.extractData()
         if errors:

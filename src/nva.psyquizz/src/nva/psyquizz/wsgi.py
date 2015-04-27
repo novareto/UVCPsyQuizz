@@ -16,6 +16,7 @@ def routing(conf, files, session_key, **kwargs):
     
     languages = kwargs['langs']
     allowed = languages.strip().replace(',', ' ').split()
+    allowed = ('de',)
     register_allowed_languages(allowed)
     config.ALLOWED_LANGUAGES = None
 
