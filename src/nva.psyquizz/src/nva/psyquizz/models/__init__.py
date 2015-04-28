@@ -5,19 +5,19 @@ import uuid
 from .. import Base
 from cromlech.sqlalchemy import get_session
 from datetime import datetime
+from grokcore.component import provider
 from sqlalchemy import *
-from zope.component import getUtilitiesFor
 from sqlalchemy.orm import aliased
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm.collections import attribute_mapped_collection
 from uvc.content.interfaces import IContent
 from uvclight.directives import traversable
-from grokcore.component import provider
+from zope import schema
+from zope.component import getUtilitiesFor
 from zope.interface import Interface, implementer
 from zope.location import ILocation, Location, LocationProxy
-from zope import schema
-from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 from zope.schema.interfaces import IContextSourceBinder
+from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 
 
 class IQuizz(Interface):
@@ -40,22 +40,54 @@ def quizz_choice(context):
     ])
 
 
+class ICriteria(Interface):
+
+    title = schema.TextLine(
+        title=u"Label",
+        required=True,
+    )
+
+    items = schema.Text(
+        title=u"Please enter one criteria per line",
+        required=True,
+    )
+
+
+@implementer(ICriteria)
+class Criteria(Base):
+
+    __tablename__ = 'criterias'
+
+    id = Column(Integer, primary_key=True)
+    title = Column('title', String)
+    items = Column('items', Text)
+
+
+@provider(IContextSourceBinder)
+def criterias_choice(context):
+    session = get_session('school')
+    criterias = session.query(Criteria)
+    return SimpleVocabulary([
+        SimpleTerm(value=c, token=c.id, title=c.title)
+        for c in criterias])
+
+
 class ICompany(ILocation, IContent):
 
     name = schema.TextLine(
         title=u"Company name",
         required=True,
-        )
+    )
 
     password = schema.Password(
         title=u"Password for observation access",
         required=True,
-        )
+    )
 
     courses = schema.Set(
         title=u"Courses",
         required=False,
-        )
+    )
 
 
 class ICourse(ILocation, IContent):
@@ -63,24 +95,30 @@ class ICourse(ILocation, IContent):
     name = schema.TextLine(
         title=u"Course name",
         required=True,
-        )
+    )
     
     students = schema.Set(
         title=u"Students",
         required=False,
-        )
+    )
 
     quizz_type = schema.Choice(
         title=u"Quizz",
         source=quizz_choice,
         required=True,
-        )
+    )
+
+    criterias = schema.Set(
+        title=u"Criterias",
+        value_type=schema.Choice(source=criterias_choice),
+        required=False,
+    )
 
     extra_questions = schema.Text(
         title=u"Complementary questions for the course",
         description=u"Type your questions : one per line.",
         required=False,
-        )
+    )
 
 
 class IStudent(ILocation, IContent):
@@ -88,12 +126,18 @@ class IStudent(ILocation, IContent):
     access = schema.TextLine(
         title=u"Access string",
         required=True,
-        )
+    )
 
     email = schema.TextLine(
         title=u"Email",
         required=True,
-        )
+    )
+
+
+criterias_table = Table('criterias_courses', Base.metadata,
+    Column('courses_id', Integer, ForeignKey('courses.id')),
+    Column('criterias_id', Integer, ForeignKey('criterias.id')),
+)
 
 
 @implementer(IQuizz, IStudent)
@@ -141,6 +185,9 @@ class Course(Base, Location):
     _students = relationship(
         "Student", backref="course",
         collection_class=attribute_mapped_collection('access'))
+
+    criterias = relationship(
+        "Criteria", secondary=criterias_table, backref="courses")
 
     def __init__(self, **kwargs):
         Base.__init__(self, **kwargs)

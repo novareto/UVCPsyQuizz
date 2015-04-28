@@ -5,8 +5,8 @@ from ..models import IQuizz
 from ..apps import admin
 from ..i18n import _
 from ..interfaces import IAnonymousRequest
-from ..models import Company, Student, Course
-from ..models import ICourse, ICompany, TrueOrFalse
+from ..models import Company, Student, Course, Criteria
+from ..models import ICriteria, ICourse, ICompany, TrueOrFalse
 from cromlech.sqlalchemy import get_session
 from dolmen.menu import menuentry, order
 from uvc.design.canvas import IContextualActionsMenu
@@ -31,6 +31,36 @@ class IPopulateCourse(Interface):
         title=_(u"Number of students"),
         required=True,
         )
+
+
+@menuentry(IContextualActionsMenu, order=10)
+class CreateCriterias(Form):
+    context(admin.School)
+    name('add.criterias')
+    title(_(u'Add a criteria'))
+    require('zope.Public')
+
+    fields = Fields(ICriteria).select('title', 'items')
+
+    @property
+    def action_url(self):
+        return self.request.path
+
+    @action(_(u'Add'))
+    def handle_save(self):
+        data, errors = self.extractData()
+        if errors:
+            self.flash(_(u'An error occurred.'))
+            return FAILURE
+
+        session = get_session('school')
+        criteria = Criteria(**data)
+        session.add(criteria)
+        session.flush()
+        session.refresh(criteria)
+        self.flash(_(u'Criteria added with success.'))
+        self.redirect('%s/%s' % (self.application_url(), company.name))
+        return SUCCESS
 
 
 @menuentry(IContextualActionsMenu, order=10)
