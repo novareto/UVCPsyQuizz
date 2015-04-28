@@ -100,6 +100,7 @@ class Application(SQLPublication, SecurePublication):
         @transaction_sql(self.engine)
         def publish(environ, start_response):
             layers = self.layers or list()
+            print layers
             with ContextualRequest(environ, layers=layers) as request:
                 response = self.publish_traverse(request)
                 return response(environ, start_response)

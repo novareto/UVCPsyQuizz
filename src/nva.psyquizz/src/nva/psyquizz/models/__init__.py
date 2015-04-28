@@ -3,6 +3,7 @@
 import uuid
 
 from .. import Base
+from ..i18n import _
 from cromlech.sqlalchemy import get_session
 from datetime import datetime
 from grokcore.component import provider
@@ -75,17 +76,17 @@ def criterias_choice(context):
 class ICompany(ILocation, IContent):
 
     name = schema.TextLine(
-        title=u"Company name",
+        title=_(u"Company name"),
         required=True,
     )
 
     password = schema.Password(
-        title=u"Password for observation access",
+        title=_(u"Password for observation access"),
         required=True,
     )
 
     courses = schema.Set(
-        title=u"Courses",
+        title=_(u"Courses"),
         required=False,
     )
 
@@ -93,17 +94,17 @@ class ICompany(ILocation, IContent):
 class ICourse(ILocation, IContent):
 
     name = schema.TextLine(
-        title=u"Course name",
+        title=_(u"Course name"),
         required=True,
     )
     
     students = schema.Set(
-        title=u"Students",
+        title=_(u"Students"),
         required=False,
     )
 
     quizz_type = schema.Choice(
-        title=u"Quizz",
+        title=_(u"Quizz"),
         source=quizz_choice,
         required=True,
     )
@@ -115,8 +116,8 @@ class ICourse(ILocation, IContent):
     )
 
     extra_questions = schema.Text(
-        title=u"Complementary questions for the course",
-        description=u"Type your questions : one per line.",
+        title=_(u"Complementary questions for the course"),
+        description=_(u"Type your questions : one per line."),
         required=False,
     )
 

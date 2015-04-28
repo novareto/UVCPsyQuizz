@@ -26,10 +26,10 @@ class QuizzBoard(SQLContainer):
             raise QuizzAlreadyCompleted(content)
         return content
 
-
+from uvc.themes.btwidgets import IBootstrapRequest
 class Application(SQLPublication):
 
-    layers = [IAnonymousRequest,]
+    layers = [IBootstrapRequest, IAnonymousRequest, IBootstrapRequest]
 
     def setup_database(self, engine):
         pass
