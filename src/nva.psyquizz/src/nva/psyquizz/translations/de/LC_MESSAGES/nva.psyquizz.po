@@ -1,0 +1,96 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"POT-Creation-Date: Tue Mar 24 14:10:42 2010\n"
+"PO-Revision-Date: 2015-03-24 14:48+0200\n"
+"Last-Translator: Souheil Chelfouh <trollfot@gmail.com>\n"
+"Language-Team: Novareto\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: fr\n"
+"Language-Name: French\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: nva.psyquizz\n"
+
+
+msgid "Add"
+msgstr "Hinzufügen"
+
+msgid "Answer"
+msgstr "Abschließen"
+
+msgid "Add a company"
+msgstr "Unternehmen registrieren"
+
+msgid "Number of students"
+msgstr "Anzahl Fragebögen"
+
+msgid "Name ${name} already exists."
+msgstr "Der Name '${name}' existiert bereits."
+
+msgid "Company added with success."
+msgstr "Das Unternehmen wurde erfolgreich registriert."
+
+msgid "Add a course"
+msgstr "Unternehmensbereich hinzufügen"
+
+msgid "An error occurred."
+msgstr "Une erreur est survenue."
+
+msgid "Course added with success."
+msgstr "Unternehmen erfolgreich registriert."
+
+msgid "Add accesses"
+msgstr "Fragebogen anlegen"
+
+msgid "Added ${nb} accesses with success."
+msgstr "$nb Fragebogen erfolgreich angelegt."
+
+msgid "Thank you for answering the quizz"
+msgstr "Vielen Dank für Ihre Teilname am Fragebogen. Ihre Antworten werden ausschließlich anonymisiert verarbeitet."
+
+msgid "Frontpage"
+msgstr "Startseite"
+
+msgid "This quizz is already completed and therefore closed."
+msgstr "Der Fragebogen ist bereits abgeschlossen."
+
+msgid "Results for the course"
+msgstr "Auswertung Unternehmensbereich"
+
+msgid "Company wide results"
+msgstr "Auswertung Unternehmen"
+
+msgid "Site wide results"
+msgstr "Résultats combinés inter-entreprises"
+
+msgid "Company name"
+msgstr "Name des Unternehmens"
+
+msgid "Password for observation access"
+msgstr "Passwort"
+
+msgid "Course name"
+msgstr "Name des Unternehmensbereichs"
+
+msgid "Students"
+msgstr "Students"
+
+msgid "Quizz"
+msgstr "Quizz"
+
+msgid "Complementary questions for the course"
+msgstr "Zusatzfragen für diesen Unternehmensbereich (optional)"
+
+msgid "Type your questions : one per line."
+msgstr "Zusatzfragen eingeben. Für jede Frage eine neue Zeile beginnen."
+
+msgid "Populate"
+msgstr "Anlegen"
+
+msgid "i"
+msgstr "i"
+
