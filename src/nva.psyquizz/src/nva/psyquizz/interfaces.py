@@ -22,3 +22,7 @@ class IAnonymousRequest(IQuizzLayer):
 
 class QuizzAlreadyCompleted(exceptions.HTTPForbidden):
     pass
+
+
+class QuizzClosed(exceptions.HTTPForbidden):
+    pass

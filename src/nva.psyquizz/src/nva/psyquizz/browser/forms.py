@@ -1,21 +1,25 @@
 # -*- coding: utf-8 -*-
 
 import json
-from ..models import IQuizz
+
 from ..apps import admin
 from ..i18n import _
 from ..interfaces import IAnonymousRequest
-from ..models import Company, Student, Course, Criteria
+from ..models import Company, Student, Course, Criteria, ICriterias
 from ..models import ICriteria, ICourse, ICompany, TrueOrFalse
+from ..models import IQuizz, CriteriaAnswer
+from collections import OrderedDict
 from cromlech.sqlalchemy import get_session
 from dolmen.menu import menuentry, order
 from uvc.design.canvas import IContextualActionsMenu
-from uvclight import JSON, Form, Fields, SUCCESS, FAILURE
+from uvc.themes.dguv.resources import alldate
+from uvclight import Form, EditForm, Fields, SUCCESS, FAILURE
 from uvclight import action, layer, name, context, title, get_template
 from uvclight.auth import require
-from zope.interface import Interface
 from zope.component import getUtility
+from zope.interface import Interface
 from zope.schema import Int, Choice
+from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 
 
 class IExtraQuestions(Interface):
@@ -23,6 +27,13 @@ class IExtraQuestions(Interface):
 
 
 IExtraQuestions.setTaggedValue('label', 'Extra questions')
+
+
+class IStudentFilters(Interface):
+    pass
+
+
+IStudentFilters.setTaggedValue('label', 'Getting started')
 
 
 class IPopulateCourse(Interface):
@@ -35,8 +46,8 @@ class IPopulateCourse(Interface):
 
 @menuentry(IContextualActionsMenu, order=10)
 class CreateCriterias(Form):
-    context(admin.School)
-    name('add.criterias')
+    context(ICriterias)
+    name('add.criteria')
     title(_(u'Add a criteria'))
     require('zope.Public')
 
@@ -55,12 +66,27 @@ class CreateCriterias(Form):
 
         session = get_session('school')
         criteria = Criteria(**data)
+        criteria.company_id = self.context.__parent__.name
         session.add(criteria)
         session.flush()
         session.refresh(criteria)
         self.flash(_(u'Criteria added with success.'))
-        self.redirect('%s/%s' % (self.application_url(), company.name))
+        self.redirect('%s' % self.application_url())
         return SUCCESS
+
+
+@menuentry(IContextualActionsMenu, order=10)
+class EditCriteria(EditForm):
+    context(ICriteria)
+    name('index')
+    title(_(u'Edit criteria'))
+    require('zope.Public')
+
+    fields = Fields(ICriteria).select('title', 'items')
+
+    @property
+    def action_url(self):
+        return self.request.path
 
 
 @menuentry(IContextualActionsMenu, order=10)
@@ -103,7 +129,12 @@ class CreateCourse(Form):
     require('manage.company')
     title(_(u'Add a course'))
 
-    fields = Fields(ICourse).select('name', 'quizz_type', 'extra_questions')
+    fields = Fields(ICourse).select(
+        'name', 'startdate', 'criterias',
+        'quizz_type', 'extra_questions')
+
+    def update(self):
+        alldate.need()
 
     @property
     def action_url(self):
@@ -127,6 +158,24 @@ class CreateCourse(Form):
 
 
 @menuentry(IContextualActionsMenu, order=10)
+class EditCourse(EditForm):
+    context(Course)
+    name('edit')
+    require('manage.company')
+    title(_(u'Edit the course'))
+
+    fields = Fields(ICourse).select(
+        'name', 'startdate')
+
+    def update(self):
+        alldate.need()
+
+    @property
+    def action_url(self):
+        return self.request.path
+
+
+@menuentry(IContextualActionsMenu, order=10)
 class PopulateCourse(Form):
     context(Course)
     name('populate')
@@ -146,15 +195,11 @@ class PopulateCourse(Form):
         if errors:
             self.flash(_(u'An error occurred.'))
             return
-        session = get_session('school')
         for student in self.context.generate_students(data['nb_students']):
             self.context.append(student)
         self.flash(_(u'Added ${nb} accesses with success.',
                      mapping=dict(nb=data['nb_students'])))
         return self.redirect(self.url(self.context))
-
-
-from collections import OrderedDict
 
 
 class AnswerQuizz(Form):
@@ -179,15 +224,33 @@ class AnswerQuizz(Form):
         Form.updateWidgets(self)
         groups = OrderedDict()
         for widget in self.fieldWidgets:
-            iface = widget.component.interface or IExtraQuestions
+            if widget.component.identifier.startswith('criteria_'):
+                iface = IStudentFilters
+            else:
+                iface = widget.component.interface or IExtraQuestions
             group = groups.setdefault(iface, [])
             group.append(widget)
         self.groups = groups
 
     @property
     def fields(self):
-
         fields = Fields(self.quizz.__schema__)
+
+        criteria_fields = []
+        for criteria in self.context.course.criterias:
+            values = [c.strip() for c in criteria.items.split('\n')
+                      if c.strip()]
+            
+            criteria_field = Choice(
+                __name__ = 'criteria_%s' % criteria.id,
+                title=criteria.title,
+                values=values,
+                required=True,
+            )
+            criteria_fields.append(criteria_field)
+        fields = Fields(*criteria_fields) + fields
+
+
         questions_text = self.context.course.extra_questions
         questions_fields = []
         if questions_text:
@@ -201,26 +264,39 @@ class AnswerQuizz(Form):
                     required=True,
                     )
                 questions_fields.append(extra_field)
-        
         fields += Fields(*questions_fields)
+
         for field in fields:
             field.mode = 'radio'
+
         return fields
 
 
     @action(_(u'Answer'))
     def handle_save(self):
-        print self.context.completion_date
         data, errors = self.extractData()
         if errors:
             self.flash(_(u'An error occurred.'))
             return FAILURE
 
+        session = get_session('school')
+
         fields = self.fields
         extra_answers = {}
+
         keys = data.keys()
         for key in keys:
-            if key.startswith('extra_'):
+            if key.startswith('criteria_'):
+                cid = key.split('_', 1)[1]
+                value = data.pop(key)
+                field = fields.get(key)
+                criteria_answer = CriteriaAnswer(
+                    criteria_id=cid,
+                    student_id=self.context.access,
+                    answer=value,
+                    )
+                session.add(criteria_answer)
+            elif key.startswith('extra_'):
                 value = data.pop(key)
                 field = fields.get(key)
                 extra_answers[field.title] = value
@@ -233,7 +309,6 @@ class AnswerQuizz(Form):
         quizz.company_id = self.context.company_id
         quizz.course_id = self.context.course_id
 
-        session = get_session('school')
         session.add(self.context)
         session.add(quizz)
         self.flash(_(u'Thank you for answering the quizz'))

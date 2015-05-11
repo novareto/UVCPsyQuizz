@@ -1,5 +1,6 @@
 <div tal:define="baseurl view.url(context)">
   <h1 tal:content="context.name" />
+  <p>Course starts the <span tal:content="context.startdate" /> and ends the <span tal:content="context.enddate" /></p>
   <h2 tal:content="context.quizz_type" />
   <dl>
     <dt>Abgeschlossene Fragebogen</dt>
@@ -23,4 +24,12 @@
       </ul>
     </dd>
   </dl>
+  <h2>Criterias</h2>
+  <div tal:repeat="crit view.criterias.keys()">
+    <h3 tal:content="crit" />
+    <ul>
+      <li tal:repeat="val view.criterias[crit]"
+	  tal:content="val" />
+    </ul>
+  </div>
 </div>

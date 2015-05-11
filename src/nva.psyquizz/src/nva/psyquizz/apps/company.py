@@ -3,24 +3,22 @@
 import webob.exc
 
 from . import Site
-from .. import Base
 from ..models import Company
 from ..interfaces import ICompanyRequest
-from cromlech.browser import exceptions
 from cromlech.browser import IPublicationRoot, IView, IResponseFactory
-from cromlech.sqlalchemy import get_session
 from cromlech.security import Interaction, unauthenticated_principal
+from cromlech.sqlalchemy import get_session
 from ul.auth import SecurePublication, ICredentials
 from ul.auth.browser import Login
-from ul.sql.decorators import transaction_sql
-from ul.browser.decorators import sessionned
 from ul.browser.context import ContextualRequest
+from ul.browser.decorators import sessionned
+from ul.sql.decorators import transaction_sql
 from uvclight import GlobalUtility, name, layer
 from uvclight.auth import require
 from uvclight.backends.sql import SQLPublication
 from zope.component import getGlobalSiteManager
-from zope.location import Location
 from zope.interface import alsoProvides, implementer
+from zope.location import Location
 from zope.security.proxy import removeSecurityProxy
 
 
@@ -60,7 +58,7 @@ class NoAccess(Location):
 
 class Application(SQLPublication, SecurePublication):
 
-    layers = [ICompanyRequest,]
+    layers = [ICompanyRequest]
 
     def setup_database(self, engine):
         pass
@@ -100,7 +98,6 @@ class Application(SQLPublication, SecurePublication):
         @transaction_sql(self.engine)
         def publish(environ, start_response):
             layers = self.layers or list()
-            print layers
             with ContextualRequest(environ, layers=layers) as request:
                 response = self.publish_traverse(request)
                 return response(environ, start_response)

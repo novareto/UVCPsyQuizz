@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
+from datetime import date
 from . import Site
-from .. import Base
-from ..models import Student
-from ..interfaces import IAnonymousRequest, QuizzAlreadyCompleted
+from ..interfaces import IAnonymousRequest, QuizzAlreadyCompleted, QuizzClosed
+from ..models import Student, Course
 from cromlech.browser import IPublicationRoot
 from dolmen.sqlcontainer import SQLContainer
 from uvc.content.interfaces import IContent
+from uvc.themes.btwidgets import IBootstrapRequest
 from uvclight.backends.sql import SQLPublication
 from zope.component import getGlobalSiteManager
 from zope.interface import implementer
@@ -21,15 +22,36 @@ class QuizzBoard(SQLContainer):
         return getGlobalSiteManager()
 
     def __getitem__(self, id):
-        content = SQLContainer.__getitem__(self, id)
-        if getattr(content, 'completion_date') is not None:
-            raise QuizzAlreadyCompleted(content)
-        return content
+        if id.startswith('generic'):
+            try:
+                courseid = int(id.split('-', 1)[1])
+                course = self.session.query(Course).get(courseid)
+                assert course is not None
+                if date.today() > course.enddate:
+                    raise QuizzClosed(self)
+                uuid = self.model.generate_access()
+                student = self.model(
+                    access=uuid, company_id=course.company_id,
+                    quizz_type=course.quizz_type, course=course)
+                self.session.add(student)
+                student.__name__ = uuid
+                student.__parent__ = self
+                return student
+            except QuizzClosed:
+                raise
+            except:
+                raise KeyError(id)
+        else:
+            content = SQLContainer.__getitem__(self, id)
+            if date.today() > content.course.enddate:
+                raise QuizzClosed(content)
+            if getattr(content, 'completion_date') is not None:
+                raise QuizzAlreadyCompleted(content)
+            return content
 
-from uvc.themes.btwidgets import IBootstrapRequest
+
 class Application(SQLPublication):
-
-    layers = [IBootstrapRequest, IAnonymousRequest, IBootstrapRequest]
+    layers = [IBootstrapRequest, IAnonymousRequest]
 
     def setup_database(self, engine):
         pass

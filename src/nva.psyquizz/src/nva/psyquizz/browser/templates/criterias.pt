@@ -1,0 +1,9 @@
+<div id="criterias">
+  <h1>All criterias</h1>
+  <ul>
+    <li tal:repeat="crit context">
+      <a tal:attributes="href 'criterias/' + str(crit.id)"
+	 tal:content="crit.title" />
+    </li>
+  </ul>
+</div>

@@ -1,23 +1,12 @@
 # -*- coding: utf-8 -*-
 
-import uuid
-
 from . import TrueOrFalse, IQuizz
 from .. import Base
-
-from cromlech.sqlalchemy import get_session
-from datetime import datetime
 from sqlalchemy import *
-from sqlalchemy.orm import aliased
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm.collections import attribute_mapped_collection
-from uvc.content.interfaces import IContent
-from uvclight.directives import traversable
 from grokcore.component import global_utility
 from zope.interface import Interface, implementer
-from zope.location import ILocation, Location, LocationProxy
+from zope.location import Location
 from zope import schema
-from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 
 
 class IGroup1(Interface):

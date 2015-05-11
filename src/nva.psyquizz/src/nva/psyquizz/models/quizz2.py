@@ -1,61 +1,222 @@
 # -*- coding: utf-8 -*-
 
-import uuid
-
-from . import TrueOrFalse, IQuizz
+from . import LessToMore, IQuizz
 from .. import Base
-
-from cromlech.sqlalchemy import get_session
-from datetime import datetime
 from grokcore.component import global_utility
 from sqlalchemy import *
-from sqlalchemy.orm import aliased
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm.collections import attribute_mapped_collection
-from uvc.content.interfaces import IContent
-from uvclight.directives import traversable
 from zope import schema
 from zope.interface import Interface, implementer
-from zope.location import ILocation, Location, LocationProxy
-from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
+from zope.location import Location
 
 
 class IGroup1(Interface):
+    u"""Arbeitstätigkeit """
 
     question1 = schema.Choice(
         title=u"1.1",
-        description=u"Is Godzilla a lizard ?",
-        vocabulary=TrueOrFalse,
+        description=u"Können Sie bei Ihrer Arbeit Neues dazulernen?",
+        vocabulary=LessToMore,
         required=True,
         )
 
+    question2 = schema.Choice(
+        title=u"1.2",
+        description=u"Können Sie bei Ihrer Arbeit Ihr Wissen und Können voll einsetzen?",
+        vocabulary=LessToMore,
+        required=True,
+        )
+
+    question3 = schema.Choice(
+        title=u"1.3",
+        description=u"Bei meiner Arbeit habe ich insgesammt gesehen häufig wechselnde, unterschiedliche Arbeitsaufgaben.",
+        vocabulary=LessToMore,
+        required=True,
+        )
+
+    question4 = schema.Choice(
+        title=u"1.4",
+        description=u"Bei meiner Arbeit sehe ich selber am Ergebnis ob meine Arbeit, gut war oder nicht.",
+        vocabulary=LessToMore,
+        required=True,
+        )
+
+    question5 = schema.Choice(
+        title=u"1.5",
+        description=u"Meine Arbeit ist so gestaltet, dass ich die Möglichkeit habe, ein vollständiges Arbeitsprodukt \
+                eine vollständige Arbeitsaufgabe von Anfang bis Ende herzustellen.",
+        vocabulary=LessToMore,
+        required=True,
+        )
 
 class IGroup2(Interface):
+    """ Stressoren """
 
-    question2 = schema.Choice(
+    question6 = schema.Choice(
         title=u"2.1",
-        description=u"Is Zorro a spanish animal ?",
-        vocabulary=TrueOrFalse,
+        description=u"Bei dieser Arbeit gibt es Sachen, die zu kompliziert sind (z.B. \
+                aufgrund keiner oder unklarer Arbeitsbeschreibungen oder aufgrund mangelnder \
+                Qualifizierung).",
+        vocabulary=LessToMore,
+        required=True,
+        )
+
+    question7 = schema.Choice(
+        title=u"2.2",
+        description=u"Es werden zu hohe Anforderungen an meine Konzentrations fähigkeit gestellt.",
+        vocabulary=LessToMore,
+        required=True,
+        )
+
+    question8 = schema.Choice(
+        title=u"2.3",
+        description=u"Ich stehe häufig unter Zeitdruck.",
+        vocabulary=LessToMore,
+        required=True,
+        )
+
+    question9 = schema.Choice(
+        title=u"2.4",
+        description=u"Ich habe zu viel Arbeit.",
+        vocabulary=LessToMore,
+        required=True,
+        )
+
+    question10 = schema.Choice(
+        title=u"2.5",
+        description=u"Oft stehen mir die benötigten Informationen, Materialien und Arbeitsmittel nicht zur Verfügung.",
+        vocabulary=LessToMore,
+        required=True,
+        )
+
+    question11 = schema.Choice(
+        title=u"2.6",
+        description=u"Ich werde bei meiner eigentlichen Arbeit immer wieder von anderen Personen unterbrochen.",
+        vocabulary=LessToMore,
+        required=True,
+        )
+
+    question12 = schema.Choice(
+        title=u"2.7",
+        description=u"An meinen Arbeitsplatz gibt es ungünstige Umgebungsbedingungen wie Lärm, Klima, Staub.",
+        vocabulary=LessToMore,
+        required=True,
+        )
+
+    question13 = schema.Choice(
+        title=u"2.8",
+        description=u"An meinem Arbeitsplatz sind Räume und Raumausstattung ungenügend",
+        vocabulary=LessToMore,
         required=True,
         )
 
 
 class IGroup3(Interface):
 
-    question3 = schema.Choice(
+    question14 = schema.Choice(
         title=u"3.1",
-        description=u"Are you a robot ?",
-        vocabulary=TrueOrFalse,
+        description=u"Wenn Sie Ihre Tätigkeit insgesammt betrachten, inwieweit können Sie die Reihenfolge der Arbeitsschritte selbst bestimmen?",
+        vocabulary=LessToMore,
+        required=True,
+        )
+
+    question15 = schema.Choice(
+        title=u"3.2",
+        description=u"Wie viel Einfluss haben Sie darauf, welche Arbeit Ihnen zugeteilt wird?",
+        vocabulary=LessToMore,
+        required=True,
+        )
+
+    question16 = schema.Choice(
+        title=u"3.3",
+        description=u"Können Sie Ihre Arbeit selbstständig planen und einteilen?",
+        vocabulary=LessToMore,
+        required=True,
+        )
+
+    question17 = schema.Choice(
+        title=u"3.4",
+        description=u"Ich kann mich auf Kollegen und Kolleginnen verlassen, wenn es bei der Arbeit schwierig wird.",
+        vocabulary=LessToMore,
+        required=True,
+        )
+
+    question18 = schema.Choice(
+        title=u"3.5",
+        description=u"Ich kann mich auf meine/n direkte/n Vorgesetzte/n verlassen, wenn es bei der Arbeit schwierig wird.",
+        vocabulary=LessToMore,
+        required=True,
+        )
+
+    question19 = schema.Choice(
+        title=u"3.6",
+        description=u"Man hält in der Abteilung gut zusammen.",
+        vocabulary=LessToMore,
+        required=True,
+        )
+
+    question20 = schema.Choice(
+        title=u"3.7",
+        description=u"Diese Arbeit erfordert enge Zusammenarbeit mit anderen Kolleginnen und Kollegen in der Organisation.",
+        vocabulary=LessToMore,
+        required=True,
+        )
+
+    question21 = schema.Choice(
+        title=u"3.8",
+        description=u"Ich kann mich während der Arbeit mit verschiedenen Kolleginnen und Kollegen über dienstliche und private Dinge unterhalten.",
+        vocabulary=LessToMore,
+        required=True,
+        )
+
+    question22 = schema.Choice(
+        title=u"3.9",
+        description=u"Ich bekommen von Vorgesetzten und Kollegen immer Rückmeldung über die Qualität meiner Arbeit.",
+        vocabulary=LessToMore,
         required=True,
         )
 
 
-IGroup1.setTaggedValue('label', 'Questions 1')
-IGroup2.setTaggedValue('label', 'Questions 2')
-IGroup3.setTaggedValue('label', 'Questions 3')
+class IGroup4(Interface):
+
+    question23 = schema.Choice(
+        title=u"4.1",
+        description=u"Über wichtige Dinge und Vorgänge in unserer Organistaion sind wir ausreichend informiert.",
+        vocabulary=LessToMore,
+        required=True,
+        )
 
 
-class IQuizz2(IQuizz, IGroup1, IGroup2, IGroup3):
+    question24 = schema.Choice(
+        title=u"4.2",
+        description=u"Die Leitung der Organisation ist bereit, Ideen und Vorschläge der Beschäftigten zu berücksichtigen.",
+        vocabulary=LessToMore,
+        required=True,
+        )
+
+
+    question25 = schema.Choice(
+        title=u"4.3",
+        description=u"Unser Unternehmen bietet gute Weiterbildungsmöglichkeiten.",
+        vocabulary=LessToMore,
+        required=True,
+        )
+
+
+    question26 = schema.Choice(
+        title=u"4.4",
+        description=u"Bei uns gibt es gute Aufstiegschancen (z.B. auch durch Erweiterung des bisherigen Tätigkeitsfeldes).",
+        vocabulary=LessToMore,
+        required=True,
+        )
+
+
+IGroup1.setTaggedValue('label', u'Arbeitstätigkeit')
+IGroup2.setTaggedValue('label', u'Stressoren')
+IGroup3.setTaggedValue('label', u'Ressourcen')
+IGroup4.setTaggedValue('label', u'Organisationsklima')
+
+
+class IQuizz2(IQuizz, IGroup1, IGroup2, IGroup3, IGroup4):
     pass
 
 
@@ -64,7 +225,7 @@ class Quizz2(Base, Location):
 
     __tablename__ = 'quizz2'
     __schema__ = IQuizz2
-    __title__ = u"Some other Quizz"
+    __title__ = u"KFZA Kurzfragebogen zur Arbeitsanalyse"
 
     id = Column('id', Integer, primary_key=True)
 
@@ -75,9 +236,32 @@ class Quizz2(Base, Location):
 
     # Quizz
     completion_date = Column('completion_date', DateTime)
-    question1 = Column('question1', Boolean)
-    question2 = Column('question2', Boolean)
-    question3 = Column('question3', Boolean)
+    question1 = Column('question1', Integer)
+    question2 = Column('question2', Integer)
+    question3 = Column('question3', Integer)
+    question4 = Column('question4', Integer)
+    question5 = Column('question5', Integer)
+    question6 = Column('question6', Integer)
+    question7 = Column('question7', Integer)
+    question8 = Column('question8', Integer)
+    question9 = Column('question9', Integer)
+    question10 = Column('question10', Integer)
+    question11 = Column('question11', Integer)
+    question12 = Column('question12', Integer)
+    question13 = Column('question13', Integer)
+    question14 = Column('question14', Integer)
+    question15 = Column('question15', Integer)
+    question16 = Column('question16', Integer)
+    question17 = Column('question17', Integer)
+    question18 = Column('question18', Integer)
+    question19 = Column('question19', Integer)
+    question20 = Column('question20', Integer)
+    question21 = Column('question21', Integer)
+    question22 = Column('question22', Integer)
+    question23 = Column('question23', Integer)
+    question24 = Column('question24', Integer)
+    question25 = Column('question25', Integer)
+    question26 = Column('question26', Integer)
     extra_questions = Column('extra_questions', Text)
 
 

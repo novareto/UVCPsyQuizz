@@ -7,8 +7,8 @@
   <include package="ul.auth" />
   <include package="siguvtheme.uvclight" />
   <include package="cromlech.dawnlight" file="consumers.zcml" />
+  <include package="dolmen.clockwork" />
 
-  <include package="cromlech.i18n" file="default.zcml" />
   <include package="zope.i18n" />
   <include package="zope.i18n" file="meta.zcml" />
   <i18n:registerTranslations directory="translations" />

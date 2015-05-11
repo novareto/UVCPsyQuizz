@@ -6,8 +6,7 @@ from ..apps import anonymous, admin
 from ..i18n import _
 from ..interfaces import ICompanyRequest, IManagingRequest
 from ..models import Company, Student, Course
-from ..models import IQuizz
-
+from ..models import IQuizz, ICriterias
 from collections import OrderedDict
 from cromlech.browser import exceptions
 from cromlech.sqlalchemy import get_session
@@ -18,6 +17,18 @@ from uvclight import layer, name, context, title, get_template
 from uvclight.auth import require
 from zope.component import getUtility
 from zope.schema import getFieldsInOrder
+
+
+@menuentry(IContextualActionsMenu, order=0)
+class CriteriasListing(Page):
+    name('index')
+    title(_(u'Frontpage'))
+    context(ICriterias)
+    require('manage.company')
+    order(0)
+
+    template = get_template('criterias.pt', __file__)
+
 
 
 @menuentry(IContextualActionsMenu, order=0)
@@ -74,6 +85,11 @@ class CompanyCourseHomepage(Page):
     require('manage.company')
 
     template = get_template('course.pt', __file__)
+
+    def update(self):
+        self.criterias = {
+            c.title: [v.strip() for v in c.items.split('\n') if v.strip()]
+            for c in self.context.criterias}
 
 
 class StudentHomepage(Page):

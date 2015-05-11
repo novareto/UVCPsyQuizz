@@ -3,12 +3,19 @@
 from . import Base
 from .apps import admin, company, anonymous, remote
 from cromlech.configuration.utils import load_zcml
-from cromlech.i18n import register_allowed_languages
+from cromlech.i18n import register_allowed_languages, setLanguage
 from cromlech.sqlalchemy import create_and_register_engine
 from paste.urlmap import URLMap
 from ul.auth import GenericSecurityPolicy
 from zope.i18n import config
 from zope.security.management import setSecurityPolicy
+
+
+def localize(application):
+    def wrapper(*args, **kwargs):
+        setLanguage('de')
+        return application(*args, **kwargs)
+    return wrapper
 
 
 def routing(conf, files, session_key, **kwargs):
@@ -21,7 +28,6 @@ def routing(conf, files, session_key, **kwargs):
     config.ALLOWED_LANGUAGES = None
 
     load_zcml(kwargs['zcml'])
-
 
     setSecurityPolicy(GenericSecurityPolicy)
     name = 'school'
@@ -37,9 +43,9 @@ def routing(conf, files, session_key, **kwargs):
 
     # Router
     root = URLMap()
-    root['/'] = company.Application(session_key, engine, name)
-    root['/admin'] = admin.Application(session_key, engine, name)
-    root['/quizz'] = anonymous.Application(session_key, engine, name)
-    root['/json'] = remote.Application(session_key, engine, name)
+    root['/'] = localize(company.Application(session_key, engine, name))
+    root['/admin'] = localize(admin.Application(session_key, engine, name))
+    root['/quizz'] = localize(anonymous.Application(session_key, engine, name))
+    root['/json'] = localize(remote.Application(session_key, engine, name))
 
     return root

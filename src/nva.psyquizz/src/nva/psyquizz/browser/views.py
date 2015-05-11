@@ -3,15 +3,15 @@
 import json
 
 from collections import OrderedDict
-from ..apps import admin
+from ..apps import admin, anonymous
 from ..i18n import _
 from ..interfaces import ICompanyRequest
-from ..interfaces import QuizzAlreadyCompleted
+from ..interfaces import QuizzAlreadyCompleted, QuizzClosed
 from ..models import IQuizz, Company, Course, Student, TrueOrFalse
 from dolmen.menu import menuentry
 from uvc.design.canvas import IContextualActionsMenu
 
-from uvclight import Page
+from uvclight import Page, View
 from uvclight import layer, title, name, context, get_template
 from uvclight.auth import require
 from zope.component import getUtilitiesFor
@@ -26,6 +26,15 @@ class QuizzErrorPage(Page):
 
     def render(self):
         return _(u"This quizz is already completed and therefore closed.")
+
+
+class CourseExpiredPage(Page):
+    name('')
+    context(QuizzClosed)
+    require('zope.Public')
+
+    def render(self):
+        return _(u"The course access is expired.")
 
 
 class QuizzStats(object):

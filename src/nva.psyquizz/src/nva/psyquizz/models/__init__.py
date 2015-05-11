@@ -5,12 +5,12 @@ import uuid
 from .. import Base
 from ..i18n import _
 from cromlech.sqlalchemy import get_session
-from datetime import datetime
+from datetime import datetime, date, timedelta
 from grokcore.component import provider
 from sqlalchemy import *
-from sqlalchemy.orm import aliased
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, backref
 from sqlalchemy.orm.collections import attribute_mapped_collection
+from sqlalchemy.orm.collections import collection
 from uvc.content.interfaces import IContent
 from uvclight.directives import traversable
 from zope import schema
@@ -33,12 +33,30 @@ TrueOrFalse = SimpleVocabulary([
     ])
 
 
+LessToMore = SimpleVocabulary([
+    SimpleTerm(value=1,
+               title='sehr wening'),
+    SimpleTerm(value=2,
+               title='ziemlich wenig'),
+    SimpleTerm(value=3,
+               title='etwas'),
+    SimpleTerm(value=4,
+               title='ziemlich viel'),
+    SimpleTerm(value=5,
+               title='sehr viel'),
+    ])
+
+
 @provider(IContextSourceBinder)
 def quizz_choice(context):
     utils = getUtilitiesFor(IQuizz)
     return SimpleVocabulary([
         SimpleTerm(value=name, title=obj.__title__) for name, obj in utils
     ])
+
+
+class ICriterias(Interface):
+    pass
 
 
 class ICriteria(Interface):
@@ -62,15 +80,11 @@ class Criteria(Base):
     id = Column(Integer, primary_key=True)
     title = Column('title', String)
     items = Column('items', Text)
+    company_id = Column(Integer, ForeignKey('companies.name'))
 
-
-@provider(IContextSourceBinder)
-def criterias_choice(context):
-    session = get_session('school')
-    criterias = session.query(Criteria)
-    return SimpleVocabulary([
-        SimpleTerm(value=c, token=c.id, title=c.title)
-        for c in criterias])
+    @property
+    def traversable_id(self):
+        return str(self.id)
 
 
 class ICompany(ILocation, IContent):
@@ -91,35 +105,60 @@ class ICompany(ILocation, IContent):
     )
 
 
+def get_company_id(node):
+    current = node
+    while current is not None:
+        if ICompany.providedBy(current):
+            return current
+        current = getattr(current, '__parent__', None)
+    raise RuntimeError('No company found')
+
+
+@provider(IContextSourceBinder)
+def criterias_choice(context):
+    session = get_session('school')
+    company = get_company_id(context)
+    criterias = session.query(Criteria).filter(
+        Criteria.company_id == company.name)
+    return SimpleVocabulary([
+        SimpleTerm(value=c, token=c.id, title=c.title)
+        for c in criterias])
+
+
 class ICourse(ILocation, IContent):
 
     name = schema.TextLine(
         title=_(u"Course name"),
         required=True,
-    )
+        )
+
+    startdate = schema.Date(
+        title=_(u"Start date"),
+        required=True,
+        )
     
     students = schema.Set(
         title=_(u"Students"),
         required=False,
-    )
+        )
 
     quizz_type = schema.Choice(
         title=_(u"Quizz"),
         source=quizz_choice,
         required=True,
-    )
+        )
 
     criterias = schema.Set(
         title=u"Criterias",
         value_type=schema.Choice(source=criterias_choice),
         required=False,
-    )
+        )
 
     extra_questions = schema.Text(
         title=_(u"Complementary questions for the course"),
         description=_(u"Type your questions : one per line."),
         required=False,
-    )
+        )
 
 
 class IStudent(ILocation, IContent):
@@ -138,6 +177,7 @@ class IStudent(ILocation, IContent):
 criterias_table = Table('criterias_courses', Base.metadata,
     Column('courses_id', Integer, ForeignKey('courses.id')),
     Column('criterias_id', Integer, ForeignKey('criterias.id')),
+    Column('company_id', String, ForeignKey('companies.name')),    
 )
 
 
@@ -179,6 +219,7 @@ class Course(Base, Location):
  
     id = Column('id', Integer, primary_key=True)
     name = Column('name', String)
+    startdate = Column('startdate', Date)
     company_id = Column(String, ForeignKey('companies.name'))
     quizz_type = Column('quizz_type', String)
     extra_questions = Column('extra_questions', Text)
@@ -188,13 +229,18 @@ class Course(Base, Location):
         collection_class=attribute_mapped_collection('access'))
 
     criterias = relationship(
-        "Criteria", secondary=criterias_table, backref="courses")
+        "Criteria", secondary=criterias_table, backref="courses",
+        collection_class=set)
 
     def __init__(self, **kwargs):
         Base.__init__(self, **kwargs)
 
     def append(self, value):
         self._students[value.access] = value
+
+    @property
+    def enddate(self):
+        return self.startdate + timedelta(days=21)
 
     @property
     def students(self):
@@ -233,8 +279,43 @@ class Course(Base, Location):
                 yield student
 
 
+@implementer(ICriterias)
+class Criterias(Location):
+
+    def __init__(self):
+        self._data = {}
+
+    @collection.appender
+    def _append(self, child):
+        self._data[child.id] = child
+
+    def __setitem__(self, id, child):
+        self._append(child)
+
+    def __getitem__(self, id):
+        try:
+            obj = self._data[int(id)]
+            if obj is not None:
+                return LocationProxy(obj, self.__parent__, id)
+        except:
+            pass
+        raise KeyError(id)
+
+    @collection.remover
+    def _remove(self, child):
+        del self._data[child.id]
+
+    @collection.iterator
+    def __iter__(self):
+        return self._data.itervalues()
+
+    def __repr__(self):
+        return '%s(%r)' % (type(self).__name__, self._data)
+
+
 @implementer(ICompany)
 class Company(Base, Location):
+    traversable('criterias')
 
     __tablename__ = 'companies'
     model = Course
@@ -246,9 +327,19 @@ class Company(Base, Location):
         "Course", backref="company",
         collection_class=attribute_mapped_collection('id'))
 
+    _criterias = relationship(
+        "Criteria", backref=backref("company", uselist=False),
+        collection_class=Criterias)
+ 
     @property
     def id(self):
         return self.name
+
+    @property
+    def criterias(self):
+        self._criterias.__name__ = 'criterias'
+        self._criterias.__parent__ = self
+        return self._criterias
 
     @property
     def courses(self):
@@ -271,3 +362,14 @@ class Company(Base, Location):
     @__name__.setter
     def __name__(self, value):
         pass
+
+
+class CriteriaAnswer(Base):
+
+    __tablename__ = 'criteria_answers'
+
+    criteria_id = Column(Integer, ForeignKey('criterias.id'), primary_key=True)
+    student_id = Column(String, ForeignKey('students.access'), primary_key=True)
+    completion_date = Column('completion_date', DateTime,
+                             default=datetime.utcnow)
+    answer = Column('answer', String)
