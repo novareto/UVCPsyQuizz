@@ -47,7 +47,7 @@ class CriteriasAccess(MenuItem):
 
     url = '/criterias'
 
-    
+
 @menuentry(IContextualActionsMenu, order=20)
 class CompanyCourseResults(Page):
     name('results')
@@ -66,7 +66,7 @@ class CompanyCourseResults(Page):
         quizz = getUtility(IQuizz, name=self.context.quizz_type)
         stats = quizz.__stats__
         data = {}
-        
+
         # number of students
         students = session.query(Student).filter(
             Student.course_id == self.context.id).filter(
@@ -155,3 +155,21 @@ class CompanyCourseResults(Page):
 #     def display(self):
 #         for name, result in self.get_data().items():
 #             yield name, result.get_answers()
+
+
+class Registration(Page):
+    name('registration')
+    context(admin.School)
+    require('zope.Public')
+
+    def render(self):
+        rid = self.request.form.get('rid', None)
+        print rid
+        session = get_session('school')
+        try:
+            company = session.query(Company).filter(Company.activation == rid).one()
+        except:
+            self.flash(u'There was an error in the Registration Process')
+            return
+        company.activation = 'true'
+        self.redirect('http://localhost:8080')

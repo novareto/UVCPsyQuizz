@@ -107,6 +107,16 @@ class ICompany(ILocation, IContent):
         required=True,
     )
 
+    mnr = schema.TextLine(
+        title=_(u"Company ID"),
+        required=True,
+    )
+
+    email = schema.TextLine(
+        title=_(u"E-Mail"),
+        required=True,
+    )
+
     password = schema.Password(
         title=_(u"Password for observation access"),
         required=True,
@@ -149,7 +159,7 @@ class ICourse(ILocation, IContent):
         title=_(u"Start date"),
         required=True,
         )
-    
+
     students = schema.Set(
         title=_(u"Students"),
         required=False,
@@ -190,7 +200,7 @@ class IStudent(ILocation, IContent):
 criterias_table = Table('criterias_courses', Base.metadata,
     Column('courses_id', Integer, ForeignKey('courses.id')),
     Column('criterias_id', Integer, ForeignKey('criterias.id')),
-    Column('company_id', String, ForeignKey('companies.name')),    
+    Column('company_id', String, ForeignKey('companies.name')),
 )
 
 
@@ -229,7 +239,7 @@ class Course(Base, Location):
 
     __tablename__ = 'courses'
     model = Student
- 
+
     id = Column('id', Integer, primary_key=True)
     name = Column('name', String)
     startdate = Column('startdate', Date)
@@ -334,6 +344,9 @@ class Company(Base, Location):
     model = Course
     name = Column('name', String, primary_key=True)
     password = Column('password', String)
+    mnr = Column('mnr', String)
+    email = Column('email', String)
+    activation = Column('activation', String)
     students = relationship("Student", backref="company")
 
     _courses = relationship(
@@ -343,7 +356,7 @@ class Company(Base, Location):
     _criterias = relationship(
         "Criteria", backref=backref("company", uselist=False),
         collection_class=Criterias)
- 
+
     @property
     def id(self):
         return self.name

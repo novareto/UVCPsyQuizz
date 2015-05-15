@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import uvclight
+from uvc.design.canvas.menus import INavigationMenu
 from uvc.design.canvas import IAboveContent
 from uvc.design.canvas import menus
 from dolmen.message import receive
@@ -28,3 +29,13 @@ class FlashMessages(uvclight.Viewlet):
 @implementer(ITemplate)
 def object_template(context, request):
     return uvclight.get_template('objectmenu.cpt', __file__)
+
+
+class Home(uvclight.MenuItem):
+    uvclight.title(u'Home')
+    uvclight.auth.require('zope.Public')
+    uvclight.menu(INavigationMenu)
+
+    @property
+    def action(self):
+        return self.view.application_url()
