@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from . import LessToMore, IQuizz
+from . import MoreToLess, LessToMore, IQuizz
 from .. import Base
+from ..stats import ChartedQuizzStats
 from grokcore.component import global_utility
 from sqlalchemy import *
 from zope import schema
@@ -56,56 +57,56 @@ class IGroup2(Interface):
         description=u"Bei dieser Arbeit gibt es Sachen, die zu kompliziert sind (z.B. \
                 aufgrund keiner oder unklarer Arbeitsbeschreibungen oder aufgrund mangelnder \
                 Qualifizierung).",
-        vocabulary=LessToMore,
+        vocabulary=MoreToLess,
         required=True,
         )
 
     question7 = schema.Choice(
         title=u"2.2",
         description=u"Es werden zu hohe Anforderungen an meine Konzentrations fähigkeit gestellt.",
-        vocabulary=LessToMore,
+        vocabulary=MoreToLess,
         required=True,
         )
 
     question8 = schema.Choice(
         title=u"2.3",
         description=u"Ich stehe häufig unter Zeitdruck.",
-        vocabulary=LessToMore,
+        vocabulary=MoreToLess,
         required=True,
         )
 
     question9 = schema.Choice(
         title=u"2.4",
         description=u"Ich habe zu viel Arbeit.",
-        vocabulary=LessToMore,
+        vocabulary=MoreToLess,
         required=True,
         )
 
     question10 = schema.Choice(
         title=u"2.5",
         description=u"Oft stehen mir die benötigten Informationen, Materialien und Arbeitsmittel nicht zur Verfügung.",
-        vocabulary=LessToMore,
+        vocabulary=MoreToLess,
         required=True,
         )
 
     question11 = schema.Choice(
         title=u"2.6",
         description=u"Ich werde bei meiner eigentlichen Arbeit immer wieder von anderen Personen unterbrochen.",
-        vocabulary=LessToMore,
+        vocabulary=MoreToLess,
         required=True,
         )
 
     question12 = schema.Choice(
         title=u"2.7",
         description=u"An meinen Arbeitsplatz gibt es ungünstige Umgebungsbedingungen wie Lärm, Klima, Staub.",
-        vocabulary=LessToMore,
+        vocabulary=MoreToLess,
         required=True,
         )
 
     question13 = schema.Choice(
         title=u"2.8",
         description=u"An meinem Arbeitsplatz sind Räume und Raumausstattung ungenügend",
-        vocabulary=LessToMore,
+        vocabulary=MoreToLess,
         required=True,
         )
 
@@ -185,7 +186,6 @@ class IGroup4(Interface):
         required=True,
         )
 
-
     question24 = schema.Choice(
         title=u"4.2",
         description=u"Die Leitung der Organisation ist bereit, Ideen und Vorschläge der Beschäftigten zu berücksichtigen.",
@@ -193,14 +193,12 @@ class IGroup4(Interface):
         required=True,
         )
 
-
     question25 = schema.Choice(
         title=u"4.3",
         description=u"Unser Unternehmen bietet gute Weiterbildungsmöglichkeiten.",
         vocabulary=LessToMore,
         required=True,
         )
-
 
     question26 = schema.Choice(
         title=u"4.4",
@@ -225,6 +223,7 @@ class Quizz2(Base, Location):
 
     __tablename__ = 'quizz2'
     __schema__ = IQuizz2
+    __stats__ = ChartedQuizzStats
     __title__ = u"KFZA Kurzfragebogen zur Arbeitsanalyse"
 
     id = Column('id', Integer, primary_key=True)

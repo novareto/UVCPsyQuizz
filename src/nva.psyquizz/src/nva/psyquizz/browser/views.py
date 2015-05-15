@@ -11,12 +11,13 @@ from ..models import IQuizz, Company, Course, Student, TrueOrFalse
 from dolmen.menu import menuentry
 from uvc.design.canvas import IContextualActionsMenu
 
-from uvclight import Page, View
-from uvclight import layer, title, name, context, get_template
+from uvclight import Page, View, MenuItem
+from uvclight import layer, title, name, menu, context, get_template
 from uvclight.auth import require
-from zope.component import getUtilitiesFor
+from zope.component import getUtilitiesFor, getUtility
 from zope.schema import getFieldsInOrder
 from cromlech.sqlalchemy import get_session
+from nva.psyquizz import quizzjs
 
 
 class QuizzErrorPage(Page):
@@ -37,74 +38,16 @@ class CourseExpiredPage(Page):
         return _(u"The course access is expired.")
 
 
-class QuizzStats(object):
+class CriteriasAccess(MenuItem):
+    context(Company)
+    name('criteria')
+    title('Criterias')
+    layer(ICompanyRequest)
+    menu(IContextualActionsMenu)
 
-    def __init__(self, total, completed, extra_questions, quizz):
-        self.quizz = quizz.__schema__
-        self.completed = list(completed)
-        self.percent_base = len(self.completed)
-        self.missing = total - self.percent_base 
-        self.extra_questions = extra_questions
+    url = '/criterias'
 
-    @staticmethod
-    def compute(forms, fields):
-        questions = OrderedDict()
-        extras = OrderedDict()
-
-        for form in forms:
-            for field in fields:
-                question = questions.setdefault(field, {})
-                answer = getattr(form, field)
-                stat = question.setdefault(answer, 0)
-                question[answer] = stat + 1
-            
-            xa = json.loads(form.extra_questions)
-            for title, answer in xa.items():
-                question = extras.setdefault(title, {})
-                stat = question.setdefault(answer, 0)
-                question[answer] = stat + 1
-
-        return questions, extras
-
-    def get_answers(self):
-        computed, extras = self.compute(self.completed, list(self.quizz))
-
-        for key, field in getFieldsInOrder(self.quizz):
-            question = {
-                'title': self.quizz[key].title,
-                'description': self.quizz[key].description,
-                'answers': [],
-                }
-            for term in self.quizz[key].vocabulary:
-                value = computed[key].get(term.value, 0)
-                question['answers'].append({
-                    'title': term.title,
-                    'value': value,
-                    'percent': float(value) / self.percent_base * 100
-                    })
-            yield question
-
-        xq = set(self.extra_questions.strip().split('\n'))
-        for title in xq:
-            title = title.strip()
-            if title == "":
-                continue
-
-            question = {
-                'title': title,
-                'description': '',
-                'answers': [],
-                }
-            for term in TrueOrFalse:
-                value = extras[title].get(term.value, 0)
-                question['answers'].append({
-                    'title': term.title,
-                    'value': value,
-                    'percent': float(value) / self.percent_base * 100
-                    })
-            yield question
-
-
+    
 @menuentry(IContextualActionsMenu, order=20)
 class CompanyCourseResults(Page):
     name('results')
@@ -120,87 +63,95 @@ class CompanyCourseResults(Page):
 
     def get_data(self):
         session = get_session('school')
+        quizz = getUtility(IQuizz, name=self.context.quizz_type)
+        stats = quizz.__stats__
         data = {}
-        for name, quizz in getUtilitiesFor(IQuizz):
-            students = session.query(Student).filter(
-                Student.course_id == self.context.id).filter(
-                    Student.company_id == self.context.company_id).filter(
-                        Student.quizz_type == name).count()
-            if students:
-                answers = list(session.query(quizz).filter(
-                    quizz.course_id == self.context.id).filter(
-                        quizz.company_id == self.context.company_id))
-                if answers:
-                    data[name] = QuizzStats(
+        
+        # number of students
+        students = session.query(Student).filter(
+            Student.course_id == self.context.id).filter(
+                Student.company_id == self.context.company_id).filter(
+                    Student.quizz_type == self.context.quizz_type).count()
+        if students:
+            answers = list(session.query(quizz).filter(
+                quizz.course_id == self.context.id).filter(
+                    quizz.company_id == self.context.company_id))
+            if answers:
+                data[self.context.quizz_type] = stats(
                         students, list(answers),
                         self.context.extra_questions, quizz)
         return data
 
     def display(self):
+        quizzjs.need()
         for name, result in self.get_data().items():
-            yield name, result.get_answers()
+            compute_chart = getattr(result, 'compute_chart', None)
+            if compute_chart is None:
+                yield name, {'results': result.get_answers(), 'chart': None}
+            else:
+                chart = compute_chart()
+                yield name, {'results': result.get_answers(), 'chart': chart}
+
+# @menuentry(IContextualActionsMenu, order=20)
+# class CompanyResults(CompanyCourseResults):
+#     name('results')
+#     context(Company)
+#     layer(ICompanyRequest)
+#     require('manage.company')
+#     title(_(u'Company wide results'))
+
+#     def get_data(self):
+#         session = get_session('school')
+#         data = {}
+#         for name, quizz in getUtilitiesFor(IQuizz):
+#             students = session.query(Student).filter(
+#                 Student.company_id == self.context.name).filter(
+#                     Student.quizz_type == name).count()
+
+#             if students:
+#                 answers = list(session.query(quizz).filter(
+#                     quizz.company_id == self.context.name))
+
+#                 if answers:
+#                     courses = session.query(Course).filter(
+#                         Course.company_id == self.context.name).filter(
+#                             Course.quizz_type == name)
+
+#                     extra_questions = "".join(
+#                         [course.extra_questions for course in courses])
+
+#                     data[name] = QuizzStats(
+#                         students, list(answers), extra_questions, quizz)
+#                     return data
 
 
-@menuentry(IContextualActionsMenu, order=20)
-class CompanyResults(CompanyCourseResults):
-    name('results')
-    context(Company)
-    layer(ICompanyRequest)
-    require('manage.company')
-    title(_(u'Company wide results'))
+# @menuentry(IContextualActionsMenu, order=20)
+# class AllResults(CompanyCourseResults):
+#     name('results')
+#     context(admin.School)
+#     layer(ICompanyRequest)
+#     require('manage.school')
+#     title(_(u'Site wide results'))
 
-    def get_data(self):
-        session = get_session('school')
-        data = {}
-        for name, quizz in getUtilitiesFor(IQuizz):
-            students = session.query(Student).filter(
-                Student.company_id == self.context.name).filter(
-                    Student.quizz_type == name).count()
+#     def update(self):
+#         session = get_session('school')
+#         data = {}
+#         for name, quizz in getUtilitiesFor(IQuizz):
+#             students = session.query(Student).filter(
+#                     Student.quizz_type == name).count()
+#             if students:
+#                 answers = list(session.query(quizz))
+#                 if answers:
+#                     courses = session.query(Course).filter(
+#                         Course.quizz_type == name)
 
-            if students:
-                answers = list(session.query(quizz).filter(
-                    quizz.company_id == self.context.name))
+#                     extra_questions = "".join(
+#                         [course.extra_questions for course in courses])
 
-                if answers:
-                    courses = session.query(Course).filter(
-                        Course.company_id == self.context.name).filter(
-                            Course.quizz_type == name)
+#                     data[name] = QuizzStats(
+#                         students, list(answers), extra_questions, quizz)
+#         return data
 
-                    extra_questions = "".join(
-                        [course.extra_questions for course in courses])
-
-                    data[name] = QuizzStats(
-                        students, list(answers), extra_questions, quizz)
-                    return data
-
-
-@menuentry(IContextualActionsMenu, order=20)
-class AllResults(CompanyCourseResults):
-    name('results')
-    context(admin.School)
-    layer(ICompanyRequest)
-    require('manage.school')
-    title(_(u'Site wide results'))
-
-    def update(self):
-        session = get_session('school')
-        data = {}
-        for name, quizz in getUtilitiesFor(IQuizz):
-            students = session.query(Student).filter(
-                    Student.quizz_type == name).count()
-            if students:
-                answers = list(session.query(quizz))
-                if answers:
-                    courses = session.query(Course).filter(
-                        Course.quizz_type == name)
-
-                    extra_questions = "".join(
-                        [course.extra_questions for course in courses])
-
-                    data[name] = QuizzStats(
-                        students, list(answers), extra_questions, quizz)
-        return data
-
-    def display(self):
-        for name, result in self.get_data().items():
-            yield name, result.get_answers()
+#     def display(self):
+#         for name, result in self.get_data().items():
+#             yield name, result.get_answers()

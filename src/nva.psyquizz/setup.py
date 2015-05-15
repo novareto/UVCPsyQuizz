@@ -53,5 +53,6 @@ setup(name=name,
       app = nva.psyquizz.wsgi:routing
 
       [fanstatic.libraries]
+      nva.psyquizz=nva.psyquizz:library
       """,
       )

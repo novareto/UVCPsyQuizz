@@ -2,6 +2,7 @@
 
 from . import TrueOrFalse, IQuizz
 from .. import Base
+from ..stats import TrueFalseQuizzStats
 from sqlalchemy import *
 from grokcore.component import global_utility
 from zope.interface import Interface, implementer
@@ -166,6 +167,7 @@ class Quizz1(Base, Location):
 
     __tablename__ = 'quizz1'
     __schema__ = IQuizz1
+    __stats__ = TrueFalseQuizzStats
     __title__ = u"Some Quizz"
 
     id = Column('id', Integer, primary_key=True)

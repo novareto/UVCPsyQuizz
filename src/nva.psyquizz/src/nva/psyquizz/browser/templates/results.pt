@@ -1,7 +1,9 @@
 <div id="result">
   <h1>Current results</h1>
-  <div class="panel" tal:define="quizz dict(view.display())">
-    <tal:quizz repeat="qname quizz.keys()">
+  <div class="panel"
+       tal:define="data dict(view.display());">
+    
+    <tal:quizz repeat="qname data.keys()">
       <a data-toggle="collapse" href="" class="btn btn-primary"
 	 tal:content="qname"
 	 tal:attributes="href '#' + qname;
@@ -9,10 +11,38 @@
 			 aria-controls qname" />
     </tal:quizz>
 
-    <div tal:repeat="qname quizz.keys()" 
+    <div tal:repeat="qname data.keys()" 
 	 tal:attributes="id qname;
 	                 class repeat['qname'].start and 'collapse in' or 'collapse'">
-      <dl tal:repeat="question quizz[qname]">
+
+      <tal:chart condition="data[qname]['chart'] is not None">
+	<canvas id="myChart" width="800" height="800"></canvas>
+	
+	<script language="Javascript">
+	  // Get the context of the canvas element we want to select
+
+	  var data = {
+	  labels: <span tal:replace="[k.encode('iso-8859-1') for k in data[qname]['chart'].keys()]" />,
+	  datasets: [
+          {
+          label: "My First dataset",
+          fillColor: "rgba(220,220,220,0.2)",
+          strokeColor: "rgba(220,220,220,1)",
+          pointColor: "rgba(220,220,220,1)",
+          pointStrokeColor: "#fff",
+          pointHighlightFill: "#fff",
+          pointHighlightStroke: "rgba(220,220,220,1)",
+          data: <span tal:replace="[v['avg'] for v in data[qname]['chart'].values()]" />
+          },
+	  ]
+	  };
+	  
+	  var ctx = document.getElementById("myChart").getContext("2d");
+	  var myNewChart = new Chart(ctx).Radar(data);
+	</script>
+      </tal:chart>
+      
+      <dl tal:repeat="question data[qname]['results']">
 	<dt tal:content="question['title']" />
 	<dd>
 	  <ul>

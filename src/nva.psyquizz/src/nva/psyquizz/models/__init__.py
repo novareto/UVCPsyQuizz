@@ -47,6 +47,19 @@ LessToMore = SimpleVocabulary([
     ])
 
 
+MoreToLess = SimpleVocabulary([
+    SimpleTerm(value=5,
+               title='sehr wening'),
+    SimpleTerm(value=4,
+               title='ziemlich wenig'),
+    SimpleTerm(value=3,
+               title='etwas'),
+    SimpleTerm(value=2,
+               title='ziemlich viel'),
+    SimpleTerm(value=1,
+               title='sehr viel'),
+    ])
+
 @provider(IContextSourceBinder)
 def quizz_choice(context):
     utils = getUtilitiesFor(IQuizz)
@@ -55,11 +68,11 @@ def quizz_choice(context):
     ])
 
 
-class ICriterias(Interface):
+class ICriterias(IContent):
     pass
 
 
-class ICriteria(Interface):
+class ICriteria(IContent):
 
     title = schema.TextLine(
         title=u"Label",
