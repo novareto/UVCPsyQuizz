@@ -47,50 +47,6 @@ class CriteriasAccess(MenuItem):
 
     url = '/criterias'
 
-    
-@menuentry(IContextualActionsMenu, order=20)
-class CompanyCourseResults(Page):
-    name('results')
-    context(Course)
-    layer(ICompanyRequest)
-    require('manage.company')
-    title(_(u'Results for the course'))
-
-    template = get_template('results.pt', __file__)
-
-    def filters(self, query):
-        return query
-
-    def get_data(self):
-        session = get_session('school')
-        quizz = getUtility(IQuizz, name=self.context.quizz_type)
-        stats = quizz.__stats__
-        data = {}
-        
-        # number of students
-        students = session.query(Student).filter(
-            Student.course_id == self.context.id).filter(
-                Student.company_id == self.context.company_id).filter(
-                    Student.quizz_type == self.context.quizz_type).count()
-        if students:
-            answers = list(session.query(quizz).filter(
-                quizz.course_id == self.context.id).filter(
-                    quizz.company_id == self.context.company_id))
-            if answers:
-                data[self.context.quizz_type] = stats(
-                        students, list(answers),
-                        self.context.extra_questions, quizz)
-        return data
-
-    def display(self):
-        quizzjs.need()
-        for name, result in self.get_data().items():
-            compute_chart = getattr(result, 'compute_chart', None)
-            if compute_chart is None:
-                yield name, {'results': result.get_answers(), 'chart': None}
-            else:
-                chart = compute_chart()
-                yield name, {'results': result.get_answers(), 'chart': chart}
 
 # @menuentry(IContextualActionsMenu, order=20)
 # class CompanyResults(CompanyCourseResults):

@@ -4,7 +4,7 @@ import json
 
 from ..apps import admin
 from ..i18n import _
-from ..interfaces import IAnonymousRequest
+from ..interfaces import IAnonymousRequest, ICompanyRequest
 from ..models import Company, Student, Course, Criteria, ICriterias
 from ..models import ICriteria, ICourse, ICompany, TrueOrFalse
 from ..models import IQuizz, CriteriaAnswer
@@ -13,12 +13,13 @@ from cromlech.sqlalchemy import get_session
 from dolmen.menu import menuentry, order
 from uvc.design.canvas import IContextualActionsMenu
 from uvc.themes.dguv.resources import alldate
+from dolmen.forms.base.markers import NO_VALUE
 from uvclight import Form, EditForm, Fields, SUCCESS, FAILURE
 from uvclight import action, layer, name, context, title, get_template
 from uvclight.auth import require
 from zope.component import getUtility
 from zope.interface import Interface
-from zope.schema import Int, Choice
+from zope.schema import Int, Choice, Set
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 
 
@@ -314,3 +315,50 @@ class AnswerQuizz(Form):
         self.flash(_(u'Thank you for answering the quizz'))
         self.redirect(self.request.url)
         return SUCCESS
+
+
+def company_criterias(context):
+    for criteria in context.criterias:
+        vocabulary = SimpleVocabulary(
+            [SimpleTerm(value=i.strip(), title=i.strip())
+             for i in criteria.items.split('\n') if i.strip()])
+        yield Set(
+            __name__= '%i' % criteria.id,
+            title=criteria.title,
+            value_type=Choice(vocabulary=vocabulary),
+            required=False)
+
+
+@menuentry(IContextualActionsMenu, order=10)
+class Stats(Form):
+    context(Course)
+    name('course.stats')
+    title(_(u'Statistics'))
+    require('manage.company')
+    layer(ICompanyRequest)
+    
+    ignoreContent = True
+    dataValidators = []
+    criterias = {}
+    
+    @property
+    def fields(self):
+        return Fields(*list(company_criterias(self.context)))
+
+    @property
+    def action_url(self):
+        return self.request.path
+
+    @action(_(u'Filter'))
+    def handle_save(self):
+        data, errors = self.extractData()
+        if errors:
+            self.flash(_(u'An error occurred.'))
+            return FAILURE
+
+        self.criterias = {int(k): v for k,v in data.items()
+                          if v is not NO_VALUE}
+        return SUCCESS
+
+
+
