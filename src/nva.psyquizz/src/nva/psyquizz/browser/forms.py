@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
+import uuid
 
 from ..apps import admin
 from ..i18n import _
@@ -38,7 +39,7 @@ IStudentFilters.setTaggedValue('label', 'Getting started')
 
 
 class IPopulateCourse(Interface):
-    
+
     nb_students = Int(
         title=_(u"Number of students"),
         required=True,
@@ -97,7 +98,7 @@ class CreateCompany(Form):
     title(_(u'Add a company'))
     require('zope.Public')
 
-    fields = Fields(ICompany).select('name', 'password')
+    fields = Fields(ICompany).select('name', 'password', 'mnr', 'email')
 
     @property
     def action_url(self):
@@ -115,6 +116,7 @@ class CreateCompany(Form):
             return FAILURE
         session = get_session('school')
         company = Company(**data)
+        company.activation = str(uuid.uuid1())
         session.add(company)
         session.flush()
         session.refresh(company)
@@ -241,7 +243,7 @@ class AnswerQuizz(Form):
         for criteria in self.context.course.criterias:
             values = [c.strip() for c in criteria.items.split('\n')
                       if c.strip()]
-            
+
             criteria_field = Choice(
                 __name__ = 'criteria_%s' % criteria.id,
                 title=criteria.title,
@@ -301,9 +303,9 @@ class AnswerQuizz(Form):
                 value = data.pop(key)
                 field = fields.get(key)
                 extra_answers[field.title] = value
-        
+
         data['extra_questions'] = json.dumps(extra_answers)
-        
+
         self.context.complete_quizz()
         quizz = self.quizz(**data)
         quizz.student_id = self.context.access

@@ -14,6 +14,9 @@ from ..models import Company, Course, Student, CriteriaAnswer
 from collections import OrderedDict
 from cromlech.sqlalchemy import get_session
 from dolmen.menu import menuentry
+from uvc.design.canvas.menus import INavigationMenu
+from uvc.design.canvas import IAboveContent
+from uvc.design.canvas import menus
 from dolmen.message import receive
 from dolmen.template import ITemplate
 from grokcore.component import adapter, implementer
@@ -122,3 +125,13 @@ class CompanyCourseResults(uvclight.Viewlet):
             else:
                 chart = compute_chart()
                 yield name, {'results': result.get_answers(), 'chart': chart}
+
+                
+class Home(uvclight.MenuItem):
+    uvclight.title(u'Home')
+    uvclight.auth.require('zope.Public')
+    uvclight.menu(INavigationMenu)
+
+    @property
+    def action(self):
+        return self.view.application_url()
