@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
+import os
 import json
 import uuid
+import html2text
 
 from ..apps import admin
 from ..i18n import _
@@ -9,12 +11,16 @@ from ..interfaces import IAnonymousRequest, ICompanyRequest
 from ..models import Company, Student, Course, Criteria, ICriterias
 from ..models import ICriteria, ICourse, ICompany, TrueOrFalse
 from ..models import IQuizz, CriteriaAnswer
+from .emailer import SecureMailer, prepare, ENCODING
+
 from collections import OrderedDict
 from cromlech.sqlalchemy import get_session
+from dolmen.forms.base.markers import NO_VALUE
 from dolmen.menu import menuentry, order
+from string import Template
 from uvc.design.canvas import IContextualActionsMenu
 from uvc.themes.dguv.resources import alldate
-from dolmen.forms.base.markers import NO_VALUE
+from uvclight.form_components.fields import Captcha
 from uvclight import Form, EditForm, Fields, SUCCESS, FAILURE
 from uvclight import action, layer, name, context, title, get_template
 from uvclight.auth import require
@@ -22,6 +28,27 @@ from zope.component import getUtility
 from zope.interface import Interface
 from zope.schema import Int, Choice, Set
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
+
+
+
+with open(os.path.join(os.path.dirname(__file__), 'mail.tpl'), 'r') as fd:
+    data = unicode(fd.read(), 'utf-8')
+    mail_template = Template(data.encode(ENCODING))
+
+
+def send_activation_code(company_name, email, code):
+    mailer = SecureMailer('localhost')
+    from_ = 'no-reply@karl.novareto.de'
+    with mailer as sender:
+        html = mail_template.substitute(
+            title=u'Activate your account',
+            encoding=ENCODING,
+            company=company_name,
+            activation_code=code)
+        text = html2text.html2text(html)
+        mail = prepare(from_, email, 'Activation code', html, text)
+        sender(from_, email, mail.as_string())
+    return True
 
 
 class IExtraQuestions(Interface):
@@ -91,6 +118,13 @@ class EditCriteria(EditForm):
         return self.request.path
 
 
+class ICaptched(Interface):
+
+    captcha = Captcha(
+        title=u'Captcha',
+        required=True)
+
+    
 @menuentry(IContextualActionsMenu, order=10)
 class CreateCompany(Form):
     context(admin.School)
@@ -98,7 +132,9 @@ class CreateCompany(Form):
     title(_(u'Add a company'))
     require('zope.Public')
 
-    fields = Fields(ICompany).select('name', 'password', 'mnr', 'email')
+    dataValidators = []
+    fields = (Fields(ICompany).select('name', 'password', 'mnr', 'email') +
+              Fields(ICaptched))
 
     @property
     def action_url(self):
@@ -107,19 +143,29 @@ class CreateCompany(Form):
     @action(_(u'Add'))
     def handle_save(self):
         data, errors = self.extractData()
+
         if errors:
             self.flash(_(u'An error occurred.'))
             return FAILURE
+
+        # pop the captcha, it's not a needed data
+        data.pop('captcha')
+        
         if data['name'] in self.context:
             self.flash(_(u'Name ${name} already exists.',
                          mapping=dict(name=data['name'])))
             return FAILURE
+
         session = get_session('school')
         company = Company(**data)
-        company.activation = str(uuid.uuid1())
+        code = company.activation = str(uuid.uuid1())
         session.add(company)
         session.flush()
         session.refresh(company)
+
+        # send email
+        send_activation_code(data['name'], data['email'], code)
+
         self.flash(_(u'Company added with success.'))
         self.redirect('%s/%s' % (self.application_url(), company.name))
         return SUCCESS

@@ -21,6 +21,7 @@ install_requires = [
     'zope.cachedescriptors',
     'siguvtheme.uvclight',
     'uvc.themes.dguv',
+    'html2text',
     ]
 
 tests_require = [

@@ -347,6 +347,7 @@ class Company(Base, Location):
     mnr = Column('mnr', String)
     email = Column('email', String)
     activation = Column('activation', String)
+    activated = Column('activated', DateTime)
     students = relationship("Student", backref="company")
 
     _courses = relationship(
