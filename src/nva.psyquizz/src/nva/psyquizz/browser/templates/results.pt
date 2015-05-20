@@ -15,6 +15,39 @@
 	 tal:attributes="id qname;
 	                 class repeat['qname'].start and 'collapse in' or 'collapse'">
 
+
+
+
+      <tal:users condition="data[qname]['users'] is not None">
+        <canvas id="myUsersChart" width="800" height="800"></canvas>
+
+        <script language="Javascript">
+          // Get the context of the canvas element we want to select
+
+	    var data = {
+	      labels: <span tal:replace="[k.encode('iso-8859-1') for k in data[qname]['users'].keys()]" />,
+	      rotated: true,
+	      datasets: [
+	      <tal:datasets repeat="i reversed(range(1, 6))">
+              {
+              label: "My First dataset",
+              fillColor: "<tal:color content="viewlet.colors[i]" />",
+              strokeColor: "rgba(120,120,120,1)",
+              pointColor: "rgba(120,120,120,1)",
+              pointStrokeColor: "#fff",
+              pointHighlightFill: "#fff",
+              pointHighlightStroke: "rgba(220,220,220,1)",
+              data: <span tal:replace="[v[i] for v in data[qname]['users'].values()]" />
+              },
+	      </tal:datasets>
+	    ]
+          };
+
+          var ctx = document.getElementById("myUsersChart").getContext("2d");
+          var myNewChart = new Chart(ctx).StackedBar(data);
+        </script>
+      </tal:users>
+
       <tal:chart condition="data[qname]['chart'] is not None">
 	<canvas id="myChart" width="800" height="800"></canvas>
 	

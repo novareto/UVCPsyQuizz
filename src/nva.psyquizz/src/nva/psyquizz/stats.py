@@ -6,6 +6,32 @@ from zope.schema import getFieldsInOrder
 from .models import TrueOrFalse
 
 
+def compute(forms, iface):
+    questions = OrderedDict()
+    extras = OrderedDict()
+    users = []
+
+    for form in forms:
+        user = {}
+        for field in list(iface):
+            question = questions.setdefault(field, {})
+            answer = getattr(form, field)
+            stat = question.setdefault(answer, 0)
+            question[answer] = stat + 1
+            user[iface[field].title] = answer
+
+        xa = json.loads(form.extra_questions)
+        for title, answer in xa.items():
+            question = extras.setdefault(title, {})
+            stat = question.setdefault(answer, 0)
+            question[answer] = stat + 1
+            user[title] = answer
+
+        users.append(user)
+
+    return questions, extras, users
+
+
 class QuizzStats(object):
 
     def __init__(self, total, completed, extra_questions, quizz):
@@ -14,29 +40,9 @@ class QuizzStats(object):
         self.percent_base = len(self.completed)
         self.missing = total - self.percent_base 
         self.extra_questions = extra_questions
-
-    @staticmethod
-    def compute(forms, fields):
-        questions = OrderedDict()
-        extras = OrderedDict()
-
-        for form in forms:
-            for field in fields:
-                question = questions.setdefault(field, {})
-                answer = getattr(form, field)
-                stat = question.setdefault(answer, 0)
-                question[answer] = stat + 1
-            
-            xa = json.loads(form.extra_questions)
-            for title, answer in xa.items():
-                question = extras.setdefault(title, {})
-                stat = question.setdefault(answer, 0)
-                question[answer] = stat + 1
-
-        return questions, extras
+        self.computed, self.extras, self.users = compute(completed, self.quizz)
 
     def get_answers(self):
-        computed, extras = self.compute(self.completed, list(self.quizz))
 
         for key, field in getFieldsInOrder(self.quizz):
             question = {
@@ -45,7 +51,7 @@ class QuizzStats(object):
                 'answers': [],
                 }
             for term in self.quizz[key].vocabulary:
-                nb = computed[key].get(term.value, 0)
+                nb = self.computed[key].get(term.value, 0)
                 question['answers'].append({
                     'title': term.title,
                     'nb': nb,
@@ -66,7 +72,7 @@ class QuizzStats(object):
                 'answers': [],
                 }
             for term in TrueOrFalse:
-                nb = extras[title].get(term.value, 0)
+                nb = self.extras[title].get(term.value, 0)
                 question['answers'].append({
                     'title': term.title,
                     'nb': nb,
@@ -104,6 +110,7 @@ class ChartedQuizzStats(QuizzStats):
     def compute_chart(self):
         answers = self.get_answers()
         averages = {}
+        users_averages = {}
 
         for answer in answers:
             values = averages.setdefault(
@@ -114,7 +121,20 @@ class ChartedQuizzStats(QuizzStats):
                 values['nb'] += value_answer['nb']
                 values['sum'] += (value_answer['nb'] * value_answer['value'])
 
+        for user in self.users:
+            avg = user['averages'] = {}
+            for title, ids in self.averages.items():
+                group = users_averages.setdefault(title, {})
+                group['total'] = group.get('total', 0) + 1
+                avg = sum([user[id] for id in ids]) / len(ids)
+                group[avg] = group.get(avg, 0) + 1
+
+        for title, results in users_averages.items():
+            for i in [1, 2, 3, 4, 5]:
+                results[i] = results.get(i, 0)
+                results[i] = results[i] / float(results['total']) * 100
+
         for data in averages.values():
             data['avg'] = float(data['sum']) / data['nb']
 
-        return averages
+        return averages, users_averages

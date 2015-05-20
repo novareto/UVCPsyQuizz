@@ -60,6 +60,14 @@ class CompanyCourseResults(uvclight.Viewlet):
 
     template = uvclight.get_template('results.pt', __file__)
 
+    colors = {
+        1: 'rgba(215, 40, 40, 0.9)',
+        2: 'rgba(212, 115, 60, 0.9)',
+        3: 'rgba(255, 222, 30, 0.9)',
+        4: 'rgba(201, 200, 0, 0.9)',
+        5: 'rgba(58, 200, 0, 0.9)',
+        }
+
     def students_ids(self, session):
         criterias = self.view.criterias
         if not criterias:
@@ -121,10 +129,13 @@ class CompanyCourseResults(uvclight.Viewlet):
         for name, result in self.get_data().items():
             compute_chart = getattr(result, 'compute_chart', None)
             if compute_chart is None:
-                yield name, {'results': result.get_answers(), 'chart': None}
+                yield name, {'results': result.get_answers(),
+                             'users': None, 'chart': None}
             else:
-                chart = compute_chart()
-                yield name, {'results': result.get_answers(), 'chart': chart}
+                gbl, users = compute_chart()
+                yield name, {'results': result.get_answers(),
+                             'users': users,
+                             'chart': gbl}
 
                 
 class Home(uvclight.MenuItem):
