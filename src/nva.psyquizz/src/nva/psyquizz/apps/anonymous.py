@@ -24,15 +24,19 @@ class QuizzBoard(SQLContainer):
     def __getitem__(self, id):
         if id.startswith('generic'):
             try:
-                courseid = int(id.split('-', 1)[1])
-                course = self.session.query(Course).get(courseid)
-                assert course is not None
-                if date.today() > course.enddate:
+                sessionid = int(id.split('-', 1)[1])
+                session = self.session.query(ClassSession).get(sessionid)
+                assert session is not None
+                if date.today() > session.enddate:
                     raise QuizzClosed(self)
                 uuid = self.model.generate_access()
                 student = self.model(
-                    access=uuid, company_id=course.company_id,
-                    quizz_type=course.quizz_type, course=course)
+                    access=uuid,
+                    company_id=course.company_id,
+                    session_id=sessionid,
+                    course=session.course,
+                    quizz_type=session.course.quizz_type)
+
                 self.session.add(student)
                 student.__name__ = uuid
                 student.__parent__ = self
@@ -43,7 +47,7 @@ class QuizzBoard(SQLContainer):
                 raise KeyError(id)
         else:
             content = SQLContainer.__getitem__(self, id)
-            if date.today() > content.course.enddate:
+            if date.today() > content.session.enddate:
                 raise QuizzClosed(content)
             if getattr(content, 'completion_date') is not None:
                 raise QuizzAlreadyCompleted(content)

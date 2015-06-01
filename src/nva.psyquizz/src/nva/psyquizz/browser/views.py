@@ -3,7 +3,7 @@
 import json
 
 from collections import OrderedDict
-from ..apps import admin, anonymous
+from ..apps import anonymous
 from ..i18n import _
 from ..interfaces import ICompanyRequest
 from ..interfaces import QuizzAlreadyCompleted, QuizzClosed
@@ -41,73 +41,8 @@ class CourseExpiredPage(Page):
 class CriteriasAccess(MenuItem):
     context(Company)
     name('criteria')
-    title('Criterias')
+    title(_(u'Criterias'))
     layer(ICompanyRequest)
     menu(IContextualActionsMenu)
 
     url = '/criterias'
-
-
-# @menuentry(IContextualActionsMenu, order=20)
-# class CompanyResults(CompanyCourseResults):
-#     name('results')
-#     context(Company)
-#     layer(ICompanyRequest)
-#     require('manage.company')
-#     title(_(u'Company wide results'))
-
-#     def get_data(self):
-#         session = get_session('school')
-#         data = {}
-#         for name, quizz in getUtilitiesFor(IQuizz):
-#             students = session.query(Student).filter(
-#                 Student.company_id == self.context.name).filter(
-#                     Student.quizz_type == name).count()
-
-#             if students:
-#                 answers = list(session.query(quizz).filter(
-#                     quizz.company_id == self.context.name))
-
-#                 if answers:
-#                     courses = session.query(Course).filter(
-#                         Course.company_id == self.context.name).filter(
-#                             Course.quizz_type == name)
-
-#                     extra_questions = "".join(
-#                         [course.extra_questions for course in courses])
-
-#                     data[name] = QuizzStats(
-#                         students, list(answers), extra_questions, quizz)
-#                     return data
-
-
-# @menuentry(IContextualActionsMenu, order=20)
-# class AllResults(CompanyCourseResults):
-#     name('results')
-#     context(admin.School)
-#     layer(ICompanyRequest)
-#     require('manage.school')
-#     title(_(u'Site wide results'))
-
-#     def update(self):
-#         session = get_session('school')
-#         data = {}
-#         for name, quizz in getUtilitiesFor(IQuizz):
-#             students = session.query(Student).filter(
-#                     Student.quizz_type == name).count()
-#             if students:
-#                 answers = list(session.query(quizz))
-#                 if answers:
-#                     courses = session.query(Course).filter(
-#                         Course.quizz_type == name)
-
-#                     extra_questions = "".join(
-#                         [course.extra_questions for course in courses])
-
-#                     data[name] = QuizzStats(
-#                         students, list(answers), extra_questions, quizz)
-#         return data
-
-#     def display(self):
-#         for name, result in self.get_data().items():
-#             yield name, result.get_answers()

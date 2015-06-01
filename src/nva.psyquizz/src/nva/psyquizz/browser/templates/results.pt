@@ -15,9 +15,6 @@
 	 tal:attributes="id qname;
 	                 class repeat['qname'].start and 'collapse in' or 'collapse'">
 
-
-
-
       <tal:users condition="data[qname]['users'] is not None">
         <canvas id="myUsersChart" width="800" height="800"></canvas>
 
@@ -26,7 +23,6 @@
 
 	    var data = {
 	      labels: <span tal:replace="[k.encode('iso-8859-1') for k in data[qname]['users'].keys()]" />,
-	      rotated: true,
 	      datasets: [
 	      <tal:datasets repeat="i reversed(range(1, 6))">
               {
@@ -40,11 +36,11 @@
               data: <span tal:replace="[v[i] for v in data[qname]['users'].values()]" />
               },
 	      </tal:datasets>
-	    ]
+	      ]
           };
 
           var ctx = document.getElementById("myUsersChart").getContext("2d");
-          var myNewChart = new Chart(ctx).StackedBar(data);
+          var myNewChart = new Chart(ctx).HorizontalStackedBar(data);
         </script>
       </tal:users>
 

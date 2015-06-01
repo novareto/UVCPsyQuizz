@@ -5,8 +5,9 @@ import urllib
 import urlparse
 
 from . import Site
-from ..interfaces import ICompanyRequest
+from ..interfaces import ICompanyRequest, IRegistrationRequest
 from ..models import Company
+from ..browser.forms import CreateCompany
 from cromlech.browser import IPublicationRoot, IView, IResponseFactory
 from cromlech.browser.interfaces import ITraverser
 from cromlech.security import Interaction, unauthenticated_principal
@@ -16,6 +17,7 @@ from dolmen.forms.base import Fields, SuccessMarker
 from ul.auth import SecurePublication, ICredentials
 from ul.auth.browser import Login, ILoginForm
 from ul.browser.context import ContextualRequest
+from ul.browser.publication import Publication
 from ul.browser.decorators import sessionned
 from ul.sql.decorators import transaction_sql
 from uvclight import GlobalUtility, name, layer, MultiAdapter, provides, adapts
@@ -175,4 +177,34 @@ class Application(SQLPublication, SecurePublication):
                 response = self.publish_traverse(request)
                 return response(environ, start_response)
 
+        return publish(environ, start_response)
+
+
+@implementer(IPublicationRoot)
+class Regitration(Publication, Location):
+
+    layers = [IRegistrationRequest]
+    
+    def __init__(self, session_key, engine):
+        self.engine = engine
+        self.session_key = session_key
+
+    def getSiteManager(self):
+        return getGlobalSiteManager()
+
+    def site_manager(self, request):
+        return Site(self)
+    
+    def __call__(self, environ, start_response):
+
+        @sessionned(self.session_key)
+        @transaction_sql(self.engine)
+        def publish(environ, start_response):
+            layers = self.layers or list()
+            with ContextualRequest(environ, layers=layers) as request:
+                site_manager = self.site_manager(environ)
+                with site_manager as site:
+                    response = self.publish_traverse(request, site)
+                    return response(environ, start_response)
+ 
         return publish(environ, start_response)

@@ -2,10 +2,10 @@
 
 import json
 
-from ..apps import anonymous, admin
+from ..apps import anonymous
 from ..i18n import _
-from ..interfaces import ICompanyRequest, IManagingRequest
-from ..models import Company, Student, Course
+from ..interfaces import ICompanyRequest
+from ..models import Company, Student, Course, ClassSession
 from ..models import IQuizz, ICriterias
 from collections import OrderedDict
 from cromlech.browser import exceptions
@@ -28,41 +28,6 @@ class CriteriasListing(Page):
     order(0)
 
     template = get_template('criterias.pt', __file__)
-
-
-
-@menuentry(IContextualActionsMenu, order=0)
-class SchoolHomepage(Page):
-    name('index')
-    title(_(u'Frontpage'))
-    context(admin.School)
-    layer(IManagingRequest)
-    require('manage.school')
-    order(0)
-
-    template = get_template('school.pt', __file__)
-
-
-@menuentry(IContextualActionsMenu, order=0)
-class SchoolCompanyHomepage(Page):
-    name('index')
-    title(_(u'Frontpage'))
-    context(Company)
-    layer(IManagingRequest)
-    require('manage.school')
-    
-    template = get_template('company.pt', __file__)
-
-
-@menuentry(IContextualActionsMenu, order=0)
-class SchoolCourseHomepage(Page):
-    name('index')
-    title(_(u'Frontpage'))
-    context(Course)
-    layer(IManagingRequest)
-    require('manage.school')
-
-    template = get_template('course.pt', __file__)
 
 
 @menuentry(IContextualActionsMenu, order=0)
@@ -90,6 +55,15 @@ class CompanyCourseHomepage(Page):
         self.criterias = {
             c.title: [v.strip() for v in c.items.split('\n') if v.strip()]
             for c in self.context.criterias}
+
+        
+@menuentry(IContextualActionsMenu, order=0)
+class CompanySessionHomepage(Page):
+    name('index')
+    title(_(u'Frontpage'))
+    context(ClassSession)
+    require('manage.company')
+    template = get_template('session.pt', __file__)
 
 
 class StudentHomepage(Page):

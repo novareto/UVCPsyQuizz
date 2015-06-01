@@ -8,11 +8,11 @@ class IQuizzLayer(IDGUVRequest):
     pass
 
 
-class IManagingRequest(IQuizzLayer):
+class ICompanyRequest(IQuizzLayer):
     pass
 
 
-class ICompanyRequest(IQuizzLayer):
+class IRegistrationRequest(IQuizzLayer):
     pass
 
 

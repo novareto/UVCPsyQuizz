@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from . import Base
-from .apps import admin, company, anonymous, remote
+from .apps import company, anonymous, remote
 from cromlech.configuration.utils import load_zcml
 from cromlech.i18n import register_allowed_languages, setLanguage
 from cromlech.sqlalchemy import create_and_register_engine
@@ -44,7 +44,7 @@ def routing(conf, files, session_key, **kwargs):
     # Router
     root = URLMap()
     root['/'] = localize(company.Application(session_key, engine, name))
-    root['/admin'] = localize(admin.Application(session_key, engine, name))
+    root['/register'] = localize(company.Regitration(session_key, engine))
     root['/quizz'] = localize(anonymous.Application(session_key, engine, name))
     root['/json'] = localize(remote.Application(session_key, engine, name))
 

@@ -175,6 +175,7 @@ class Quizz1(Base, Location):
     # Link
     student_id = Column(String, ForeignKey('students.access'))
     course_id = Column(Integer, ForeignKey('courses.id'))
+    session_id = Column(Integer, ForeignKey('sessions.id'))
     company_id = Column(String, ForeignKey('companies.name'))
 
     # Quizz

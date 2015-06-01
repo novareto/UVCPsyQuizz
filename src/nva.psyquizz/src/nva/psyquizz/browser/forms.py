@@ -5,28 +5,27 @@ import json
 import uuid
 import html2text
 
-from ..apps import admin
 from ..i18n import _
-from ..interfaces import IAnonymousRequest, ICompanyRequest
+from ..interfaces import IAnonymousRequest, ICompanyRequest, IRegistrationRequest
 from ..models import Company, Student, Course, Criteria, ICriterias
 from ..models import ICriteria, ICourse, ICompany, TrueOrFalse
-from ..models import IQuizz, CriteriaAnswer
+from ..models import IQuizz, CriteriaAnswer, ClassSession, IClassSession
 from .emailer import SecureMailer, prepare, ENCODING
 
 from collections import OrderedDict
 from cromlech.sqlalchemy import get_session
 from dolmen.forms.base.markers import NO_VALUE
+from dolmen.forms.base.errors import Error
 from dolmen.menu import menuentry, order
 from string import Template
 from uvc.design.canvas import IContextualActionsMenu
-from uvc.themes.dguv.resources import alldate
 from uvclight.form_components.fields import Captcha
 from uvclight import Form, EditForm, Fields, SUCCESS, FAILURE
-from uvclight import action, layer, name, context, title, get_template
+from uvclight import action, layer, name, context, title, get_template, baseclass
 from uvclight.auth import require
 from zope.component import getUtility
 from zope.interface import Interface
-from zope.schema import Int, Choice, Set
+from zope.schema import Int, Choice, Set, Password
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 
 
@@ -118,23 +117,14 @@ class EditCriteria(EditForm):
         return self.request.path
 
 
-class ICaptched(Interface):
-
-    captcha = Captcha(
-        title=u'Captcha',
-        required=True)
-
-    
 @menuentry(IContextualActionsMenu, order=10)
-class CreateCompany(Form):
-    context(admin.School)
-    name('add.company')
-    title(_(u'Add a company'))
+class AddSession(Form):
+    context(ICourse)
+    name('add.session')
+    title(_(u'Add a session'))
     require('zope.Public')
 
-    dataValidators = []
-    fields = (Fields(ICompany).select('name', 'password', 'mnr', 'email') +
-              Fields(ICaptched))
+    fields = Fields(IClassSession).select('startdate')
 
     @property
     def action_url(self):
@@ -143,20 +133,83 @@ class CreateCompany(Form):
     @action(_(u'Add'))
     def handle_save(self):
         data, errors = self.extractData()
-
         if errors:
             self.flash(_(u'An error occurred.'))
             return FAILURE
 
-        # pop the captcha, it's not a needed data
-        data.pop('captcha')
+        session = get_session('school')
+        clssession = ClassSession(**data)
+        clssession.course_id = self.context.id
+        clssession.company_id = self.context.__parent__.name
+        session.add(clssession)
+        session.flush()
+        session.refresh(clssession)
+        self.flash(_(u'Session added with success.'))
+        self.redirect('%s' % self.application_url())
+        return SUCCESS
+
+    
+class ICaptched(Interface):
+
+    captcha = Captcha(
+        title=u'Captcha',
+        required=True)
+
+
+class IVerifyPassword(Interface):
+
+    verif = Password(
+        title=_(u'Retype password'),
+        required=True)
+
+    
+@menuentry(IContextualActionsMenu, order=10)
+class CreateCompany(Form):
+    name('index')
+    layer(IRegistrationRequest)
+    title(_(u'Add a company'))
+    require('zope.Public')
+
+    dataValidators = []
+    fields = (Fields(ICompany).select('name', 'password', 'mnr', 'email') +
+              Fields(IVerifyPassword, ICaptched))
+
+    @property
+    def action_url(self):
+        return self.request.path
+
+    @action(_(u'Add'))
+    def handle_save(self):
+        data, errors = self.extractData()
+        session = get_session('school')
         
-        if data['name'] in self.context:
-            self.flash(_(u'Name ${name} already exists.',
-                         mapping=dict(name=data['name'])))
+        if errors:
+            self.flash(_(u'An error occurred.'))
             return FAILURE
 
-        session = get_session('school')
+        if not data['password'] == data['verif']:
+            self.errors.append(
+                Error(identifier='form.field.password',
+                      title='Password and verification mismatch'))
+            self.errors.append(
+                Error(identifier='form.field.verif',
+                      title='Password and verification mismatch'))
+            self.flash(_(u'Password and verification mismatch.'))
+            return FAILURE
+
+        existing = session.query(Company).get(data['email'])
+        if existing is not None:
+            self.flash(_(u'User with given email already exists.'))
+            self.errors.append(
+                Error(identifier='form.field.email',
+                      title='Email already exists'))
+            return FAILURE
+
+        # pop the captcha and verif, it's not a needed data
+        data.pop('verif')
+        data.pop('captcha')
+        
+        # create it
         company = Company(**data)
         code = company.activation = str(uuid.uuid1())
         session.add(company)
@@ -182,8 +235,8 @@ class CreateCourse(Form):
         'name', 'startdate', 'criterias',
         'quizz_type', 'extra_questions')
 
-    def update(self):
-        alldate.need()
+    #def update(self):
+    #    alldate.need()
 
     @property
     def action_url(self):
@@ -226,7 +279,7 @@ class EditCourse(EditForm):
 
 @menuentry(IContextualActionsMenu, order=10)
 class PopulateCourse(Form):
-    context(Course)
+    context(IClassSession)
     name('populate')
     require('zope.Public')
     title(_(u'Add accesses'))
@@ -357,6 +410,7 @@ class AnswerQuizz(Form):
         quizz.student_id = self.context.access
         quizz.company_id = self.context.company_id
         quizz.course_id = self.context.course_id
+        quizz.session_id = self.context.session_id
 
         session.add(self.context)
         session.add(quizz)
@@ -377,22 +431,13 @@ def company_criterias(context):
             required=False)
 
 
-@menuentry(IContextualActionsMenu, order=10)
-class Stats(Form):
-    context(Course)
-    name('course.stats')
-    title(_(u'Statistics'))
-    require('manage.company')
-    layer(ICompanyRequest)
-    
+class CriteriaFiltering(Form):
+    baseclass()
+
     ignoreContent = True
     dataValidators = []
     criterias = {}
     
-    @property
-    def fields(self):
-        return Fields(*list(company_criterias(self.context)))
-
     @property
     def action_url(self):
         return self.request.path
@@ -407,6 +452,46 @@ class Stats(Form):
         self.criterias = {int(k): v for k,v in data.items()
                           if v is not NO_VALUE}
         return SUCCESS
+    
+
+@menuentry(IContextualActionsMenu, order=10)
+class ClassStats(CriteriaFiltering):
+    context(ClassSession)
+    name('session.stats')
+    title(_(u'Statistics'))
+    require('manage.company')
+    layer(ICompanyRequest)
+
+    @property
+    def fields(self):
+        return Fields(*list(company_criterias(self.context.course)))
 
 
+@menuentry(IContextualActionsMenu, order=10)
+class CourseStats(CriteriaFiltering):
+    context(Course)
+    name('course.stats')
+    title(_(u'Statistics'))
+    require('manage.company')
+    layer(ICompanyRequest)
+    
+    ignoreContent = True
+    dataValidators = []
+    criterias = {}
+    
+    @property
+    def fields(self):
+        return Fields(*list(company_criterias(self.context)))
 
+
+@menuentry(IContextualActionsMenu, order=10)
+class CourseDiff(CriteriaFiltering):
+    context(Course)
+    name('course.diff')
+    title(_(u'Diff'))
+    require('manage.company')
+    layer(ICompanyRequest)
+    
+    @property
+    def fields(self):
+        return Fields(*list(company_criterias(self.context)))

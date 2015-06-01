@@ -4,6 +4,7 @@ import uuid
 
 from .. import Base
 from ..i18n import _
+from ..sqlutils import IntIds
 from cromlech.sqlalchemy import get_session
 from datetime import datetime, date, timedelta
 from grokcore.component import provider
@@ -15,7 +16,7 @@ from uvc.content.interfaces import IContent
 from uvclight.directives import traversable
 from zope import schema
 from zope.component import getUtilitiesFor
-from zope.interface import Interface, implementer
+from zope.interface import Interface, implementer, directlyProvides
 from zope.location import ILocation, Location, LocationProxy
 from zope.schema.interfaces import IContextSourceBinder
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
@@ -75,12 +76,12 @@ class ICriterias(IContent):
 class ICriteria(IContent):
 
     title = schema.TextLine(
-        title=u"Label",
+        title=_(u"Label"),
         required=True,
     )
 
     items = schema.Text(
-        title=u"Please enter one criteria per line",
+        title=_(u"Please enter one criteria per line"),
         required=True,
     )
 
@@ -148,13 +149,8 @@ def criterias_choice(context):
         for c in criterias])
 
 
-class ICourse(ILocation, IContent):
-
-    name = schema.TextLine(
-        title=_(u"Course name"),
-        required=True,
-        )
-
+class IClassSession(ILocation, IContent):
+    
     startdate = schema.Date(
         title=_(u"Start date"),
         required=True,
@@ -165,6 +161,14 @@ class ICourse(ILocation, IContent):
         required=False,
         )
 
+
+class ICourse(ILocation, IContent):
+
+    name = schema.TextLine(
+        title=_(u"Course name"),
+        required=True,
+        )
+
     quizz_type = schema.Choice(
         title=_(u"Quizz"),
         source=quizz_choice,
@@ -172,7 +176,7 @@ class ICourse(ILocation, IContent):
         )
 
     criterias = schema.Set(
-        title=u"Criterias",
+        title=_(u"Criterias"),
         value_type=schema.Choice(source=criterias_choice),
         required=False,
         )
@@ -211,11 +215,14 @@ class Student(Base, Location):
 
     access = Column('access', String, primary_key=True)
     email = Column('email', String)
+
+    # Relationships
     course_id = Column(Integer, ForeignKey('courses.id'))
     company_id = Column(String, ForeignKey('companies.name'))
-    quizz_type = Column('quizz_type', String)
+    session_id = Column(String, ForeignKey('sessions.id'))
 
     # Quizz
+    quizz_type = Column('quizz_type', String)
     completion_date = Column('completion_date', DateTime)
 
     @staticmethod
@@ -234,26 +241,20 @@ class Student(Base, Location):
         pass
 
 
-@implementer(ICourse)
-class Course(Base, Location):
+@implementer(IClassSession)
+class ClassSession(Base, Location):
 
-    __tablename__ = 'courses'
+    __tablename__ = 'sessions'
     model = Student
 
     id = Column('id', Integer, primary_key=True)
-    name = Column('name', String)
     startdate = Column('startdate', Date)
     company_id = Column(String, ForeignKey('companies.name'))
-    quizz_type = Column('quizz_type', String)
-    extra_questions = Column('extra_questions', Text)
-
+    course_id = Column(String, ForeignKey('courses.id'))
+    
     _students = relationship(
-        "Student", backref="course",
+        "Student", backref="session",
         collection_class=attribute_mapped_collection('access'))
-
-    criterias = relationship(
-        "Criteria", secondary=criterias_table, backref="courses",
-        collection_class=set)
 
     def __init__(self, **kwargs):
         Base.__init__(self, **kwargs)
@@ -270,7 +271,7 @@ class Course(Base, Location):
         for key, student in self._students.items():
             student.__parent__ = self
             yield student
-
+            
     def __getitem__(self, key):
         student = self._students[key]
         student.__parent__ = self
@@ -280,12 +281,18 @@ class Course(Base, Location):
     def __name__(self):
         return str(self.id)
 
+    @property
+    def quizz_type(self):
+        return self.course.quizz_type
+    
     def generate_students(self, nb):
         for i in xrange(0, nb):
             access = self.model.generate_access()
             yield self.model(
-                access=access, company_id=self.company_id,
-                quizz_type=self.quizz_type)
+                access=access,
+                company_id=self.company_id,
+                course_id=self.course.id,
+                quizz_type=self.course.quizz_type)
 
     @property
     def uncomplete(self):
@@ -301,39 +308,59 @@ class Course(Base, Location):
             if student.completion_date is not None:
                 yield student
 
+    
+@implementer(ICourse)
+class Course(Base, Location):
+    traversable('criterias', 'students', 'sessions')
+    
+    __tablename__ = 'courses'
 
-@implementer(ICriterias)
-class Criterias(Location):
+    id = Column('id', Integer, primary_key=True)
+    name = Column('name', String)
+    startdate = Column('startdate', Date)
+    company_id = Column(String, ForeignKey('companies.name'))
+    quizz_type = Column('quizz_type', String)
+    extra_questions = Column('extra_questions', Text)
 
-    def __init__(self):
-        self._data = {}
+    students = relationship(
+        "Student", backref="course",
+        collection_class=set)
 
-    @collection.appender
-    def _append(self, child):
-        self._data[child.id] = child
+    _sessions = relationship(
+        "ClassSession", backref=backref("course", uselist=False),
+        collection_class=IntIds)
+    
+    criterias = relationship(
+        "Criteria", secondary=criterias_table, backref="courses",
+        collection_class=set)
 
-    def __setitem__(self, id, child):
-        self._append(child)
+    def __init__(self, **kwargs):
+        Base.__init__(self, **kwargs)
 
-    def __getitem__(self, id):
-        try:
-            obj = self._data[int(id)]
-            if obj is not None:
-                return LocationProxy(obj, self.__parent__, id)
-        except:
-            pass
-        raise KeyError(id)
+    @property
+    def __name__(self):
+        return str(self.id)
 
-    @collection.remover
-    def _remove(self, child):
-        del self._data[child.id]
+    @property
+    def sessions(self):
+        self._sessions.__name__ = 'sessions'
+        self._sessions.__parent__ = self
+        # directlyProvides(self._sessions, ISessions)
+        return self._sessions
+    
+    @property
+    def uncomplete(self):
+        for key, student in self._students.items():
+            student.__parent__ = self
+            if student.completion_date is None:
+                yield student
 
-    @collection.iterator
-    def __iter__(self):
-        return self._data.itervalues()
-
-    def __repr__(self):
-        return '%s(%r)' % (type(self).__name__, self._data)
+    @property
+    def complete(self):
+        for key, student in self._students.items():
+            student.__parent__ = self
+            if student.completion_date is not None:
+                yield student
 
 
 @implementer(ICompany)
@@ -342,10 +369,10 @@ class Company(Base, Location):
 
     __tablename__ = 'companies'
     model = Course
-    name = Column('name', String, primary_key=True)
+    email = Column('email', String, primary_key=True)
+    name = Column('name', String)
     password = Column('password', String)
     mnr = Column('mnr', String)
-    email = Column('email', String)
     activation = Column('activation', String)
     activated = Column('activated', DateTime)
     students = relationship("Student", backref="company")
@@ -356,7 +383,7 @@ class Company(Base, Location):
 
     _criterias = relationship(
         "Criteria", backref=backref("company", uselist=False),
-        collection_class=Criterias)
+        collection_class=IntIds)
 
     @property
     def id(self):
@@ -366,6 +393,7 @@ class Company(Base, Location):
     def criterias(self):
         self._criterias.__name__ = 'criterias'
         self._criterias.__parent__ = self
+        directlyProvides(self._criterias, ICriterias)
         return self._criterias
 
     @property

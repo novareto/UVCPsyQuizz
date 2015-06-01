@@ -20,7 +20,6 @@ install_requires = [
     'dolmen.message',
     'zope.cachedescriptors',
     'siguvtheme.uvclight',
-    'uvc.themes.dguv',
     'html2text',
     ]
 

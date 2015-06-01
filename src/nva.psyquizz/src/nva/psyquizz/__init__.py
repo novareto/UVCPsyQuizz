@@ -21,8 +21,10 @@ from fanstatic import Library, Resource
 
 library = Library('nva.psyquizz', 'static')
 
-chartjs = Resource(library, 'Chart.js')
-charthbar = Resource(library, 'Chart.StackedBar.js', depends=[chartjs])
-quizzjs = Resource(library, 'quizz.js', depends=[charthbar, ])
+#chartjs = Resource(library, 'Chart.js')
+#charthbar = Resource(library, 'Chart.StackedBar.js', depends=[chartjs])
+
+charthjs = Resource(library, 'ChartNew.js')
+quizzjs = Resource(library, 'quizz.js', depends=[charthjs, ])
 
 Base = declarative_base()

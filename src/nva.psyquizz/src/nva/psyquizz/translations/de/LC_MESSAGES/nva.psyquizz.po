@@ -94,3 +94,37 @@ msgstr "Anlegen"
 msgid "i"
 msgstr "i"
 
+msgid "Criterias"
+msgstr "Kriterien"
+
+msgid "All criterias"
+msgstr "Alle Kriterien"
+
+msgid "Add a criteria"
+msgstr "Kriterium anlegen"
+
+msgid "Label"
+msgstr "Kriterium (Abteilung, Standort)"
+
+msgid "Please enter one criteria per line"
+msgstr "Bitte geben Sie je Zeile ein Kriterium ein (IT, Verwaltung)"
+
+msgid "Company ID"
+msgstr "Mitgliedsnummer"
+
+msgid "Retype password"
+msgstr "Passwort wiederholen"
+
+msgid "Add a session"
+msgstr "Befragung hinzufügen"
+
+msgid "Diff"
+msgstr "Auswertung (Vergleich)"
+
+msgid "Statistics"
+msgstr "Auswertung"
+
+msgid "Start date"
+msgstr "Startdatum der Befragung"
+
+

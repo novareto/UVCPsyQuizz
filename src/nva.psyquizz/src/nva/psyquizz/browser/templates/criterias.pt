@@ -1,5 +1,5 @@
 <div id="criterias">
-  <h1>All criterias</h1>
+  <h1 i18n:translate="">All criterias</h1>
   <ul>
     <li tal:repeat="crit context">
       <a tal:attributes="href 'criterias/' + str(crit.id)"

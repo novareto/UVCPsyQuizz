@@ -2,14 +2,14 @@
 
 import json
 import uvclight
-
-from .forms import Stats
-from ..apps import admin, anonymous
+from random import *
+from .forms import ClassStats, CourseStats, CourseDiff
+from ..apps import anonymous
 from ..i18n import _
 from ..interfaces import ICompanyRequest
 from ..interfaces import IQuizzLayer
 from ..interfaces import QuizzAlreadyCompleted, QuizzClosed
-from ..models import IQuizz, TrueOrFalse
+from ..models import IQuizz, TrueOrFalse, IClassSession
 from ..models import Company, Course, Student, CriteriaAnswer
 from collections import OrderedDict
 from cromlech.sqlalchemy import get_session
@@ -53,21 +53,17 @@ def object_template(context, request):
     return uvclight.get_template('objectmenu.cpt', __file__)
 
 
-class CompanyCourseResults(uvclight.Viewlet):
-    uvclight.viewletmanager(IBelowContent)
-    uvclight.view(Stats)
-    uvclight.name('results')
 
-    template = uvclight.get_template('results.pt', __file__)
+class Results(object):
 
     colors = {
-        1: 'rgba(215, 40, 40, 0.9)',
-        2: 'rgba(212, 115, 60, 0.9)',
-        3: 'rgba(255, 222, 30, 0.9)',
-        4: 'rgba(201, 200, 0, 0.9)',
-        5: 'rgba(58, 200, 0, 0.9)',
+        1: 'rgba(212, 15, 20, 0.9)',
+        2: 'rgba(243, 146, 0, 0.9)',
+        3: 'rgba(255, 204, 0, 0.9)',
+        4: 'rgba(175, 202, 6, 0.9)',
+        5: 'rgba(81, 174, 49, 0.9)',
         }
-
+    
     def students_ids(self, session):
         criterias = self.view.criterias
         if not criterias:
@@ -86,47 +82,62 @@ class CompanyCourseResults(uvclight.Viewlet):
 
         return students_ids
 
-    def get_data(self):
+    def count_students(self, session, qtype, cid=None, sid=None, restrict=None):
+        students = session.query(Student).filter(Student.quizz_type == qtype)
+        if cid is not None:
+            students = students.filter(Student.course_id == cid)
+        if sid is not None:
+            students = students.filter(Student.session_id == sid)
+        if restrict:
+            students = students.filter(Student.access.in_(restrict))
+            
+        return students.count()
+
+    def get_data(self, qtype, cid=None, sid=None, extra_questions=None):
         session = get_session('school')
-        quizz = getUtility(IQuizz, name=self.context.quizz_type)
+        quizz = getUtility(IQuizz, name=qtype)
         stats = quizz.__stats__
         data = {}
 
-        restrict_students_id = self.students_ids(session)
-        if restrict_students_id is not None and not restrict_students_id:
-            # restriction removed ALL the results
+        restrict = self.students_ids(session)
+        if restrict is not None and not restrict:
             nb_students = 0
         else:
-            # number of students
-            students = session.query(Student).filter(
-                Student.course_id == self.context.id).filter(
-                    Student.company_id == self.context.company_id).filter(
-                        Student.quizz_type == self.context.quizz_type)
+            nb_students = self.count_students(session, qtype, cid, sid)
+            if nb_students:
+                answers = session.query(quizz)
+                if sid is not None:
+                    answers = answers.filter(quizz.session_id == sid)
+                if cid is not None:
+                    answers = answers.filter(quizz.course_id == cid)
 
-            if restrict_students_id is not None:
-                students.filter(Student.access.in_(restrict_students_id))
+                if restrict is not None:
+                    answers = answers.filter(quizz.student_id.in_(restrict))
 
-            nb_students = students.count()
-                            
-        if nb_students:
-            answers = session.query(quizz).filter(
-                quizz.course_id == self.context.id).filter(
-                    quizz.company_id == self.context.company_id)
-
-            if restrict_students_id is not None:
-                answers.filter(quizz.student_id.in_(restrict_students_id))
-
-            answers = list(answers)
-    
-            if answers:
-                data[self.context.quizz_type] = stats(
-                        nb_students, answers,
-                        self.context.extra_questions, quizz)
+                answers = list(answers)
+                if answers:
+                    data[self.context.quizz_type] = stats(
+                        nb_students, answers, extra_questions, quizz)
         return data
+
+
+class CompanyClassResults(uvclight.Viewlet, Results):
+    uvclight.viewletmanager(IBelowContent)
+    uvclight.view(ClassStats)
+    uvclight.context(IClassSession)
+    uvclight.name('results')
+
+    template = uvclight.get_template('results.pt', __file__)
 
     def display(self):
         quizzjs.need()
-        for name, result in self.get_data().items():
+        data = self.get_data(
+            self.context.course.quizz_type,
+            cid=self.context.course.id,
+            sid=self.context.id,
+            extra_questions=self.context.course.extra_questions)
+
+        for name, result in data.items():
             compute_chart = getattr(result, 'compute_chart', None)
             if compute_chart is None:
                 yield name, {'results': result.get_answers(),
@@ -137,7 +148,89 @@ class CompanyCourseResults(uvclight.Viewlet):
                              'users': users,
                              'chart': gbl}
 
+
+class CompanyCourseResults(uvclight.Viewlet, Results):
+    uvclight.viewletmanager(IBelowContent)
+    uvclight.view(CourseStats)
+    uvclight.context(Course)
+    uvclight.name('results')
+
+    template = uvclight.get_template('results.pt', __file__)
+
+    def display(self):
+        quizzjs.need()
+        data = self.get_data(
+            self.context.quizz_type,
+            cid=self.context.id,
+            extra_questions=self.context.extra_questions)
+
+        for name, result in data.items():
+            compute_chart = getattr(result, 'compute_chart', None)
+            if compute_chart is None:
+                yield name, {'results': result.get_answers(),
+                             'users': None, 'chart': None}
+            else:
+                gbl, users = compute_chart()
+                yield name, {'results': result.get_answers(),
+                             'users': users,
+                             'chart': gbl}
+
+def colors(limit=15):
+    h, s, v = random() * 6, .5, 243.2
+    for i in range(limit):
+        h += 3.708
+        yield ((v,v-v*s*abs(1-h%2),v-v*s)*3)[5**int(h)/3%3::int(h)%2+1][:3]
+        if i%5 / 4:
+            s += .1
+            v -= 51.2
+
+
+class CompanyCourseDiffs(uvclight.Viewlet, Results):
+    uvclight.viewletmanager(IBelowContent)
+    uvclight.view(CourseDiff)
+    uvclight.context(Course)
+    uvclight.name('diffs')
+
+    template = uvclight.get_template('diffs.pt', __file__)
+
+    averages = [
+        u'Handlungssspielraum',
+        u'Vielseitiges Arbeiten',
+        u'Ganzheitliches Arbeiten',
+        u'Soziale Rückendeckung',
+        u'Zusammenarbeit',
+        u'Passende inhaltliche Arbeitsanforderungen',
+        u'Passende mengenmäßige Arbeit',
+        u'Passende Arbeitsabläufe',
+        u'Passende Arbeitsumgebung',
+        u'Information und Mitsprache',
+        u'Entwicklungsmöglichkeiten',
+        ]
+
+    
+    coloring_set = colors()
                 
+    def get_color(self):
+        r, v, b = self.coloring_set.next()
+        return ['rgba(%i, %i, %i, %s)' % (r, v, b, tr) for tr in [0.3, 1, 1]]
+
+    def display(self):
+        quizzjs.need()
+        diffs = {}
+        for session in self.context.sessions:
+            data = self.get_data(
+                self.context.quizz_type,
+                cid=self.context.id,
+                sid=session.id,
+                extra_questions=self.context.extra_questions)
+        
+            for name, result in data.items():
+                diff = diffs.setdefault(name, {})
+                gbl, users = result.compute_chart()
+                diff['%s - %s' % (session.id, session.startdate)] = gbl
+        return diffs
+
+
 class Home(uvclight.MenuItem):
     uvclight.title(u'Home')
     uvclight.auth.require('zope.Public')
