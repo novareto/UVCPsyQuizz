@@ -25,6 +25,7 @@
 	  <tal:dataset repeat="diff data[qname].items()">
           {
           label: "<span tal:replace="diff[0]" />",
+	  title: "<span tal:replace="diff[0]" />",
 	  <tal:color define="colors viewlet.get_color()">
           fillColor: "<span tal:replace="colors[0]" />",
           strokeColor: "<span tal:replace="colors[1]" />",
@@ -38,9 +39,13 @@
 	  </tal:dataset>
 	  ]
 	  };
+
+          var opt = {
+            legend : true,
+	  }
 	  
 	  var ctx = document.getElementById("myChart").getContext("2d");
-	  var myNewChart = new Chart(ctx).Radar(data);
+	  var myNewChart = new Chart(ctx).Radar(data, opt);
 	</script>
     </div>
 
