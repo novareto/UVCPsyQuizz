@@ -3,7 +3,7 @@
 from datetime import date
 from . import Site
 from ..interfaces import IAnonymousRequest, QuizzAlreadyCompleted, QuizzClosed
-from ..models import Student, Course
+from ..models import Student, Course, ClassSession
 from cromlech.browser import IPublicationRoot
 from dolmen.sqlcontainer import SQLContainer
 from uvc.content.interfaces import IContent
@@ -32,7 +32,7 @@ class QuizzBoard(SQLContainer):
                 uuid = self.model.generate_access()
                 student = self.model(
                     access=uuid,
-                    company_id=course.company_id,
+                    company_id=session.course.company_id,
                     session_id=sessionid,
                     course=session.course,
                     quizz_type=session.course.quizz_type)

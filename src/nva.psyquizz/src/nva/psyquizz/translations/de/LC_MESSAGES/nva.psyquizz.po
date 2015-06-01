@@ -35,7 +35,7 @@ msgid "Company added with success."
 msgstr "Das Unternehmen wurde erfolgreich registriert."
 
 msgid "Add a course"
-msgstr "Unternehmensbereich hinzufügen"
+msgstr "Befragung"
 
 msgid "An error occurred."
 msgstr "Une erreur est survenue."
@@ -95,7 +95,7 @@ msgid "i"
 msgstr "i"
 
 msgid "Criterias"
-msgstr "Kriterien"
+msgstr "Unternehmensprofil"
 
 msgid "All criterias"
 msgstr "Alle Kriterien"

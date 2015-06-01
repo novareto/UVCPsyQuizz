@@ -36,6 +36,7 @@
 	       data-parent="#wizard">
 	    <h1 tal:content="group.getTaggedValue('label')" />
             <div class="field" tal:repeat="widget view.groups[group]">
+              <!--
               <label class="field-label" for="#"
                      tal:attributes="for widget.htmlId()"
                      tal:content="widget.title"
@@ -48,8 +49,9 @@
 				   and not view.isHidden(widget)"
                     >(required)</span>
               <br />
+-->
               <tal:description tal:condition="widget.description">
-		<span class="field-description"
+		<span class="field-description lead"
                       tal:content="widget.description">
 		  </span><br />
               </tal:description>

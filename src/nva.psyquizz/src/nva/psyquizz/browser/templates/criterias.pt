@@ -1,5 +1,7 @@
 <div id="criterias">
-  <h1 i18n:translate="">All criterias</h1>
+  <h1 i18n:translate="">Unternehmensprofil</h1>
+  <p> In diesem Bereich legen Sie die Struktur Ihres Unternehmens für die Befragung fest. Sie sollten Kriterien definieren, wie z.B. Abteilungen oder Standorte, um die psychische Belastung tätigkeitsbezogen auswerten zu können. Bei der späteren Auswertung der Befragung können Sie nach diesen Kriterien vergleichen.
+  </p>
   <ul>
     <li tal:repeat="crit context">
       <a tal:attributes="href 'criterias/' + str(crit.id)"

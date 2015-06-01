@@ -99,7 +99,7 @@ class CreateCriterias(Form):
         session.flush()
         session.refresh(criteria)
         self.flash(_(u'Criteria added with success.'))
-        self.redirect('%s' % self.application_url())
+        self.redirect('%s/criterias' % self.application_url())
         return SUCCESS
 
 

@@ -110,16 +110,19 @@ class ICompany(ILocation, IContent):
 
     mnr = schema.TextLine(
         title=_(u"Company ID"),
+        description=u"Bitte tragen Sie hier die achtstellige Mitgliedsnummer Ihres Unternehmens bei der BG ETEM ein.",
         required=True,
     )
 
     email = schema.TextLine(
         title=_(u"E-Mail"),
+        description=u"Ihre E-Mailadresse benötigen Sie später beim Login.",
         required=True,
     )
 
     password = schema.Password(
         title=_(u"Password for observation access"),
+        description=u"Bitte vergeben Sie ein Passwort (mindestens acht Zeichen).",
         required=True,
     )
 

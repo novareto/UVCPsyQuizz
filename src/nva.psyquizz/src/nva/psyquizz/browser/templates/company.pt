@@ -1,5 +1,9 @@
 <div tal:define="baseurl view.url(context)">
   <h1 tal:content="context.name" />
+    <p>
+    Herzlich Willkommen bei der Online-Hilfe der BG ETEM für Ihre Gefährdungsbeurteilung psychischer Belastung. Mit diesem Werkzeug können Sie die psychischen Belastungen der Beschäftigten Ihres Unternehmens unkompliziert erheben. Auf den folgenden Seiten können Sie das Profil Ihres Unternehmens beschreiben, Befragungen anlegen, Ergebnisse einsehen und mit früheren Befragungen vergleichen.
+    </p>
+    <div tal:condition="context.courses">
   <h2>Unternehmensbereiche</h2>
   <ul>
     <li tal:repeat="course context.courses">
@@ -7,4 +11,5 @@
 	 tal:content="course.name" />
     </li>
   </ul>
+</div>
 </div>
