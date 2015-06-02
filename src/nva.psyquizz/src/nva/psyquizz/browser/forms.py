@@ -36,12 +36,14 @@ with open(os.path.join(os.path.dirname(__file__), 'mail.tpl'), 'r') as fd:
 
 
 def send_activation_code(company_name, email, code):
+    #mailer = SecureMailer('smtprelay.bg10.bgfe.local') # BBB This should be configurarble...
     mailer = SecureMailer('localhost')
-    from_ = 'no-reply@karl.novareto.de'
+    from_ = 'extranet@bgetem.de'
     with mailer as sender:
         html = mail_template.substitute(
-            title=u'Activate your account',
+            title=u'Aktivierung der Online-Hilfe zur Gefährdungsbeurteilung psychischer Belastung',
             encoding=ENCODING,
+            email=email,
             company=company_name,
             activation_code=code)
         text = html2text.html2text(html)

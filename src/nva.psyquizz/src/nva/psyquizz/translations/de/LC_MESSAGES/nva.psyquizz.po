@@ -104,10 +104,16 @@ msgid "Add a criteria"
 msgstr "Kriterium anlegen"
 
 msgid "Label"
-msgstr "Kriterium (Abteilung, Standort)"
+msgstr "Kriterium (z. B. Standort, Abteilung, Tätigkeit)"
 
 msgid "Please enter one criteria per line"
-msgstr "Bitte geben Sie je Zeile ein Kriterium ein (IT, Verwaltung)"
+msgstr "Ausprägung für das Kriterium"
+
+msgid "Description Items"
+msgstr "Nennen Sie mindestens zwei unterschiedliche Ausprägungen (Beispiel Standort: „Hamburg“ und „Berlin“)"
+
+msgid "Description Label"
+msgstr "Mithilfe der Kriterien können sie später die psychische Belastung z. B. regional, bezogen auf Abteilungen oder andere Kriterien auswerten"
 
 msgid "Company ID"
 msgstr "Mitgliedsnummer"

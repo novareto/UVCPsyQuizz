@@ -77,11 +77,13 @@ class ICriteria(IContent):
 
     title = schema.TextLine(
         title=_(u"Label"),
+        description=_(u"Description Label"),
         required=True,
     )
 
     items = schema.Text(
         title=_(u"Please enter one criteria per line"),
+        description=_(u"Description items"),
         required=True,
     )
 

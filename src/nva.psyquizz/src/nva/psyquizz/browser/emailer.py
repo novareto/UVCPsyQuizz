@@ -7,7 +7,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 
-ENCODING = 'iso-8859-1'
+ENCODING = 'utf-8'
 
 
 class SecureMailer(object):
