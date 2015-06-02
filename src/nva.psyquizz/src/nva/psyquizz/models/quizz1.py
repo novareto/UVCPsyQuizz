@@ -8,6 +8,7 @@ from grokcore.component import global_utility
 from zope.interface import Interface, implementer
 from zope.location import Location
 from zope import schema
+from sqlalchemy.orm import relationship, backref
 
 
 class IGroup1(Interface):
@@ -177,6 +178,8 @@ class Quizz1(Base, Location):
     course_id = Column(Integer, ForeignKey('courses.id'))
     session_id = Column(Integer, ForeignKey('sessions.id'))
     company_id = Column(String, ForeignKey('companies.name'))
+
+    student = relationship("Student")
 
     # Quizz
     completion_date = Column('completion_date', DateTime)

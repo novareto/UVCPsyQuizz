@@ -141,10 +141,16 @@ class CompanyClassResults(uvclight.Viewlet, Results):
             compute_chart = getattr(result, 'compute_chart', None)
             if compute_chart is None:
                 yield name, {'results': result.get_answers(),
+                             'total': result.total,
+                             'criterias': result.criterias,
+                             'all': result.total + result.missing,
                              'users': None, 'chart': None}
             else:
                 gbl, users = compute_chart()
                 yield name, {'results': result.get_answers(),
+                             'total': result.percent_base,
+                             'criterias': result.criterias,
+                             'all': result.percent_base + result.missing,
                              'users': users,
                              'chart': gbl}
 
@@ -168,10 +174,16 @@ class CompanyCourseResults(uvclight.Viewlet, Results):
             compute_chart = getattr(result, 'compute_chart', None)
             if compute_chart is None:
                 yield name, {'results': result.get_answers(),
+                             'total': result.total,
+                             'criterias': result.criterias,
+                             'all': result.total + result.missing,
                              'users': None, 'chart': None}
             else:
                 gbl, users = compute_chart()
                 yield name, {'results': result.get_answers(),
+                             'total': result.total,
+                             'criterias': result.criterias,
+                             'all': result.total + result.missing,
                              'users': users,
                              'chart': gbl}
 
