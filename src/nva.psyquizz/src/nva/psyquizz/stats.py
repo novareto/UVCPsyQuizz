@@ -42,6 +42,17 @@ class QuizzStats(object):
         self.extra_questions = extra_questions
         self.computed, self.extras, self.users = compute(completed, self.quizz)
 
+        criterias = {}
+        for answer in completed:
+            for criteria_answer in answer.student.criterias:
+                criteria = criteria_answer.criteria
+                criteria_data = criterias.setdefault(
+                    criteria.id, {'title': criteria.title, 'answers': {}})
+                criteria_data['answers'][criteria_answer.answer] = (
+                    criteria_data['answers'].get(criteria_answer.answer, 0) + 1)
+
+        self.criterias = criterias
+
     def get_answers(self):
 
         for key, field in getFieldsInOrder(self.quizz):

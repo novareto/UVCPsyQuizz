@@ -431,3 +431,6 @@ class CriteriaAnswer(Base):
     completion_date = Column('completion_date', DateTime,
                              default=datetime.utcnow)
     answer = Column('answer', String)
+
+    criteria = relationship("Criteria", backref="answers")
+    student = relationship("Student", backref="criterias")

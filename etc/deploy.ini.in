@@ -38,12 +38,11 @@ minified = true
 compile = true
 next = session
 
-
 [filter-app:session]
 use = egg:cromlech.wsgistate#file_session
 session_key = nva
 session_cache = ${settings:cachedir}/sessions
-timeout = 6000
+timeout = 12000
 next = courses
 
 [app:courses]

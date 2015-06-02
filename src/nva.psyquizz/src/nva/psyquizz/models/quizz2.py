@@ -8,6 +8,7 @@ from sqlalchemy import *
 from zope import schema
 from zope.interface import Interface, implementer
 from zope.location import Location
+from sqlalchemy.orm import relationship, backref
 
 
 class IGroup1(Interface):
@@ -234,6 +235,8 @@ class Quizz2(Base, Location):
     session_id = Column(Integer, ForeignKey('sessions.id'))
     company_id = Column(String, ForeignKey('companies.name'))
 
+    student = relationship("Student")
+    
     # Quizz
     completion_date = Column('completion_date', DateTime)
     question1 = Column('question1', Integer)

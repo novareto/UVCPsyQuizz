@@ -15,6 +15,26 @@
 	 tal:attributes="id qname;
 	                 class repeat['qname'].start and 'collapse in' or 'collapse'">
 
+      <h2>
+	Statistics concerning
+	<span tal:content="data[qname]['total']" /> /
+	<span tal:content="data[qname]['all']" /> students
+      </h2>
+
+      <dl>
+	<tal:criterias repeat="criteria data[qname]['criterias'].items()">
+	  <dt tal:content="criteria[1]['title']" />
+	  <dd>
+	    <ul>
+	      <li tal:repeat="answer criteria[1]['answers'].items()">
+		<strong tal:content="answer[0]" /> :
+		<span tal:content="answer[1]" />
+	      </li>
+	    </ul>
+	  </dd>
+	</tal:criterias>
+      </dl>
+
       <tal:users condition="data[qname]['users'] is not None">
         <canvas id="myUsersChart" width="800" height="800"></canvas>
 
