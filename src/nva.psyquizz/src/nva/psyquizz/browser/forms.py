@@ -32,7 +32,6 @@ from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 
 with open(os.path.join(os.path.dirname(__file__), 'mail.tpl'), 'r') as fd:
     data = unicode(fd.read(), 'utf-8')
-    print data
     mail_template = Template(data.encode(ENCODING))
 
 
@@ -46,8 +45,8 @@ def send_activation_code(company_name, email, code, base_url):
             title=title,
             encoding=ENCODING,
             base_url=base_url,
-            email=str(email),
-            company=str(company_name),
+            email=email.encode(ENCODING),
+            company=company_name.encode(ENCODING),
             activation_code=code)
 
         text = html2text.html2text(html.decode('utf-8'))
