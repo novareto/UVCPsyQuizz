@@ -228,7 +228,7 @@ class CreateCompany(Form):
         send_activation_code(data['name'], data['email'], code, base_url)
 
         self.flash(_(u'Company added with success.'))
-        self.redirect('%s/%s' % (self.application_url(), company.name))
+        self.redirect('%s/registered' % self.application_url())
         return SUCCESS
 
 

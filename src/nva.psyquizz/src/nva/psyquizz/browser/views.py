@@ -5,7 +5,7 @@ import json
 from collections import OrderedDict
 from ..apps import anonymous
 from ..i18n import _
-from ..interfaces import ICompanyRequest
+from ..interfaces import ICompanyRequest, IRegistrationRequest
 from ..interfaces import QuizzAlreadyCompleted, QuizzClosed
 from ..models import IQuizz, Company, Course, Student, TrueOrFalse
 from dolmen.menu import menuentry
@@ -46,3 +46,12 @@ class CriteriasAccess(MenuItem):
     menu(IContextualActionsMenu)
 
     url = '/criterias'
+
+
+class Registered(Page):
+    name('registered')
+    layer(IRegistrationRequest)
+    require('zope.Public')
+
+    def render(self):
+        return u"Registration successful"
