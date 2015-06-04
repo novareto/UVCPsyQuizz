@@ -32,22 +32,26 @@ from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 
 with open(os.path.join(os.path.dirname(__file__), 'mail.tpl'), 'r') as fd:
     data = unicode(fd.read(), 'utf-8')
+    print data
     mail_template = Template(data.encode(ENCODING))
 
 
-def send_activation_code(company_name, email, code):
-    mailer = SecureMailer('localhost')
+def send_activation_code(company_name, email, code, base_url):
+    #mailer = SecureMailer('localhost')
+    mailer = SecureMailer('smtprelay.bg10.bgfe.local')
     from_ = 'extranet@bgetem.de'
+    title = u'Aktivierung der Online-Hilfe zur Gefährdungsbeurteilung psychischer Belastung'.encode(ENCODING)
     with mailer as sender:
         html = mail_template.substitute(
-            title=u'Aktivierung der Online-Hilfe zur Gefährdungsbeurteilung psychischer Belastung'.encode(ENCODING),
+            title=title,
             encoding=ENCODING,
-            email=email,
-            company=company_name,
+            base_url=base_url,
+            email=str(email),
+            company=str(company_name),
             activation_code=code)
 
         text = html2text.html2text(html.decode('utf-8'))
-        mail = prepare(from_, email, 'Activation code', html, text.encode('utf-8'))
+        mail = prepare(from_, email, title, html, text.encode('utf-8'))
         sender(from_, email, mail.as_string())
     return True
 
@@ -148,6 +152,7 @@ class AddSession(Form):
         session.refresh(clssession)
         self.flash(_(u'Session added with success.'))
         self.redirect('%s' % self.application_url())
+
         return SUCCESS
 
     
@@ -219,7 +224,8 @@ class CreateCompany(Form):
         session.refresh(company)
 
         # send email
-        send_activation_code(data['name'], data['email'], code)
+        base_url = self.application_url().replace('/register', '')
+        send_activation_code(data['name'], data['email'], code, base_url)
 
         self.flash(_(u'Company added with success.'))
         self.redirect('%s/%s' % (self.application_url(), company.name))
