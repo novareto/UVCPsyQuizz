@@ -91,6 +91,9 @@ class ICriteria(IContent):
 @implementer(ICriteria)
 class Criteria(Base):
 
+    isEditable = True
+    isDeletable = True
+    
     __tablename__ = 'criterias'
 
     id = Column(Integer, primary_key=True)
@@ -216,6 +219,9 @@ criterias_table = Table('criterias_courses', Base.metadata,
 @implementer(IQuizz, IStudent)
 class Student(Base, Location):
 
+    isEditable = True
+    isDeletable = True
+    
     __tablename__ = 'students'
 
     access = Column('access', String, primary_key=True)
@@ -249,6 +255,9 @@ class Student(Base, Location):
 @implementer(IClassSession)
 class ClassSession(Base, Location):
 
+    isEditable = True
+    isDeletable = True
+    
     __tablename__ = 'sessions'
     model = Student
 
@@ -317,6 +326,9 @@ class ClassSession(Base, Location):
 @implementer(ICourse)
 class Course(Base, Location):
     traversable('criterias', 'students', 'sessions')
+
+    isEditable = True
+    isDeletable = True
     
     __tablename__ = 'courses'
 
@@ -371,7 +383,7 @@ class Course(Base, Location):
 @implementer(ICompany)
 class Company(Base, Location):
     traversable('criterias')
-
+    
     __tablename__ = 'companies'
     model = Course
     email = Column('email', String, primary_key=True)
