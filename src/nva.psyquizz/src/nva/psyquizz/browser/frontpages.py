@@ -5,7 +5,7 @@ import json
 from ..apps import anonymous
 from ..i18n import _
 from ..interfaces import ICompanyRequest
-from ..models import Company, Student, Course, ClassSession
+from ..models import Account, Company, Student, Course, ClassSession
 from ..models import IQuizz, ICriterias
 from collections import OrderedDict
 from cromlech.browser import exceptions
@@ -40,6 +40,18 @@ class CompanyHomepage(Page):
 
     template = get_template('company.pt', __file__)
 
+
+@menuentry(IContextualActionsMenu, order=0)
+class AccountHomepage(Page):
+    name('index')
+    title(_(u'Frontpage'))
+    context(Account)
+    layer(ICompanyRequest)
+    require('manage.company')
+
+    template = get_template('account.pt', __file__)
+
+    
 
 @menuentry(IContextualActionsMenu, order=0)
 class CompanyCourseHomepage(Page):

@@ -6,8 +6,7 @@ import urlparse
 
 from . import Site
 from ..interfaces import ICompanyRequest, IRegistrationRequest
-from ..models import Company
-from ..browser.forms import CreateCompany
+from ..models import Company, Account
 from cromlech.browser import IPublicationRoot, IView, IResponseFactory
 from cromlech.browser.interfaces import ITraverser
 from cromlech.security import Interaction, unauthenticated_principal
@@ -61,21 +60,21 @@ def activate_url(url, **data):
 
 
 @implementer(ICredentials)
-class CompanyAccess(GlobalUtility):
-    name('company')
+class Access(GlobalUtility):
+    name('access')
     
     def log_in(self, request, username, password, **kws):
         session = get_session('school')
-        company = session.query(Company).get(username)
+        account = session.query(Account).get(username)
         
-        if company is not None and company.password == password:
-            if company.activated is not None:
-                return company
+        if account is not None and account.password == password:
+            if account.activated is not None:
+                return account
             activation = kws.get('activation')
             if activation is not None:
-                if activation == company.activation:
-                    company.activated = datetime.now()
-                    return company
+                if activation == account.activation:
+                    account.activated = datetime.now()
+                    return account
                 else:
                     return SuccessMarker(
                         'Activation failed', False,
@@ -93,7 +92,7 @@ class IActivation(Interface):
         required=True)
     
 
-class CompanyLogin(Login):
+class AccountLogin(Login):
     name('login')
     layer(ICompanyRequest)
     require('zope.Public')
@@ -115,7 +114,7 @@ class CompanyLogin(Login):
         return fields
 
     def credentials_managers(self):
-        yield CompanyAccess()
+        yield Access()
 
 
 @implementer(IPublicationRoot, IView, IResponseFactory)
@@ -128,7 +127,7 @@ class NoAccess(Location):
         return getGlobalSiteManager()
 
     def __call__(self):
-        return CompanyLogin(self, self.request)()
+        return AccountLogin(self, self.request)()
 
 
 class Application(SQLPublication, SecurePublication):
@@ -148,11 +147,11 @@ class Application(SQLPublication, SecurePublication):
         username = request.principal.id
         if username != unauthenticated_principal.id:
             session = get_session(self.name)
-            company = session.query(Company).get(username)
-            if company is not None:
-                company.getSiteManager = getGlobalSiteManager
-                alsoProvides(company, IPublicationRoot)
-                return Site(company)
+            account = session.query(Account).get(username)
+            if account is not None:
+                account.getSiteManager = getGlobalSiteManager
+                alsoProvides(account, IPublicationRoot)
+                return Site(account)
         return Site(NoAccess(request))
 
     def publish_traverse(self, request):

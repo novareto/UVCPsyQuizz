@@ -40,16 +40,10 @@ class ICriteria(IContent):
     )
 
 
-class ICompany(ILocation, IContent):
+class IAccount(ILocation, IContent):
 
     name = schema.TextLine(
-        title=_(u"Company name"),
-        required=True,
-    )
-
-    mnr = schema.TextLine(
-        title=_(u"Company ID"),
-        description=u"Bitte tragen Sie hier die achtstellige Mitgliedsnummer Ihres Unternehmens bei der BG ETEM ein.",
+        title=_(u"Fullname"),
         required=True,
     )
 
@@ -62,6 +56,25 @@ class ICompany(ILocation, IContent):
     password = schema.Password(
         title=_(u"Password for observation access"),
         description=u"Bitte vergeben Sie ein Passwort (mindestens acht Zeichen).",
+        required=True,
+    )
+    
+    activated = schema.Datetime(
+        title=_(u"Active account since"),
+        required=False,
+    )
+
+    
+class ICompany(ILocation, IContent):
+
+    name = schema.TextLine(
+        title=_(u"Company name"),
+        required=True,
+    )
+
+    mnr = schema.TextLine(
+        title=_(u"Company ID"),
+        description=u"Bitte tragen Sie hier die achtstellige Mitgliedsnummer Ihres Unternehmens bei der BG ETEM ein.",
         required=True,
     )
 
@@ -82,7 +95,6 @@ class IClassSession(ILocation, IContent):
         title=_(u"Students"),
         required=False,
         )
-
 
 class ICourse(ILocation, IContent):
 

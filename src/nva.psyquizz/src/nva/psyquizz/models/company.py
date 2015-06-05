@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from nva.psyquizz import Base
-from nva.psyquizz.sqlutils import IntIds
+from . import IntIds
 from sqlalchemy import *
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.orm.collections import attribute_mapped_collection
@@ -14,16 +14,16 @@ from .interfaces import ICompany
 @implementer(ICompany)
 class Company(Base, Location):
     traversable('criterias')
-    
+
     __tablename__ = 'companies'
 
-    email = Column('email', String, primary_key=True)
+    id = Column('id', Integer, primary_key=True)
     name = Column('name', String)
-    password = Column('password', String)
     mnr = Column('mnr', String)
-    activation = Column('activation', String)
-    activated = Column('activated', DateTime)
-    students = relationship("Student", backref="company")
+    account_id = Column(String, ForeignKey('accounts.email'))
+    
+    students = relationship(
+        "Student", backref="company")
 
     _courses = relationship(
         "Course", backref="company",
@@ -32,10 +32,6 @@ class Company(Base, Location):
     _criterias = relationship(
         "Criteria", backref=backref("company", uselist=False),
         collection_class=IntIds)
-
-    @property
-    def id(self):
-        return self.name
 
     @property
     def criterias(self):
