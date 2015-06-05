@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from . import TrueOrFalse, IQuizz
-from .. import Base
-from ..stats import TrueFalseQuizzStats
+from .. import TrueOrFalse, IQuizz
+
+from nva.psyquizz import Base
+from nva.psyquizz.stats import TrueFalseQuizzStats
 from sqlalchemy import *
 from grokcore.component import global_utility
 from zope.interface import Interface, implementer

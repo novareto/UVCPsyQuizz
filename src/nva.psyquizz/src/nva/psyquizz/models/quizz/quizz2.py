@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from . import MoreToLess, LessToMore, IQuizz
-from .. import Base
-from ..stats import ChartedQuizzStats
+from .. import MoreToLess, LessToMore, IQuizz
+
+from nva.psyquizz import Base
+from nva.psyquizz.stats import ChartedQuizzStats
 from grokcore.component import global_utility
 from sqlalchemy import *
 from zope import schema
