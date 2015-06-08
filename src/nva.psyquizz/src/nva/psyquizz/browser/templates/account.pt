@@ -1,0 +1,9 @@
+<div tal:define="baseurl view.url(context)">
+  <h1 tal:content="context.name" />
+  <ul>
+    <li tal:repeat="company iter(context)">
+      <a tal:attributes="href '%s/%s' % (baseurl, company.id)"
+	 tal:content="company.name" />
+    </li>
+  </ul>
+</div>

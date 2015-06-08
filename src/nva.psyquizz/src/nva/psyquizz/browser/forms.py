@@ -7,9 +7,11 @@ import html2text
 
 from ..i18n import _
 from ..interfaces import IAnonymousRequest, ICompanyRequest, IRegistrationRequest
-from ..models import Company, Student, Course, Criteria, ICriterias
-from ..models import ICriteria, ICourse, ICompany, TrueOrFalse
-from ..models import IQuizz, CriteriaAnswer, ClassSession, IClassSession
+
+from ..models import Account, Company, Course, ClassSession, Student
+from ..models import IAccount, ICompany, ICourse, IClassSession
+from ..models import IQuizz, TrueOrFalse
+from ..models import Criteria, CriteriaAnswer, ICriteria, ICriterias
 from .emailer import SecureMailer, prepare, ENCODING
 
 from collections import OrderedDict
@@ -36,8 +38,8 @@ with open(os.path.join(os.path.dirname(__file__), 'mail.tpl'), 'r') as fd:
 
 
 def send_activation_code(company_name, email, code, base_url):
-    #mailer = SecureMailer('localhost')
-    mailer = SecureMailer('smtprelay.bg10.bgfe.local')
+    mailer = SecureMailer('localhost')
+    #mailer = SecureMailer('smtprelay.bg10.bgfe.local')
     from_ = 'extranet@bgetem.de'
     title = u'Aktivierung der Online-Hilfe zur Gefährdungsbeurteilung psychischer Belastung'.encode(ENCODING)
     with mailer as sender:
@@ -170,14 +172,14 @@ class IVerifyPassword(Interface):
 
     
 @menuentry(IContextualActionsMenu, order=10)
-class CreateCompany(Form):
+class CreateAccount(Form):
     name('index')
     layer(IRegistrationRequest)
-    title(_(u'Add a company'))
+    title(_(u'Add an account'))
     require('zope.Public')
 
     dataValidators = []
-    fields = (Fields(ICompany).select('name', 'password', 'mnr', 'email') +
+    fields = (Fields(IAccount).select('name', 'email', 'password') +
               Fields(IVerifyPassword, ICaptched))
 
     @property
@@ -203,7 +205,7 @@ class CreateCompany(Form):
             self.flash(_(u'Password and verification mismatch.'))
             return FAILURE
 
-        existing = session.query(Company).get(data['email'])
+        existing = session.query(Account).get(data['email'])
         if existing is not None:
             self.flash(_(u'User with given email already exists.'))
             self.errors.append(
@@ -214,19 +216,20 @@ class CreateCompany(Form):
         # pop the captcha and verif, it's not a needed data
         data.pop('verif')
         data.pop('captcha')
-        
-        # create it
-        company = Company(**data)
-        code = company.activation = str(uuid.uuid1())
-        session.add(company)
-        session.flush()
-        session.refresh(company)
 
         # send email
-        base_url = self.application_url().replace('/register', '')
         send_activation_code(data['name'], data['email'], code, base_url)
+        
+        # create it
+        account = Account(**data)
+        code = account.activation = str(uuid.uuid1())
+        session.add(account)
+        session.flush()
+        session.refresh(account)
 
-        self.flash(_(u'Company added with success.'))
+        # redirect
+        base_url = self.application_url().replace('/register', '')
+        self.flash(_(u'Account added with success.'))
         self.redirect('%s/registered' % self.application_url())
         return SUCCESS
 
