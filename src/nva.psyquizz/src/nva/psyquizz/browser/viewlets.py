@@ -244,7 +244,7 @@ class CompanyCourseDiffs(uvclight.Viewlet, Results):
 
 
 class Home(uvclight.MenuItem):
-    uvclight.title(u'Home')
+    uvclight.title(_(u'Home'))
     uvclight.auth.require('zope.Public')
     uvclight.menu(INavigationMenu)
 

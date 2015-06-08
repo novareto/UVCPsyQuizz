@@ -276,8 +276,8 @@ class EditCourse(EditForm):
     fields = Fields(ICourse).select(
         'name', 'startdate')
 
-    def update(self):
-        alldate.need()
+    #def update(self):
+    #    alldate.need()
 
     @property
     def action_url(self):

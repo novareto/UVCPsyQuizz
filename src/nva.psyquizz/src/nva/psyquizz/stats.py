@@ -118,6 +118,8 @@ class ChartedQuizzStats(QuizzStats):
         for question in questions:
             determine_average[question] = label
 
+    total = 0
+
     def compute_chart(self):
         answers = self.get_answers()
         averages = {}

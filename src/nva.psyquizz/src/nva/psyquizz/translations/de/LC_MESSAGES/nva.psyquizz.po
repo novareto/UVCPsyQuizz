@@ -109,7 +109,7 @@ msgstr "Kriterium (z. B. Standort, Abteilung, Tätigkeit)"
 msgid "Please enter one criteria per line"
 msgstr "Ausprägung für das Kriterium"
 
-msgid "Description Items"
+msgid "Description items"
 msgstr "Nennen Sie mindestens zwei unterschiedliche Ausprägungen (Beispiel Standort: „Hamburg“ und „Berlin“)"
 
 msgid "Description Label"
@@ -122,7 +122,7 @@ msgid "Retype password"
 msgstr "Passwort wiederholen"
 
 msgid "Add a session"
-msgstr "Befragung hinzufügen"
+msgstr "Befragung durchführen"
 
 msgid "Diff"
 msgstr "Auswertung (Vergleich)"
@@ -133,4 +133,5 @@ msgstr "Auswertung"
 msgid "Start date"
 msgstr "Startdatum der Befragung"
 
-
+msgid "Edit the course"
+msgstr "Bearbeiten"

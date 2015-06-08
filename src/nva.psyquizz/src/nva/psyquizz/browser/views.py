@@ -18,6 +18,31 @@ from zope.component import getUtilitiesFor, getUtility
 from zope.schema import getFieldsInOrder
 from cromlech.sqlalchemy import get_session
 from nva.psyquizz import quizzjs
+from zope import interface
+from uvc.design.canvas import IPersonalMenu
+
+
+#class LogoutMenu(MenuItem):
+#    context(interface.Interface)
+#    menu(IPersonalMenu)
+#    title(u'Logout')
+#
+#    @property
+#    def action(self):
+#        return self.view.application_url() + '/logout'
+#
+#
+#class Logout(View):
+#    context(interface.Interface)
+#
+#    def update(self):
+#        session = getSession()
+#        if session:
+#            del session['username']
+#
+#    def render(self):
+#        return self.redirect(self.application_url())
+
 
 
 class QuizzErrorPage(Page):
@@ -54,4 +79,6 @@ class Registered(Page):
     require('zope.Public')
 
     def render(self):
-        return u"Registration successful"
+        return u"Ihre Registrierung war erfolgreich. Sie erhalten in Kürze eine E-Mail mit den Aktivierungslink"
+
+
