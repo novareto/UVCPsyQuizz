@@ -170,7 +170,7 @@ class IVerifyPassword(Interface):
         title=_(u'Retype password'),
         required=True)
 
-    
+
 @menuentry(IContextualActionsMenu, order=10)
 class CreateAccount(Form):
     name('index')
@@ -217,8 +217,6 @@ class CreateAccount(Form):
         data.pop('verif')
         data.pop('captcha')
 
-        # send email
-        send_activation_code(data['name'], data['email'], code, base_url)
         
         # create it
         account = Account(**data)
@@ -227,13 +225,52 @@ class CreateAccount(Form):
         session.flush()
         session.refresh(account)
 
-        # redirect
         base_url = self.application_url().replace('/register', '')
+        # send email
+        send_activation_code(data['name'], data['email'], code, base_url)
+        # redirect
         self.flash(_(u'Account added with success.'))
         self.redirect('%s/registered' % self.application_url())
         return SUCCESS
 
 
+@menuentry(IContextualActionsMenu, order=10)
+class CreateCompany(Form):
+    name('add.company')
+    layer(ICompanyRequest)
+    title(_(u'Add a company'))
+    require('zope.Public')
+
+    dataValidators = []
+    fields = Fields(ICompany).select('name', 'mnr')
+
+    @property
+    def action_url(self):
+        return self.request.path
+
+    @action(_(u'Add'))
+    def handle_save(self):
+        data, errors = self.extractData()
+        session = get_session('school')
+        
+        if errors:
+            self.flash(_(u'An error occurred.'))
+            return FAILURE
+        
+        # create it
+        company = Company(**data)
+        company.account_id = self.context.email
+        session.add(company)
+        session.flush()
+        session.refresh(company)
+
+        # redirect
+        base_url = self.url(self.context)
+        self.flash(_(u'Company added with success.'))
+        self.redirect(base_url)
+        return SUCCESS
+
+    
 @menuentry(IContextualActionsMenu, order=10)
 class CreateCourse(Form):
     context(Company)

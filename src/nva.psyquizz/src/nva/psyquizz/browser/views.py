@@ -22,27 +22,26 @@ from zope import interface
 from uvc.design.canvas import IPersonalMenu
 
 
-#class LogoutMenu(MenuItem):
-#    context(interface.Interface)
-#    menu(IPersonalMenu)
-#    title(u'Logout')
-#
-#    @property
-#    def action(self):
-#        return self.view.application_url() + '/logout'
-#
-#
-#class Logout(View):
-#    context(interface.Interface)
-#
-#    def update(self):
-#        session = getSession()
-#        if session:
-#            del session['username']
-#
-#    def render(self):
-#        return self.redirect(self.application_url())
+class LogoutMenu(MenuItem):
+   context(interface.Interface)
+   menu(IPersonalMenu)
+   title(u'Logout')
 
+   @property
+   def action(self):
+       return self.view.application_url() + '/logout'
+
+
+class Logout(View):
+   context(interface.Interface)
+
+   def update(self):
+       session = getSession()
+       if session:
+           del session['username']
+
+   def render(self):
+       return self.redirect(self.application_url())
 
 
 class QuizzErrorPage(Page):
@@ -70,7 +69,9 @@ class CriteriasAccess(MenuItem):
     layer(ICompanyRequest)
     menu(IContextualActionsMenu)
 
-    url = '/criterias'
+    @property
+    def url(self):
+        return self.view.url(self.context) + '/criterias'
 
 
 class Registered(Page):

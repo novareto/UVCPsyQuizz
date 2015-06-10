@@ -6,9 +6,9 @@ from sqlalchemy import *
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.orm.collections import attribute_mapped_collection
 from uvclight.directives import traversable
-from zope.interface import Interface, implementer
+from zope.interface import Interface, implementer, directlyProvides
 from zope.location import Location
-from .interfaces import ICompany
+from .interfaces import ICompany, ICriterias
 
 
 @implementer(ICompany)
@@ -56,7 +56,7 @@ class Company(Base, Location):
 
     @property
     def __name__(self):
-        return self.name
+        return str(self.id)
 
     @__name__.setter
     def __name__(self, value):

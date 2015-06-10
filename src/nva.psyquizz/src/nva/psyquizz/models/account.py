@@ -24,7 +24,7 @@ class Account(Base, Location):
 
     _companies = relationship(
         "Company", backref=backref("account", uselist=False),
-        collection_class=attribute_mapped_collection('id'))
+        collection_class=IntIds)
 
     @property
     def id(self):
@@ -41,11 +41,14 @@ class Account(Base, Location):
     def __getitem__(self, key):
         try:
             company = self._companies[int(key)]
-            company.__parent__ = self
-            return company
+            return self.locate(company)
         except (KeyError, ValueError):
             return None
 
+    def locate(self, company):
+        company.__parent__ = self
+        return company
+
     def __iter__(self):
-        return (self[i] for i in self._companies.keys())
+        return (self.locate(i) for i in self._companies)
     
