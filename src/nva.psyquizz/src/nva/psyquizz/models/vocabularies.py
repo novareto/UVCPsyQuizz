@@ -39,4 +39,11 @@ MoreToLess = SimpleVocabulary([
     ])
 
 
-
+durations = SimpleVocabulary([
+    SimpleTerm(value=21,
+               title=u'3 Wochen'),
+    SimpleTerm(value=28,
+               title=u'4 Wochen'),
+    SimpleTerm(value=35,
+               title=u'5 Wochen'),
+    ])

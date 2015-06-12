@@ -5,7 +5,7 @@ from uvc.content.interfaces import IContent
 from zope import schema
 from zope.interface import Interface
 from zope.location import ILocation
-from . import deferred_vocabularies
+from . import deferred_vocabularies, vocabularies
 from grokcore.component import provider
 from zope.schema.interfaces import IContextSourceBinder
 
@@ -64,7 +64,16 @@ class IAccount(ILocation, IContent):
         required=False,
     )
 
-    
+
+class ICompanyTransfer(Interface):
+
+    account_id = schema.Choice(
+        title=_(u"Accounts"),
+        source=deferred('accounts_choice'),
+        required=True,
+        )
+
+
 class ICompany(ILocation, IContent):
 
     name = schema.TextLine(
@@ -91,10 +100,17 @@ class IClassSession(ILocation, IContent):
         required=True,
         )
 
+    duration = schema.Choice(
+        title=_(u"Duration of the session's validity"),
+        required=True,
+        vocabulary=vocabularies.durations,
+        )
+
     students = schema.Set(
         title=_(u"Students"),
         required=False,
         )
+
 
 class ICourse(ILocation, IContent):
 

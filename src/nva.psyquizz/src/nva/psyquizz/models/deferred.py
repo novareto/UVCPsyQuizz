@@ -2,6 +2,7 @@
 
 from .interfaces import IQuizz, ICompany
 from .criterias import Criteria
+from .account import Account
 from . import deferred_vocabularies
 from cromlech.sqlalchemy import get_session
 from grokcore.component import provider
@@ -38,5 +39,16 @@ def criterias_choice(context):
         for c in criterias])
 
 
+@provider(IContextSourceBinder)
+def accounts_choice(context):
+    session = get_session('school')
+    accounts = session.query(Account).all()
+    return SimpleVocabulary([
+        SimpleTerm(value=c.email, token=c.email,
+                   title='%s (%s)' % (c.name, c.email))
+        for c in accounts])
+
+
 deferred_vocabularies['quizz_choice'] = quizz_choice
+deferred_vocabularies['accounts_choice'] = accounts_choice
 deferred_vocabularies['criterias_choice'] = criterias_choice

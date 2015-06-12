@@ -8,6 +8,8 @@
   <include package="siguvtheme.uvclight" />
   <include package="cromlech.dawnlight" file="consumers.zcml" />
   <include package="dolmen.clockwork" />
+  <include package="dolmen.breadcrumbs" />
+  <include package="dolmen.forms.crud" />
 
   <include package="zope.i18n" />
   <include package="zope.i18n" file="meta.zcml" />

@@ -9,9 +9,10 @@ from zope.location import Location
 from . import IntIds
 from .criterias import criterias_table
 from .interfaces import ICourse
+from uvc.content.interfaces import IDescriptiveSchema
 
 
-@implementer(ICourse)
+@implementer(ICourse, IDescriptiveSchema)
 class Course(Base, Location):
     traversable('criterias', 'students', 'sessions')
 
@@ -45,6 +46,10 @@ class Course(Base, Location):
     @property
     def __name__(self):
         return str(self.id)
+
+    @property
+    def title(self):
+        return self.name
 
     @property
     def sessions(self):

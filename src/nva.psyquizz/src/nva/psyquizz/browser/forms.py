@@ -10,7 +10,7 @@ from ..interfaces import IAnonymousRequest, ICompanyRequest, IRegistrationReques
 
 from ..models import Account, Company, Course, ClassSession, Student
 from ..models import IAccount, ICompany, ICourse, IClassSession
-from ..models import IQuizz, TrueOrFalse
+from ..models import ICompanyTransfer, IQuizz, TrueOrFalse
 from ..models import Criteria, CriteriaAnswer, ICriteria, ICriterias
 from .emailer import SecureMailer, prepare, ENCODING
 
@@ -20,7 +20,8 @@ from dolmen.forms.base.markers import NO_VALUE
 from dolmen.forms.base.errors import Error
 from dolmen.menu import menuentry, order
 from string import Template
-from uvc.design.canvas import IContextualActionsMenu
+from uvc.design.canvas import IContextualActionsMenu, IPersonalMenu
+from uvc.design.canvas import IDocumentActions
 from uvclight.form_components.fields import Captcha
 from uvclight import Form, EditForm, Fields, SUCCESS, FAILURE
 from uvclight import action, layer, name, context, title, get_template, baseclass
@@ -29,7 +30,6 @@ from zope.component import getUtility
 from zope.interface import Interface
 from zope.schema import Int, Choice, Set, Password
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
-
 
 
 with open(os.path.join(os.path.dirname(__file__), 'mail.tpl'), 'r') as fd:
@@ -79,7 +79,7 @@ class IPopulateCourse(Interface):
         )
 
 
-@menuentry(IContextualActionsMenu, order=10)
+@menuentry(IDocumentActions, order=10)
 class CreateCriterias(Form):
     context(ICriterias)
     name('add.criteria')
@@ -110,7 +110,6 @@ class CreateCriterias(Form):
         return SUCCESS
 
 
-@menuentry(IContextualActionsMenu, order=10)
 class EditCriteria(EditForm):
     context(ICriteria)
     name('index')
@@ -124,14 +123,14 @@ class EditCriteria(EditForm):
         return self.request.path
 
 
-@menuentry(IContextualActionsMenu, order=10)
+@menuentry(IDocumentActions, order=10)
 class AddSession(Form):
     context(ICourse)
     name('add.session')
     title(_(u'Add a session'))
     require('zope.Public')
 
-    fields = Fields(IClassSession).select('startdate')
+    fields = Fields(IClassSession).select('startdate', 'duration')
 
     @property
     def action_url(self):
@@ -171,7 +170,7 @@ class IVerifyPassword(Interface):
         required=True)
 
 
-@menuentry(IContextualActionsMenu, order=10)
+@menuentry(IDocumentActions, order=10)
 class CreateAccount(Form):
     name('index')
     layer(IRegistrationRequest)
@@ -234,13 +233,47 @@ class CreateAccount(Form):
         return SUCCESS
 
 
-@menuentry(IContextualActionsMenu, order=10)
+@menuentry(IDocumentActions, order=10)
+class TransfertCompany(Form):
+    name('transfer.company')
+    context(Company)
+    layer(ICompanyRequest)
+    title(_(u'Transfer the company'))
+    require('manage.company')
+    
+    dataValidators = []
+    fields = Fields(ICompanyTransfer)
+
+    @property
+    def action_url(self):
+        return self.request.path
+
+    @action(_(u'Add'))
+    def handle_save(self):
+        data, errors = self.extractData()
+        
+        if errors:
+            self.flash(_(u'An error occurred.'))
+            return FAILURE
+        
+        # create it
+        account = data['account']
+        self.context.account_id = account
+
+        # redirect
+        self.flash(_(u'Company transfered with success.'))
+        self.redirect(self.application_url())
+        return SUCCESS
+    
+
+@menuentry(IDocumentActions, order=10)
 class CreateCompany(Form):
     name('add.company')
+    context(Account)
     layer(ICompanyRequest)
     title(_(u'Add a company'))
-    require('zope.Public')
-
+    require('manage.company')
+    
     dataValidators = []
     fields = Fields(ICompany).select('name', 'mnr')
 
@@ -271,7 +304,7 @@ class CreateCompany(Form):
         return SUCCESS
 
     
-@menuentry(IContextualActionsMenu, order=10)
+@menuentry(IDocumentActions, order=10)
 class CreateCourse(Form):
     context(Company)
     name('add.course')
@@ -302,11 +335,11 @@ class CreateCourse(Form):
         session.flush()
         session.refresh(course)
         self.flash(_(u'Course added with success.'))
-        self.redirect('%s/%s' % (self.application_url(), course.id))
+        self.redirect('%s/%s' % (self.url(self.context), course.id))
         return SUCCESS
 
 
-@menuentry(IContextualActionsMenu, order=10)
+@menuentry(IDocumentActions, order=10)
 class EditCourse(EditForm):
     context(Course)
     name('edit')

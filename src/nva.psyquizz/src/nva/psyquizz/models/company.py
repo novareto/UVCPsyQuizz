@@ -9,9 +9,10 @@ from uvclight.directives import traversable
 from zope.interface import Interface, implementer, directlyProvides
 from zope.location import Location
 from .interfaces import ICompany, ICriterias
+from uvc.content.interfaces import IDescriptiveSchema
 
 
-@implementer(ICompany)
+@implementer(ICompany, IDescriptiveSchema)
 class Company(Base, Location):
     traversable('criterias')
 
@@ -53,6 +54,10 @@ class Company(Base, Location):
             return course
         except (KeyError, ValueError):
             return None
+
+    @property
+    def title(self):
+        return self.name
 
     @property
     def __name__(self):

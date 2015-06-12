@@ -30,7 +30,30 @@ from uvclight.auth import require
 from zope.component import getUtilitiesFor, getUtility
 from zope.schema import getFieldsInOrder
 from sqlalchemy import or_, and_
+from dolmen.breadcrumbs.renderer import BreadcrumbsRenderer
+from cromlech.browser import IPublicationRoot
+from uvc.content import IDescriptiveSchema
 
+
+def resolve_name(item):
+    name = getattr(item, '__name__', None)
+    if name is None and not IPublicationRoot.providedBy(item):
+        raise KeyError('Object name (%r) could not be resolved.' % item)
+    dc = IDescriptiveSchema(item, None)
+    if dc is not None:
+        return name, dc.title
+    return name, name
+
+
+class Crumbs(BreadcrumbsRenderer, uvclight.Viewlet):
+    uvclight.viewletmanager(IAboveContent)
+    uvclight.order(10)
+    uvclight.name('crumbs')
+    resolver = staticmethod(resolve_name)
+
+    def __init__(self, *args):
+        uvclight.Viewlet.__init__(self, *args)
+    
 
 class FlashMessages(uvclight.Viewlet):
     uvclight.viewletmanager(IAboveContent)

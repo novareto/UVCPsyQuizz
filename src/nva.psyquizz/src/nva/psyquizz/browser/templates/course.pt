@@ -1,6 +1,7 @@
 <div tal:define="baseurl view.url(context)">
   <h1 tal:content="context.name" />
-  <h2 tal:content="context.quizz_type" />
+
+  <h2 tal:content="view.quizz_name" />
 
   <h3>Befragungen</h3>
   <ul>

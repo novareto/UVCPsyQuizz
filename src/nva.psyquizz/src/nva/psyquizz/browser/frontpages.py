@@ -7,6 +7,7 @@ from ..i18n import _
 from ..interfaces import ICompanyRequest
 from ..models import Account, Company, Student, Course, ClassSession
 from ..models import IQuizz, ICriterias
+from ..models.deferred import quizz_choice
 from collections import OrderedDict
 from cromlech.browser import exceptions
 from cromlech.sqlalchemy import get_session
@@ -67,6 +68,9 @@ class CompanyCourseHomepage(Page):
         self.criterias = {
             c.title: [v.strip() for v in c.items.split('\n') if v.strip()]
             for c in self.context.criterias}
+
+        voc = quizz_choice(self.context)
+        self.quizz_name = voc.getTermByToken(self.context.quizz_type).title
 
         
 @menuentry(IContextualActionsMenu, order=0)

@@ -43,7 +43,7 @@ class IntIds(Location):
         return '%s(%r)' % (type(self).__name__, self._data)
 
 
-from .interfaces import IQuizz, ICriterias
+from .interfaces import IQuizz, ICriterias, ICompanyTransfer
 from .company import ICompany, Company
 from .course import ICourse, Course
 from .criterias import ICriteria, Criteria, CriteriaAnswer

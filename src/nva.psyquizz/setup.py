@@ -18,6 +18,7 @@ install_requires = [
     'ul.auth',
     'dolmen.clockwork',
     'dolmen.message',
+    'dolmen.breadcrumbs',
     'zope.cachedescriptors',
     'siguvtheme.uvclight',
     'html2text',

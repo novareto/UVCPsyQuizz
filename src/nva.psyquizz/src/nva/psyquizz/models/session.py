@@ -24,6 +24,7 @@ class ClassSession(Base, Location):
     startdate = Column('startdate', Date)
     company_id = Column(String, ForeignKey('companies.name'))
     course_id = Column(String, ForeignKey('courses.id'))
+    duration = Column('duration', Integer)
     
     _students = relationship(
         "Student", backref="session",
@@ -37,7 +38,7 @@ class ClassSession(Base, Location):
 
     @property
     def enddate(self):
-        return self.startdate + timedelta(days=21)
+        return self.startdate + timedelta(days=self.duration)
 
     @property
     def students(self):
