@@ -23,7 +23,7 @@ class Student(Base, Location):
 
     # Relationships
     course_id = Column(Integer, ForeignKey('courses.id'))
-    company_id = Column(String, ForeignKey('companies.name'))
+    company_id = Column(String, ForeignKey('companies.id'))
     session_id = Column(String, ForeignKey('sessions.id'))
 
     # Quizz

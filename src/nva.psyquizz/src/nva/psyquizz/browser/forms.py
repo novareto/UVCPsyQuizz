@@ -101,7 +101,7 @@ class CreateCriterias(Form):
 
         session = get_session('school')
         criteria = Criteria(**data)
-        criteria.company_id = self.context.__parent__.name
+        criteria.company_id = self.context.__parent__.id
         session.add(criteria)
         session.flush()
         session.refresh(criteria)
@@ -146,7 +146,7 @@ class AddSession(Form):
         session = get_session('school')
         clssession = ClassSession(**data)
         clssession.course_id = self.context.id
-        clssession.company_id = self.context.__parent__.name
+        clssession.company_id = self.context.__parent__.id
         session.add(clssession)
         session.flush()
         session.refresh(clssession)
@@ -330,7 +330,7 @@ class CreateCourse(Form):
             return FAILURE
         session = get_session('school')
         course = Course(**data)
-        course.company_id = self.context.name
+        course.company_id = self.context.id
         session.add(course)
         session.flush()
         session.refresh(course)

@@ -12,7 +12,7 @@ from uvc.content.interfaces import IDescriptiveSchema
 criterias_table = Table('criterias_courses', Base.metadata,
     Column('courses_id', Integer, ForeignKey('courses.id')),
     Column('criterias_id', Integer, ForeignKey('criterias.id')),
-    Column('company_id', String, ForeignKey('companies.name')),
+    Column('company_id', String, ForeignKey('companies.id')),
 )
 
 
@@ -27,7 +27,7 @@ class Criteria(Base):
     id = Column(Integer, primary_key=True)
     title = Column('title', String)
     items = Column('items', Text)
-    company_id = Column(Integer, ForeignKey('companies.name'))
+    company_id = Column(Integer, ForeignKey('companies.id'))
 
     @property
     def traversable_id(self):
