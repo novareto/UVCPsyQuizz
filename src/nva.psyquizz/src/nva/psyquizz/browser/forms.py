@@ -420,13 +420,15 @@ class AnswerQuizz(Form):
 
         criteria_fields = []
         for criteria in self.context.course.criterias:
-            values = [c.strip() for c in criteria.items.split('\n')
-                      if c.strip()]
+            values = SimpleVocabulary([
+                    SimpleTerm(value=c.strip(), token=idx, title=c.strip())
+                    for idx, c in enumerate(criteria.items.split('\n'), 1)
+                    if c.strip()])
 
             criteria_field = Choice(
                 __name__ = 'criteria_%s' % criteria.id,
                 title=criteria.title,
-                values=values,
+                vocabulary=values,
                 required=True,
             )
             criteria_fields.append(criteria_field)
@@ -502,8 +504,9 @@ class AnswerQuizz(Form):
 def company_criterias(context):
     for criteria in context.criterias:
         vocabulary = SimpleVocabulary(
-            [SimpleTerm(value=i.strip(), title=i.strip())
-             for i in criteria.items.split('\n') if i.strip()])
+            [SimpleTerm(value=i.strip(), title=i.strip(), token=idx)
+             for idx, i in enumerate(criteria.items.split('\n'), 1)
+             if i.strip()])
         yield Set(
             __name__= '%i' % criteria.id,
             title=criteria.title,
