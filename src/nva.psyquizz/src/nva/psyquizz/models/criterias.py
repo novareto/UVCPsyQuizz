@@ -6,6 +6,7 @@ from sqlalchemy import *
 from sqlalchemy.orm import relationship
 from zope.interface import implementer
 from .interfaces import ICriteria
+from uvc.content.interfaces import IDescriptiveSchema
 
 
 criterias_table = Table('criterias_courses', Base.metadata,
@@ -15,7 +16,7 @@ criterias_table = Table('criterias_courses', Base.metadata,
 )
 
 
-@implementer(ICriteria)
+@implementer(ICriteria, IDescriptiveSchema)
 class Criteria(Base):
 
     isEditable = True
@@ -31,6 +32,7 @@ class Criteria(Base):
     @property
     def traversable_id(self):
         return str(self.id)
+
 
 
 class CriteriaAnswer(Base):

@@ -10,6 +10,8 @@ from zope.interface import Interface, implementer, directlyProvides
 from zope.location import Location
 from .interfaces import ICompany, ICriterias
 from uvc.content.interfaces import IDescriptiveSchema
+from nva.psyquizz.i18n import _
+from zope.interface import alsoProvides
 
 
 @implementer(ICompany, IDescriptiveSchema)
@@ -39,6 +41,8 @@ class Company(Base, Location):
         self._criterias.__name__ = 'criterias'
         self._criterias.__parent__ = self
         directlyProvides(self._criterias, ICriterias)
+        alsoProvides(self._criterias, IDescriptiveSchema)
+        self._criterias.title = _('Criterias')
         return self._criterias
 
     @property

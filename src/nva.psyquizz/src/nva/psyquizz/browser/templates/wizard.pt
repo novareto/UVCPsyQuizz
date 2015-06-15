@@ -76,6 +76,7 @@
 	  <div class= "collapse" id="validate"
 	       tal:condition="view.actionWidgets">
 	    <h2>Vielen Dank für Ihre Teilnahem am Fragegoben. Ihre Antworten werden ausschließlich anonymisiert verarbeitet.
+          Bitte klicken Sie noch den Button 'Abschließen', um Ihre Antworten einzusenden.
 	    </h2>
             <div class="action" tal:repeat="widget view.actionWidgets">
               <tal:widget tal:content="structure widget.render()" />

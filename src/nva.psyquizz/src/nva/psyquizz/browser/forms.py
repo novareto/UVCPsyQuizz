@@ -79,7 +79,7 @@ class IPopulateCourse(Interface):
         )
 
 
-@menuentry(IDocumentActions, order=10)
+@menuentry(IContextualActionsMenu, order=10)
 class CreateCriterias(Form):
     context(ICriterias)
     name('add.criteria')
@@ -106,7 +106,7 @@ class CreateCriterias(Form):
         session.flush()
         session.refresh(criteria)
         self.flash(_(u'Criteria added with success.'))
-        self.redirect('%s/criterias' % self.application_url())
+        self.redirect(self.url(self.context, 'criterias'))
         return SUCCESS
 
 
@@ -123,7 +123,7 @@ class EditCriteria(EditForm):
         return self.request.path
 
 
-@menuentry(IDocumentActions, order=10)
+@menuentry(IContextualActionsMenu, order=10)
 class AddSession(Form):
     context(ICourse)
     name('add.session')
@@ -170,7 +170,7 @@ class IVerifyPassword(Interface):
         required=True)
 
 
-@menuentry(IDocumentActions, order=10)
+@menuentry(IContextualActionsMenu, order=10)
 class CreateAccount(Form):
     name('index')
     layer(IRegistrationRequest)
@@ -266,7 +266,7 @@ class TransfertCompany(Form):
         return SUCCESS
     
 
-@menuentry(IDocumentActions, order=10)
+@menuentry(IContextualActionsMenu, order=10)
 class CreateCompany(Form):
     name('add.company')
     context(Account)
@@ -304,7 +304,7 @@ class CreateCompany(Form):
         return SUCCESS
 
     
-@menuentry(IDocumentActions, order=10)
+@menuentry(IContextualActionsMenu, order=10)
 class CreateCourse(Form):
     context(Company)
     name('add.course')
