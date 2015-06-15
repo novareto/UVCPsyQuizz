@@ -24,7 +24,7 @@ class Course(Base, Location):
     id = Column('id', Integer, primary_key=True)
     name = Column('name', String)
     startdate = Column('startdate', Date)
-    company_id = Column(String, ForeignKey('companies.name'))
+    company_id = Column(String, ForeignKey('companies.id'))
     quizz_type = Column('quizz_type', String)
     extra_questions = Column('extra_questions', Text)
 

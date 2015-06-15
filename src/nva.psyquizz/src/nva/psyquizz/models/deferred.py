@@ -33,7 +33,7 @@ def criterias_choice(context):
     session = get_session('school')
     company = get_company_id(context)
     criterias = session.query(Criteria).filter(
-        Criteria.company_id == company.name)
+        Criteria.company_id == company.id)
     return SimpleVocabulary([
         SimpleTerm(value=c, token=c.id, title=c.title)
         for c in criterias])

@@ -22,10 +22,10 @@ class ClassSession(Base, Location):
 
     id = Column('id', Integer, primary_key=True)
     startdate = Column('startdate', Date)
-    company_id = Column(String, ForeignKey('companies.name'))
+    company_id = Column(String, ForeignKey('companies.id'))
     course_id = Column(String, ForeignKey('courses.id'))
     duration = Column('duration', Integer)
-    
+
     _students = relationship(
         "Student", backref="session",
         collection_class=attribute_mapped_collection('access'))
