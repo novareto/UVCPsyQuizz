@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from dolmen.clockwork.formatters import DefaultFormDateManager
 from dolmen.clockwork.formatters import DefaultFormDatetimeManager
 

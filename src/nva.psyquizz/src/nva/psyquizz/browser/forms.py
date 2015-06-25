@@ -7,7 +7,6 @@ import html2text
 
 from ..i18n import _
 from ..interfaces import IAnonymousRequest, ICompanyRequest, IRegistrationRequest
-
 from ..models import Account, Company, Course, ClassSession, Student
 from ..models import IAccount, ICompany, ICourse, IClassSession
 from ..models import ICompanyTransfer, IQuizz, TrueOrFalse
@@ -30,6 +29,8 @@ from zope.component import getUtility
 from zope.interface import Interface
 from zope.schema import Int, Choice, Set, Password
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
+from grokcore.component import baseclass
+from siguvtheme.resources import all_dates, datepicker_de
 
 
 with open(os.path.join(os.path.dirname(__file__), 'mail.tpl'), 'r') as fd:
@@ -132,6 +133,11 @@ class AddSession(Form):
 
     fields = Fields(IClassSession).select('startdate', 'duration')
 
+    def update(self):
+        all_dates.need()
+        datepicker_de.need()
+        Form.update(self)
+    
     @property
     def action_url(self):
         return self.request.path

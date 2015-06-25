@@ -74,7 +74,7 @@ msgid "Password for observation access"
 msgstr "Passwort"
 
 msgid "Course name"
-msgstr "Name des Befragung"
+msgstr "Name der Befragung"
 
 msgid "Students"
 msgstr "Students"
@@ -95,25 +95,25 @@ msgid "i"
 msgstr "i"
 
 msgid "Criterias"
-msgstr "Unternehmensprofil"
+msgstr "Tätigkeiten/Bereiche festlegen"
 
 msgid "All criterias"
 msgstr "Alle Kriterien"
 
 msgid "Add a criteria"
-msgstr "Kriterium anlegen"
+msgstr "Auswertungsgruppen bilden"
 
 msgid "Label"
 msgstr "Kriterium (z. B. Standort, Abteilung, Tätigkeit)"
 
 msgid "Please enter one criteria per line"
-msgstr "Ausprägung für das Kriterium"
+msgstr "Auswertungsgruppen"
 
 msgid "Description items"
-msgstr "Nennen Sie mindestens zwei unterschiedliche Ausprägungen (Beispiel Standort: „Hamburg“ und „Berlin“)"
+msgstr "Nennen Sie mindestens zwei unterschiedliche Ausprägungen (Beispiel Standort: „Hamburg“ und „Berlin“). ￼Trennzeichen für die Kriterien erläutern „Return“"
 
 msgid "Description Label"
-msgstr "Mithilfe der Kriterien können sie später die psychische Belastung z. B. regional, bezogen auf Abteilungen oder andere Kriterien auswerten"
+msgstr "Mithilfe der Kriterien können Sie unterschiedliche Auswertungsgruppen bilden: (z.B. Kriterium Standort ermöglicht die Auswertungsgruppen Berlin, Bremen, Hannover)"
 
 msgid "Company ID"
 msgstr "Mitgliedsnummer"
@@ -144,3 +144,6 @@ msgstr "Benutzerprofil übertragen"
 
 msgid "Duration of the session's validity"
 msgstr "Dauer der Befragung"
+
+msgid "Please give your Fullname here"
+msgstr "Bitten tragen Sie in dieses Feld Ihren Vor- und Zunamen ein."

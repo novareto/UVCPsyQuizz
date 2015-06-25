@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
+import datetime
+from . import deferred_vocabularies, vocabularies
+from grokcore.component import provider
 from nva.psyquizz.i18n import _
 from uvc.content.interfaces import IContent
 from zope import schema
-from zope.interface import Interface
+from zope.interface import invariant, Invalid, Interface
 from zope.location import ILocation
-from . import deferred_vocabularies, vocabularies
-from grokcore.component import provider
 from zope.schema.interfaces import IContextSourceBinder
 
 
@@ -44,6 +45,7 @@ class IAccount(ILocation, IContent):
 
     name = schema.TextLine(
         title=_(u"Fullname"),
+        description=_(u"Please give your Fullname here"),
         required=True,
     )
 
@@ -110,6 +112,12 @@ class IClassSession(ILocation, IContent):
         title=_(u"Students"),
         required=False,
         )
+
+    @invariant
+    def check_date(data):
+        date = data.startdate
+        if date is not None and date < datetime.date.today():
+            raise Invalid(_(u"You can't set a date in the past."))
 
 
 class ICourse(ILocation, IContent):
