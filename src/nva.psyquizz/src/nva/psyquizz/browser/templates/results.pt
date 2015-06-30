@@ -80,6 +80,13 @@
 	  labels: <span tal:replace="[k.encode('iso-8859-1') for k in data[qname]['chart'].keys()]" />,
 	  datasets: [
           {
+	  scaleShowLine : true,
+	  scaleBeginAtZero : true,
+	  scaleBeginAtZero: true,
+	  graphMin : 0,
+	  graphMax : 5,
+	  scaleShowGridLines: true,
+	  scaleGridLineWidth: 1,
           label: "My First dataset",
           fillColor: "rgba(220,220,220,0.3)",
           strokeColor: "rgba(120,120,120,1)",
@@ -91,9 +98,23 @@
           },
 	  ]
 	  };
-	  
+
+          function computeGraphBG(area, ctx, data, statData, posi,posj, vars) {
+	    alert(area, ctx, data, statData, posi,posj, vars);
+	  }
+
+          var opt = {
+            legend : true,
+	    scaleShowLabelBackdrop: true,
+	    scaleShowLabels: true,
+	    scaleShowLine: true,
+	    scaleBeginAtZero: true,
+	    graphMin: 0,
+	    graphMax: 5,
+	  }
+	    
 	  var ctx = document.getElementById("myChart").getContext("2d");
-	  var myNewChart = new Chart(ctx).Radar(data);
+          var myNewChart = new Chart(ctx).Radar(data, opt);
 	</script>
       </tal:chart>
       

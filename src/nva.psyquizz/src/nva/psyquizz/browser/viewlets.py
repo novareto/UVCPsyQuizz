@@ -49,6 +49,8 @@ class Crumbs(BreadcrumbsRenderer, uvclight.Viewlet):
     uvclight.viewletmanager(IAboveContent)
     uvclight.order(10)
     uvclight.name('crumbs')
+    uvclight.layer(ICompanyRequest)
+    
     resolver = staticmethod(resolve_name)
 
     def __init__(self, *args):
@@ -270,7 +272,8 @@ class Home(uvclight.MenuItem):
     uvclight.title(_(u'Startseite'))
     uvclight.auth.require('zope.Public')
     uvclight.menu(INavigationMenu)
-
+    uvclight.layer(ICompanyRequest)
+    
     @property
     def action(self):
         return self.view.application_url()

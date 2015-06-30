@@ -31,6 +31,8 @@
           strokeColor: "<span tal:replace="colors[1]" />",
           pointColor: "<span tal:replace="colors[2]" />",
 	  </tal:color>
+	  scaleShowGridLines: true,
+	  scaleGridLineWidth: 1,
           pointStrokeColor: "#fff",
           pointHighlightFill: "#fff",
           pointHighlightStroke: "rgba(220,220,220,1)",
@@ -44,6 +46,10 @@
             legend : true,
 	    scaleShowLabelBackdrop: true,
 	    scaleShowLabels: true,
+	    scaleShowLine: true,
+	    scaleBeginAtZero: true,
+	    graphMin: 0,
+	    graphMax: 5,
 	  }
 	  
 	  var ctx = document.getElementById("myChart").getContext("2d");

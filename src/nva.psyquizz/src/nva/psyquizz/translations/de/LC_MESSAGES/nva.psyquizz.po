@@ -41,7 +41,7 @@ msgid "An error occurred."
 msgstr "Une erreur est survenue."
 
 msgid "Course added with success."
-msgstr "Unternehmen erfolgreich registriert."
+msgstr "Die Befragung wurde erfolgreich angelegt."
 
 msgid "Add accesses"
 msgstr "Fragebogen anlegen"
@@ -147,3 +147,9 @@ msgstr "Dauer der Befragung"
 
 msgid "Please give your Fullname here"
 msgstr "Bitten tragen Sie in dieses Feld Ihren Vor- und Zunamen ein."
+
+msgid "Account added with success."
+msgstr "Der Benutzeraccount wurde angelegt."
+
+msgid "Session added with success."
+msgstr "Die Lehreinheit wurde erfolgreich angelegt"

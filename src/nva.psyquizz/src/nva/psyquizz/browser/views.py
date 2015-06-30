@@ -26,6 +26,7 @@ class LogoutMenu(MenuItem):
    context(interface.Interface)
    menu(IPersonalMenu)
    title(u'Logout')
+   layer(ICompanyRequest)
 
    @property
    def action(self):

@@ -76,6 +76,15 @@ class ICompanyTransfer(Interface):
         )
 
 
+class ICompanies(Interface):
+
+    company = schema.Choice(
+        title=_(u"Company"),
+        source=deferred('companies_choice'),
+        required=True,
+        )
+
+    
 class ICompany(ILocation, IContent):
 
     name = schema.TextLine(
