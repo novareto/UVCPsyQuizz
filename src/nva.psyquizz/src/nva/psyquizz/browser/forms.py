@@ -7,10 +7,9 @@ import html2text
 
 from ..i18n import _
 from ..interfaces import IAnonymousRequest, ICompanyRequest, IRegistrationRequest
-
 from ..models import Account, Company, Course, ClassSession, Student
 from ..models import IAccount, ICompany, ICourse, IClassSession
-from ..models import ICompanyTransfer, IQuizz, TrueOrFalse
+from ..models import ICompanyTransfer, ICompanies, IQuizz, TrueOrFalse
 from ..models import Criteria, CriteriaAnswer, ICriteria, ICriterias
 from .emailer import SecureMailer, prepare, ENCODING
 
@@ -30,6 +29,8 @@ from zope.component import getUtility
 from zope.interface import Interface
 from zope.schema import Int, Choice, Set, Password
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
+from grokcore.component import baseclass
+from siguvtheme.resources import all_dates, datepicker_de
 
 
 with open(os.path.join(os.path.dirname(__file__), 'mail.tpl'), 'r') as fd:
@@ -132,6 +133,11 @@ class AddSession(Form):
 
     fields = Fields(IClassSession).select('startdate', 'duration')
 
+    def update(self):
+        all_dates.need()
+        datepicker_de.need()
+        Form.update(self)
+    
     @property
     def action_url(self):
         return self.request.path
@@ -152,7 +158,6 @@ class AddSession(Form):
         session.refresh(clssession)
         self.flash(_(u'Session added with success.'))
         self.redirect('%s' % self.url(self.context))
-
         return SUCCESS
 
     
@@ -264,8 +269,43 @@ class TransfertCompany(Form):
         self.flash(_(u'Company transfered with success.'))
         self.redirect(self.application_url())
         return SUCCESS
-    
 
+
+@menuentry(IDocumentActions, order=10)
+class GlobalTransfertCompany(Form):
+    name('transfer.company')
+    context(Interface)
+    layer(ICompanyRequest)
+    title(_(u'Transfer the company'))
+    require('manage.company')
+    
+    dataValidators = []
+    fields = Fields(ICompanies, ICompanyTransfer)
+
+    @property
+    def action_url(self):
+        return self.request.path
+
+    @action(_(u'Add'))
+    def handle_save(self):
+        data, errors = self.extractData()
+        
+        if errors:
+            self.flash(_(u'An error occurred.'))
+            return FAILURE
+        
+        # create it
+        company = data['company']
+        account = data['account']
+        company.account_id = account
+
+        # redirect
+        self.flash(_(u'Company transfered with success.'))
+        self.redirect(self.application_url())
+        return SUCCESS
+
+
+    
 @menuentry(IContextualActionsMenu, order=10)
 class CreateCompany(Form):
     name('add.company')
@@ -391,7 +431,7 @@ class AnswerQuizz(Form):
     require('zope.Public')
     title(_(u'Answer the quizz'))
     dataValidators = []
-    template = get_template('wizard.pt', __file__)
+    template = get_template('wizard2.pt', __file__)
 
     def update(self):
         course = self.context.course
@@ -535,7 +575,7 @@ class CriteriaFiltering(Form):
         self.criterias = {int(k): v for k,v in data.items()
                           if v is not NO_VALUE}
         return SUCCESS
-    
+
 
 @menuentry(IContextualActionsMenu, order=10)
 class ClassStats(CriteriaFiltering):

@@ -2,19 +2,17 @@
 
 import uuid
 
+from ..interfaces import ICompanyRequest
 from nva.psyquizz import Base
 from nva.psyquizz.models.interfaces import IQuizz, IStudent
 from datetime import datetime
 from sqlalchemy import *
 from zope.interface import implementer
 from zope.location import Location
-
+from uvclight import getRequest
 
 @implementer(IQuizz, IStudent)
 class Student(Base, Location):
-
-    isEditable = True
-    isDeletable = True
     
     __tablename__ = 'students'
 
@@ -44,3 +42,13 @@ class Student(Base, Location):
     @__name__.setter
     def __name__(self, value):
         pass
+
+    @property
+    def isEditable(self):
+        request = getRequest()
+        return ICompanyRequest.providedBy(request)
+
+    @property
+    def isDeletable(self):
+        request = getRequest()
+        return ICompanyRequest.providedBy(request)

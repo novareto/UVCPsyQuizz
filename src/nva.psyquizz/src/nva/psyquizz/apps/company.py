@@ -12,11 +12,12 @@ from cromlech.browser.interfaces import ITraverser
 from cromlech.security import Interaction, unauthenticated_principal
 from cromlech.sqlalchemy import get_session
 from datetime import datetime
-from dolmen.forms.base import Fields, SuccessMarker
+from dolmen.forms.base import Fields, SuccessMarker,action
 from ul.auth import SecurePublication, ICredentials
 from ul.auth.browser import Login, ILoginForm
 from ul.browser.context import ContextualRequest
 from ul.browser.publication import Publication
+from ul.auth import _
 from ul.browser.decorators import sessionned
 from ul.sql.decorators import transaction_sql
 from uvclight import GlobalUtility, name, layer, MultiAdapter, provides, adapts
@@ -113,6 +114,15 @@ class AccountLogin(Login):
         for field in fields:
             field.prefix = ''
         return fields
+
+    @action(_(u'Login'))
+    def log_me(self):
+        result = Login.log_me(self)
+        if result.success == True:
+            if IActivationRequest.providedBy(self.request):
+                return SuccessMarker(
+                    'Add a company', True, url='/add.company')
+        return result
 
     def credentials_managers(self):
         yield Access()
