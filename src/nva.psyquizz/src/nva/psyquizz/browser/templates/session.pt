@@ -1,7 +1,7 @@
 <div tal:define="baseurl view.url(context)">
   <p>
-    Session starts the <span tal:content="context.startdate" />
-    and ends the <span tal:content="context.enddate" />
+    Die Erhebung beginnt vom <span tal:content="context.startdate" />
+    bis <span tal:content="context.enddate" />.
   </p>
   <dl>
     <dt>Abgeschlossene Fragebogen</dt>

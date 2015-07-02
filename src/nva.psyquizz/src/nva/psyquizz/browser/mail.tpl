@@ -8,7 +8,7 @@
       <h1>Hallo $email</h1>
       <p>
         vielen Dank, dass Sie sich bei unserer Online-Hilfe zur Gefährdungsbeurteilung psychischer Belastung registriert haben. Um die Registrierung abzuschließen, melden Sie sich bitte mit Ihren Benutzerdaten unter diesem Link an:
-    <a href="$base_url/++activation++/login?activation=$activation_code">Aktivierung der Online-Hilfe für $email</a>
+    <a href="$base_url/++activation++/login?activation=$activation_code&username=$email">Aktivierung der Online-Hilfe für $email</a>
       </p>
       <p>
        Wir wünschen viel Erfolg bei der Gefährdungsbeurteilung.

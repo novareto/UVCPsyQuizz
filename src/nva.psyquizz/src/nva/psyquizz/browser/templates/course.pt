@@ -6,7 +6,7 @@
   <h3>Befragungen</h3>
   <ul>
     <li tal:repeat="session context.sessions">
-    <a tal:attributes="href '%s/sessions/%s' % (baseurl, session.id)" tal:content="session.startdate" /> <br>
+    <a tal:attributes="href '%s/sessions/%s' % (baseurl, session.id)"> Startdatum: <span tal:content="session.startdate" /> </a> <br>
       <a tal:attributes="href '%s/quizz/generic-%s' % (view.application_url(), session.id)"> Link für den Fragebogen (Bitte an Teilnehmer/Benutzer verteilen) </a><br>
       <span tal:content="'%s/quizz/generic-%s' % (view.application_url(), session.id)"></span> 
     </li>

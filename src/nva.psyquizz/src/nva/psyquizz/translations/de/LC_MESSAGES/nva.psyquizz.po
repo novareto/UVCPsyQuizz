@@ -56,7 +56,7 @@ msgid "Frontpage"
 msgstr "Startseite"
 
 msgid "This quizz is already completed and therefore closed."
-msgstr "Der Fragebogen ist bereits abgeschlossen."
+msgstr ""
 
 msgid "Results for the course"
 msgstr "Auswertung Unternehmensbereich"
@@ -144,3 +144,9 @@ msgstr "Benutzerprofil übertragen"
 
 msgid "Duration of the session's validity"
 msgstr "Dauer der Befragung"
+
+msgid "Session added with success."
+msgstr "Ihre Erhebung wurde erfolgreich angelegt"
+
+msgid "Account added with success."
+msgstr "Ihr Benutzerprofil wurde erfolgreich erstellt."

@@ -109,6 +109,7 @@ class AccountLogin(Login):
         if IActivationRequest.providedBy(self.request):
             fields += Fields(IActivation)
             fields['activation'].ignoreRequest = False
+            fields['username'].ignoreRequest = False
         for field in fields:
             field.prefix = ''
         return fields
