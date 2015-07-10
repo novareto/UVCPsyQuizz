@@ -618,3 +618,18 @@ class CourseDiff(CriteriaFiltering):
     @property
     def fields(self):
         return Fields(*list(company_criterias(self.context)))
+
+
+from ul.auth.browser import Login
+from ..apps.company import NoAccess, Application
+from nva.psyquizz import quizzjs
+
+
+class MyLogin(Login):
+    name('login')
+    context(NoAccess)
+    layer(ICompanyRequest)
+
+    def update(self):
+        quizzjs.need()
+        pass 

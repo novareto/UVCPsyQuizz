@@ -17,7 +17,6 @@ from uvclight.auth import require
 from zope.component import getUtilitiesFor, getUtility
 from zope.schema import getFieldsInOrder
 from cromlech.sqlalchemy import get_session
-from nva.psyquizz import quizzjs
 from zope import interface
 from uvc.design.canvas import IPersonalMenu
 
