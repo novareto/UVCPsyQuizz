@@ -1,0 +1,8 @@
+<div class="wizard-block">
+ <h3>Ihre nächsten Schritt</h3>
+ <ul>
+   <li>
+     <a href="" tal:attributes="href view.url(context, 'add.company')"> Neues Unternehmen anlegen </a> 
+   </li>
+ </ul>
+</div>
