@@ -107,6 +107,8 @@ class AccountLogin(Login):
     @property
     def fields(self):
         fields = Login.fields
+        fields['username'].title = u"E-Mail"
+        fields['came_from'].title = u' '
         if IActivationRequest.providedBy(self.request):
             fields += Fields(IActivation)
             fields['activation'].ignoreRequest = False
