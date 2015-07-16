@@ -27,15 +27,15 @@ LessToMore = SimpleVocabulary([
 
 MoreToLess = SimpleVocabulary([
     SimpleTerm(value=5,
-               title='trifft gar nicht zu'),
+               title=u'trifft gar nicht zu'),
     SimpleTerm(value=4,
-               title='trifft wenig zu'),
+               title=u'trifft wenig zu'),
     SimpleTerm(value=3,
-               title='trifft mittelmäßig zu'),
+               title=u'trifft mittelmäßig zu'),
     SimpleTerm(value=2,
-               title='trifft über-wiegend zu'),
+               title=u'trifft über-wiegend zu'),
     SimpleTerm(value=1,
-               title='trifft völlig zu'),
+               title=u'trifft völlig zu'),
     ])
 
 
