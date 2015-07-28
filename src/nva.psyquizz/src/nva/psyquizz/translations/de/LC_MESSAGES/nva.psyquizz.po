@@ -153,3 +153,12 @@ msgstr "Bitten tragen Sie in dieses Feld Ihren Vor- und Zunamen ein."
 
 msgid "Session added with success."
 msgstr "Die Lehreinheit wurde erfolgreich angelegt"
+
+msgid "Criteria added with success."
+msgstr "Die Auswertungsgruppe wurde erfolgreich angelegt"
+
+msgid "Delete"
+msgstr "Löschen"
+
+msgid "Deleted with success."
+msgstr "Das Objekt wurde erfolgreich gelöscht"

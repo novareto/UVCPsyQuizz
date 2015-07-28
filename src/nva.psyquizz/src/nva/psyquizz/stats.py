@@ -71,7 +71,10 @@ class QuizzStats(object):
                     })
             yield question
 
-        xq = set(self.extra_questions.strip().split('\n'))
+        if self.extra_questions:
+            xq = set(self.extra_questions.strip().split('\n'))
+        else:
+            xq = ()
         for title in xq:
             title = title.strip()
             if title == "":

@@ -3,6 +3,7 @@
 import os
 import json
 import uuid
+import uvclight
 import html2text
 
 from ..i18n import _
@@ -22,7 +23,7 @@ from string import Template
 from uvc.design.canvas import IContextualActionsMenu, IPersonalMenu
 from uvc.design.canvas import IDocumentActions
 from uvclight.form_components.fields import Captcha
-from uvclight import Form, EditForm, Fields, SUCCESS, FAILURE
+from uvclight import Form, EditForm, DeleteForm, Fields, SUCCESS, FAILURE
 from uvclight import action, layer, name, context, title, get_template, baseclass
 from uvclight.auth import require
 from zope.component import getUtility
@@ -238,6 +239,27 @@ class CreateAccount(Form):
         return SUCCESS
 
 
+@menuentry(IDocumentActions, order=20)
+class DeletedAccount(DeleteForm):
+    context(Account)
+    name('delete')
+    require('manage.company')
+    title(_(u'Delete'))
+
+    @property
+    def action_url(self):
+        return self.request.path
+
+    @action(_(u'Delete'))
+    def handle_save(self):
+        session = get_session('school')
+        session.delete(self.context)
+        session.flush()
+        self.flash(_(u'Deleted with success.'))
+        self.redirect(self.application_url())
+        return SUCCESS
+
+
 @menuentry(IDocumentActions, order=10)
 class TransfertCompany(Form):
     name('transfer.company')
@@ -271,7 +293,19 @@ class TransfertCompany(Form):
         return SUCCESS
 
 
-@menuentry(IDocumentActions, order=10)
+#@menuentry(IPersonalMenu, order=10)
+class TranserCompany(uvclight.MenuItem):
+    context(Interface)
+    layer(ICompanyRequest)
+    title(_(u'Transfer the company'))
+    require('manage.company')
+    uvclight.menu(IPersonalMenu)
+
+    @property
+    def action(self):
+        return self.view.application_url() + '/transfer/company'
+
+
 class GlobalTransfertCompany(Form):
     name('transfer.company')
     context(Interface)
@@ -285,6 +319,9 @@ class GlobalTransfertCompany(Form):
     @property
     def action_url(self):
         return self.request.path
+
+    #def action(self):
+    #    return self.request.path
 
     @action(_(u'Add'))
     def handle_save(self):
@@ -343,6 +380,27 @@ class CreateCompany(Form):
         self.redirect(base_url)
         return SUCCESS
 
+
+@menuentry(IDocumentActions, order=20)
+class DeletedCompany(DeleteForm):
+    context(Company)
+    name('delete')
+    require('manage.company')
+    title(_(u'Delete'))
+
+    @property
+    def action_url(self):
+        return self.request.path
+
+    @action(_(u'Delete'))
+    def handle_save(self):
+        session = get_session('school')
+        session.delete(self.context)
+        session.flush()
+        self.flash(_(u'Deleted with success.'))
+        self.redirect(self.application_url())
+        return SUCCESS
+
     
 @menuentry(IContextualActionsMenu, order=10)
 class CreateCourse(Form):
@@ -352,11 +410,13 @@ class CreateCourse(Form):
     title(_(u'Add a course'))
 
     fields = Fields(ICourse).select(
-        'name', 'startdate', 'criterias',
-        'quizz_type', 'extra_questions')
+        'name', 'criterias',
+        'quizz_type') + Fields(IClassSession).select('startdate', 'duration')
 
-    #def update(self):
-    #    alldate.need()
+    def update(self):
+        all_dates.need()
+        datepicker_de.need()
+        Form.update(self)
 
     @property
     def action_url(self):
@@ -369,11 +429,22 @@ class CreateCourse(Form):
             self.flash(_(u'An error occurred.'))
             return FAILURE
         session = get_session('school')
+        csdata = dict(
+            startdate=data.pop('startdate'),
+            duration=data.pop('duration')
+        )
         course = Course(**data)
         course.company_id = self.context.id
         session.add(course)
         session.flush()
         session.refresh(course)
+        clssession = ClassSession(**csdata)
+        
+        clssession.course_id = course.id
+        clssession.company_id = self.context.id
+        session.add(clssession)
+        session.flush()
+        session.refresh(clssession)
         self.flash(_(u'Course added with success.'))
         self.redirect('%s/%s' % (self.url(self.context), course.id))
         return SUCCESS
@@ -389,12 +460,30 @@ class EditCourse(EditForm):
     fields = Fields(ICourse).select(
         'name', 'startdate')
 
-    #def update(self):
-    #    alldate.need()
+    @property
+    def action_url(self):
+        return self.request.path
+
+
+@menuentry(IDocumentActions, order=20)
+class DeleteCourse(DeleteForm):
+    context(Course)
+    name('delete')
+    require('manage.company')
+    title(_(u'Delete'))
 
     @property
     def action_url(self):
         return self.request.path
+
+    @action(_(u'Delete'))
+    def handle_save(self):
+        session = get_session('school')
+        session.delete(self.context)
+        session.flush()
+        self.flash(_(u'Deleted with success.'))
+        self.redirect(self.application_url())
+        return SUCCESS
 
 
 @menuentry(IContextualActionsMenu, order=10)
