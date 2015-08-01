@@ -13,7 +13,7 @@ from uvclight import getRequest
 
 @implementer(IQuizz, IStudent)
 class Student(Base, Location):
-    
+
     __tablename__ = 'students'
 
     access = Column('access', String, primary_key=True)
@@ -21,8 +21,8 @@ class Student(Base, Location):
 
     # Relationships
     course_id = Column(Integer, ForeignKey('courses.id'))
-    company_id = Column(String, ForeignKey('companies.id'))
-    session_id = Column(String, ForeignKey('sessions.id'))
+    company_id = Column(Integer, ForeignKey('companies.id'))
+    session_id = Column(Integer, ForeignKey('sessions.id'))
 
     # Quizz
     quizz_type = Column('quizz_type', String)
