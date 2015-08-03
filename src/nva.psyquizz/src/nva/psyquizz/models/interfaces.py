@@ -122,6 +122,11 @@ class IClassSession(ILocation, IContent):
         required=False,
         )
 
+    about = schema.Text(
+        title=_(u"About"),
+        required=False,
+        )
+
     @invariant
     def check_date(data):
         date = data.startdate

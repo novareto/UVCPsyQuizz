@@ -5,6 +5,7 @@ import json
 import uuid
 import html2text
 
+from .. import wysiwyg
 from ..i18n import _
 from ..interfaces import IAnonymousRequest, ICompanyRequest, IRegistrationRequest
 from ..models import Account, Company, Course, ClassSession, Student
@@ -131,13 +132,14 @@ class AddSession(Form):
     title(_(u'Add a session'))
     require('zope.Public')
 
-    fields = Fields(IClassSession).select('startdate', 'duration')
+    fields = Fields(IClassSession).select('startdate', 'duration', 'about')
 
     def update(self):
         all_dates.need()
         datepicker_de.need()
+        wysiwyg.need()        
         Form.update(self)
-    
+
     @property
     def action_url(self):
         return self.request.path

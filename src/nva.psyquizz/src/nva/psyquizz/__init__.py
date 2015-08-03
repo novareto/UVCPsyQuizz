@@ -16,7 +16,8 @@ from zope.component.hooks import setSite
 from zope.interface import implementer
 from zope.location import Location, ILocation
 from dolmen.sqlcontainer import SQLContainer
-from fanstatic import Library, Resource
+from fanstatic import Library, Resource, Group
+from siguvtheme.resources import bootstrap_css, siguv_css
 
 
 library = Library('nva.psyquizz', 'static')
@@ -27,5 +28,12 @@ library = Library('nva.psyquizz', 'static')
 charthjs = Resource(library, 'ChartNew.js')
 quizzcss = Resource(library, 'quizz.css')
 quizzjs = Resource(library, 'quizz.js', depends=[charthjs, ])
+
+wysiwyg_js = Resource(library, 'summernote.min.js', bottom=True)
+font_css = Resource(library, 'font-awesome.min.css')
+wysiwyg_css = Resource(library, 'summernote.css',
+                       depends=[bootstrap_css, siguv_css, font_css])
+editor = Resource(library, 'quizzeditor.js', depends=[wysiwyg_js], bottom=True)
+wysiwyg = Group([wysiwyg_js, wysiwyg_css, editor])
 
 Base = declarative_base()
