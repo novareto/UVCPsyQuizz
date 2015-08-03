@@ -32,14 +32,14 @@ class IGroup1(Interface):
     question3 = schema.Choice(
         title=u"1.3",
         description=u"Bei meiner Arbeit habe ich insgesammt gesehen häufig wechselnde, unterschiedliche Arbeitsaufgaben.",
-        vocabulary=LessToMore,
+        vocabulary=MoreToLess,
         required=True,
         )
 
     question4 = schema.Choice(
         title=u"1.4",
         description=u"Bei meiner Arbeit sehe ich selber am Ergebnis ob meine Arbeit, gut war oder nicht.",
-        vocabulary=LessToMore,
+        vocabulary=MoreToLess,
         required=True,
         )
 
@@ -47,7 +47,7 @@ class IGroup1(Interface):
         title=u"1.5",
         description=u"Meine Arbeit ist so gestaltet, dass ich die Möglichkeit habe, ein vollständiges Arbeitsprodukt \
                 eine vollständige Arbeitsaufgabe von Anfang bis Ende herzustellen.",
-        vocabulary=LessToMore,
+        vocabulary=MoreToLess,
         required=True,
         )
 
@@ -234,10 +234,10 @@ class Quizz2(Base, Location):
     student_id = Column(String, ForeignKey('students.access'))
     course_id = Column(Integer, ForeignKey('courses.id'))
     session_id = Column(Integer, ForeignKey('sessions.id'))
-    company_id = Column(String, ForeignKey('companies.id'))
+    company_id = Column(Integer, ForeignKey('companies.id'))
 
     student = relationship("Student")
-    
+
     # Quizz
     completion_date = Column('completion_date', DateTime)
     question1 = Column('question1', Integer)

@@ -1,0 +1,34 @@
+  <h1 tal:content="context.name" />
+    <p>
+    Herzlich Willkommen bei der Online-Hilfe der BG ETEM für Ihre Gefährdungsbeurteilung psychischer Belastung. Mit diesem Werkzeug können Sie die psychischen Belastungen der Beschäftigten Ihres Unternehmens unkompliziert erheben. Auf den folgenden Seiten können Sie das Profil Ihres Unternehmens beschreiben, Befragungen anlegen, Ergebnisse einsehen und mit früheren Befragungen vergleichen.
+    </p>
+
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-default" tal:repeat="company iter(context)">
+    <div class="panel-heading" role="tab" id="headingOne" tal:attributes="id string:heading${company.id}">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" tal:attributes="href string:#collapse${company.id}">
+          <span tal:content="company.name"/>
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne" tal:attributes="id string:collapse${company.id}">
+      <div class="panel-body">
+        <div tal:repeat="course company.courses">
+          <fieldset tal:repeat="session course.sessions">
+          <legend tal:content="course.title"> </legend>
+          <p tal:content="view.quizz_name(course)"> </p>
+          <p> <b> Dauer: </b> <span tal:content="string: ${session.startdate.strftime('%d.%m.%Y')} - ${session.enddate.strftime('%d.%m.%Y')}"></span>  </p>
+          <p> <b> Link: </b>  <span tal:content="'%s/quizz/generic-%s' % (view.application_url(), session.id)"></span> </p>
+          <p> <b> Auswertung: </b> <a href="" tal:attributes="href view.url(context, str(company.id) + '/' + str(course.id) + '/course.stats')"> hier </a> </p>
+          <p> <b> Eingänge: </b> <span class="badge" tal:content="len(list(session.complete))"> </span> </p>
+        </fieldset>
+        </div>
+        <div tal:condition="len(list(company.courses)) == 0">
+          <h3> Sie haben bis jetzt für Ihr Unternehmen <span tal:content="company.name"/> noch keine Befragung angelegt.</h3>
+            Klicken Sie bitte <a href="" tal:attributes="href view.url(context, str(company.id) + '/add.course')">hier </a> um eine neue Befragung anzulegen
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

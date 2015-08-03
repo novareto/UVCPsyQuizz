@@ -12,7 +12,7 @@ from uvc.content.interfaces import IDescriptiveSchema
 criterias_table = Table('criterias_courses', Base.metadata,
     Column('courses_id', Integer, ForeignKey('courses.id')),
     Column('criterias_id', Integer, ForeignKey('criterias.id')),
-    Column('company_id', String, ForeignKey('companies.id')),
+    Column('company_id', Integer, ForeignKey('companies.id')),
 )
 
 
@@ -21,7 +21,7 @@ class Criteria(Base):
 
     isEditable = True
     isDeletable = True
-    
+
     __tablename__ = 'criterias'
 
     id = Column(Integer, primary_key=True)

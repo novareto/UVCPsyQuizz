@@ -178,7 +178,7 @@ class Quizz1(Base, Location):
     student_id = Column(String, ForeignKey('students.access'))
     course_id = Column(Integer, ForeignKey('courses.id'))
     session_id = Column(Integer, ForeignKey('sessions.id'))
-    company_id = Column(String, ForeignKey('companies.id'))
+    company_id = Column(Integer, ForeignKey('companies.id'))
 
     student = relationship("Student")
 
@@ -206,4 +206,4 @@ class Quizz1(Base, Location):
     extra_questions = Column('extra_questions', Text)
 
 
-global_utility(Quizz1, provides=IQuizz, name='quizz1', direct=True)
+# global_utility(Quizz1, provides=IQuizz, name='quizz1', direct=True)

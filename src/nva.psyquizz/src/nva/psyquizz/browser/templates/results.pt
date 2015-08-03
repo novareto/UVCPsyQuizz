@@ -1,5 +1,5 @@
 <div id="result">
-  <h1>Current results</h1>
+  <h1> Ergebnisse </h1>
   <div class="panel"
        tal:define="data dict(viewlet.display());">
     
@@ -16,9 +16,9 @@
 	                 class repeat['qname'].start and 'collapse in' or 'collapse'">
 
       <h2>
-	Statistics concerning
+ Statistik für	
 	<span tal:content="data[qname]['total']" /> /
-	<span tal:content="data[qname]['all']" /> students
+	<span tal:content="data[qname]['all']" /> Teilnehmer 
       </h2>
 
       <dl>
