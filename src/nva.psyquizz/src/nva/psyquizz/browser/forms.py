@@ -55,7 +55,8 @@ def send_activation_code(company_name, email, code, base_url):
 
         text = html2text.html2text(html.decode('utf-8'))
         mail = prepare(from_, email, title, html, text.encode('utf-8'))
-        sender(from_, email, mail.as_string())
+        print mail.as_string()
+        #sender(from_, email, mail.as_string())
     return True
 
 
@@ -138,7 +139,7 @@ class AddSession(Form):
         all_dates.need()
         datepicker_de.need()
         Form.update(self)
-    
+
     @property
     def action_url(self):
         return self.request.path
@@ -161,7 +162,7 @@ class AddSession(Form):
         self.redirect('%s' % self.url(self.context))
         return SUCCESS
 
-    
+
 class ICaptched(Interface):
 
     captcha = Captcha(
@@ -195,7 +196,7 @@ class CreateAccount(Form):
     def handle_save(self):
         data, errors = self.extractData()
         session = get_session('school')
-        
+
         if errors:
             self.flash(_(u'An error occurred.'))
             return FAILURE
@@ -222,7 +223,7 @@ class CreateAccount(Form):
         data.pop('verif')
         data.pop('captcha')
 
-        
+
         # create it
         account = Account(**data)
         code = account.activation = str(uuid.uuid1())
@@ -267,7 +268,7 @@ class TransfertCompany(Form):
     layer(ICompanyRequest)
     title(_(u'Transfer the company'))
     require('manage.company')
-    
+
     dataValidators = []
     fields = Fields(ICompanyTransfer)
 
@@ -278,11 +279,11 @@ class TransfertCompany(Form):
     @action(_(u'Add'))
     def handle_save(self):
         data, errors = self.extractData()
-        
+
         if errors:
             self.flash(_(u'An error occurred.'))
             return FAILURE
-        
+
         # create it
         account = data['account']
         self.context.account_id = account
@@ -312,7 +313,7 @@ class GlobalTransfertCompany(Form):
     layer(ICompanyRequest)
     title(_(u'Transfer the company'))
     require('manage.company')
-    
+
     dataValidators = []
     fields = Fields(ICompanies, ICompanyTransfer)
 
@@ -326,11 +327,11 @@ class GlobalTransfertCompany(Form):
     @action(_(u'Add'))
     def handle_save(self):
         data, errors = self.extractData()
-        
+
         if errors:
             self.flash(_(u'An error occurred.'))
             return FAILURE
-        
+
         # create it
         company = data['company']
         account = data['account']
@@ -342,7 +343,7 @@ class GlobalTransfertCompany(Form):
         return SUCCESS
 
 
-    
+
 @menuentry(IContextualActionsMenu, order=10)
 class CreateCompany(Form):
     name('add.company')
@@ -350,7 +351,7 @@ class CreateCompany(Form):
     layer(ICompanyRequest)
     title(_(u'Add a company'))
     require('manage.company')
-    
+
     dataValidators = []
     fields = Fields(ICompany).select('name', 'mnr')
 
@@ -362,11 +363,11 @@ class CreateCompany(Form):
     def handle_save(self):
         data, errors = self.extractData()
         session = get_session('school')
-        
+
         if errors:
             self.flash(_(u'An error occurred.'))
             return FAILURE
-        
+
         # create it
         company = Company(**data)
         company.account_id = self.context.email
@@ -401,7 +402,7 @@ class DeletedCompany(DeleteForm):
         self.redirect(self.application_url())
         return SUCCESS
 
-    
+
 @menuentry(IContextualActionsMenu, order=10)
 class CreateCourse(Form):
     context(Company)
@@ -439,7 +440,7 @@ class CreateCourse(Form):
         session.flush()
         session.refresh(course)
         clssession = ClassSession(**csdata)
-        
+
         clssession.course_id = course.id
         clssession.company_id = self.context.id
         session.add(clssession)
@@ -649,7 +650,7 @@ class CriteriaFiltering(Form):
     ignoreContent = True
     dataValidators = []
     criterias = {}
-    
+
     @property
     def action_url(self):
         return self.request.path
@@ -686,11 +687,11 @@ class CourseStats(CriteriaFiltering):
     title(_(u'Statistics'))
     require('manage.company')
     layer(ICompanyRequest)
-    
+
     ignoreContent = True
     dataValidators = []
     criterias = {}
-    
+
     @property
     def fields(self):
         return Fields(*list(company_criterias(self.context)))
@@ -703,7 +704,7 @@ class CourseDiff(CriteriaFiltering):
     title(_(u'Diff'))
     require('manage.company')
     layer(ICompanyRequest)
-    
+
     @property
     def fields(self):
         return Fields(*list(company_criterias(self.context)))
