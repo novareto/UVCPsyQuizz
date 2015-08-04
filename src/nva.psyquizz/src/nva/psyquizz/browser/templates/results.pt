@@ -103,6 +103,18 @@
 	    alert(area, ctx, data, statData, posi,posj, vars);
 	  }
 
+          function assignColorFromValue(area, ctx, data,statData, posi,posj,othervars){
+	    switch(parseInt(data[posi].value)) {
+                  case 0 : rtcolor="blue"; break;
+                  case 1 : rtcolor="red"; break;
+                  case 2 : rtcolor="yellow"; break;
+                  case 3 : rtcolor="pink"; break;
+                  case 4 : rtcolor="rgba(255,255,0,0.5)"; break;
+                  default : rtcolor="rgba(255,0,255,0.5)"; break;
+            }
+            return rtcolor;
+          }
+
           var opt = {
             legend : true,
 	    scaleShowLabelBackdrop: true,
@@ -111,8 +123,21 @@
 	    scaleBeginAtZero: true,
 	    graphMin: 0,
 	    graphMax: 5,
+	    defaultFillColor : assignColorFromValue,
 	  }
-	    
+
+      function assignColorFromValue(area, ctx, data,statData, posi,posj,othervars){
+        switch(parseInt(data[posi].value)) {
+            case 0 : rtcolor="blue"; break;
+            case 1 : rtcolor="red"; break;
+            case 2 : rtcolor="yellow"; break;
+            case 3 : rtcolor="pink"; break;
+            case 4 : rtcolor="rgba(255,255,0,0.5)"; break;
+            default : rtcolor="rgba(255,0,255,0.5)"; break;
+        }
+        return rtcolor;
+      }
+
 	  var ctx = document.getElementById("myChart").getContext("2d");
           var myNewChart = new Chart(ctx).Radar(data, opt);
 	</script>

@@ -68,7 +68,11 @@
     <div tal:repeat="widget view.fieldWidgets"
 	 class="question" tal:attributes="id 'question-%s' % repeat['widget'].number">
       <h1>Frage: <span tal:replace="repeat['widget'].number" /> /
-	 <span tal:replace="len(view.fieldWidgets)" /></h1>
+      <span tal:replace="len(view.fieldWidgets)" /></h1>
+
+      <p tal:content="structure context.session.about"
+	 tal:condition="repeat['widget'].number == 1" />
+      
       <tal:description tal:condition="widget.description">
 	<span class="field-description lead"
               tal:content="widget.description">
