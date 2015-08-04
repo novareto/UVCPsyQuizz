@@ -139,7 +139,7 @@ class AddSession(Form):
     def update(self):
         all_dates.need()
         datepicker_de.need()
-        wysiwyg.need()        
+        wysiwyg.need()
         Form.update(self)
 
     @property
@@ -414,7 +414,7 @@ class CreateCourse(Form):
 
     fields = Fields(ICourse).select(
         'name', 'criterias',
-        'quizz_type') + Fields(IClassSession).select('startdate', 'duration')
+        'quizz_type') + Fields(IClassSession).select('startdate', 'duration', 'about')
 
     def update(self):
         all_dates.need()
@@ -434,7 +434,8 @@ class CreateCourse(Form):
         session = get_session('school')
         csdata = dict(
             startdate=data.pop('startdate'),
-            duration=data.pop('duration')
+            duration=data.pop('duration'),
+            about=data.pop('about')
         )
         course = Course(**data)
         course.company_id = self.context.id
@@ -456,6 +457,21 @@ class CreateCourse(Form):
 @menuentry(IDocumentActions, order=10)
 class EditCourse(EditForm):
     context(Course)
+    name('edit_course')
+    require('manage.company')
+    title(_(u'Edit the course'))
+
+    fields = Fields(ICourse).select(
+        'name', 'criterias', 'quizz_type') + Fields(IClassSession).select('startdate', 'duration', 'about')
+
+    @property
+    def action_url(self):
+        return self.request.path
+
+
+@menuentry(IDocumentActions, order=10)
+class EditCourseBase(EditForm):
+    context(Course)
     name('edit')
     require('manage.company')
     title(_(u'Edit the course'))
@@ -466,7 +482,6 @@ class EditCourse(EditForm):
     @property
     def action_url(self):
         return self.request.path
-
 
 @menuentry(IDocumentActions, order=20)
 class DeleteCourse(DeleteForm):

@@ -8,7 +8,7 @@
     <div class="panel-heading" role="tab" id="headingOne" tal:attributes="id string:heading${company.id}">
       <h4 class="panel-title">
         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" tal:attributes="href string:#collapse${company.id}">
-          <span tal:content="company.name"/>
+          <span tal:content="company.name"/> <a href="" tal:attributes="href view.url(context, str(company.id))"> <span class="glyphicon glyphicon-edit"> </span> </a>
         </a>
       </h4>
     </div>
@@ -16,17 +16,39 @@
       <div class="panel-body">
         <div tal:repeat="course company.courses">
           <fieldset tal:repeat="session course.sessions">
-          <legend tal:content="course.title"> </legend>
-          <p tal:content="view.quizz_name(course)"> </p>
-          <p> <b> Dauer: </b> <span tal:content="string: ${session.startdate.strftime('%d.%m.%Y')} - ${session.enddate.strftime('%d.%m.%Y')}"></span>  </p>
-          <p> <b> Link: </b>  <span tal:content="'%s/quizz/generic-%s' % (view.application_url(), session.id)"></span> </p>
-          <p> <b> Auswertung: </b> <a href="" tal:attributes="href view.url(context, str(company.id) + '/' + str(course.id) + '/course.stats')"> hier </a> </p>
-          <p> <b> Eingänge: </b> <span class="badge" tal:content="len(list(session.complete))"> </span> </p>
+            <legend> 
+              <span tal:content="course.title"> </span>
+              <a href="" tal:attributes="href view.url(context, str(company.id) + '/' + str(course.id) + '/edit_course')"> <span class="glyphicon glyphicon-edit"> </span> </a>
+            </legend>
+            <dl class="dl-horizontal">
+             <dt> Typ: </dt>  
+             <dd tal:content="view.quizz_name(course)"> </dd> 
+             <dt> Dauer: </dt> 
+             <dd>
+                <span class="glyphicon glyphicon-calendar"/> <span tal:content="string: ${session.startdate.strftime('%d.%m.%Y')} - ${session.enddate.strftime('%d.%m.%Y')}"></span> 
+             </dd>
+             <dt> Link: </dt> 
+             <dd>
+                 <span class="glyphicon glyphicon-play-circle"/> <span tal:content="'%s/quizz/generic-%s' % (view.application_url(), session.id)"></span> 
+             </dd>
+             <dt> Auswertung: </dt> 
+             <dd> 
+               <a href="" tal:attributes="href view.url(context, str(company.id) + '/' + str(course.id) + '/course.stats')"> <span class="glyphicon glyphicon-stats"> </span> </a> 
+             </dd>
+             <dt> Eingänge: </dt> 
+             <dd>
+               <span class="badge" tal:content="len(list(session.complete))"> </span> 
+             </dd>
+             </dl>
         </fieldset>
         </div>
         <div tal:condition="len(list(company.courses)) == 0">
           <h3> Sie haben bis jetzt für Ihr Unternehmen <span tal:content="company.name"/> noch keine Befragung angelegt.</h3>
-            Klicken Sie bitte <a href="" tal:attributes="href view.url(context, str(company.id) + '/add.course')">hier </a> um eine neue Befragung anzulegen
+            Klicken Sie bitte <a href="" tal:attributes="href view.url(context, str(company.id) + '/add.course')">hier </a> um eine neue Befragung anzulegen.
+        </div>
+        <div tal:condition="len(list(company.criterias)) == 0">
+          <h3> Sie haben bis jetzt für Ihr Unternehmen <span tal:content="company.name"/> noch kein Unternehmensprofil angelegt.</h3>
+            Klicken Sie bitte <a href="" tal:attributes="href view.url(context, str(company.id) + '/add.course')">hier </a> um ein Unternehmensprofil anzulegen.
         </div>
       </div>
     </div>

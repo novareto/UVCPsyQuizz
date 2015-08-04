@@ -50,12 +50,12 @@ class Crumbs(BreadcrumbsRenderer, uvclight.Viewlet):
     uvclight.order(10)
     uvclight.name('crumbs')
     uvclight.layer(ICompanyRequest)
-    
+
     resolver = staticmethod(resolve_name)
 
     def __init__(self, *args):
         uvclight.Viewlet.__init__(self, *args)
-    
+
 
 class FlashMessages(uvclight.Viewlet):
     uvclight.viewletmanager(IAboveContent)
@@ -88,7 +88,7 @@ class Results(object):
         4: 'rgba(175, 202, 6, 0.9)',
         5: 'rgba(81, 174, 49, 0.9)',
         }
-    
+
     def students_ids(self, session):
         criterias = self.view.criterias
         if not criterias:
@@ -115,7 +115,7 @@ class Results(object):
             students = students.filter(Student.session_id == sid)
         if restrict:
             students = students.filter(Student.access.in_(restrict))
-            
+
         return students.count()
 
     def get_data(self, qtype, cid=None, sid=None, extra_questions=None):
@@ -244,9 +244,9 @@ class CompanyCourseDiffs(uvclight.Viewlet, Results):
         u'Entwicklungsmöglichkeiten',
         ]
 
-    
+
     coloring_set = colors()
-                
+
     def get_color(self):
         r, v, b = self.coloring_set.next()
         return ['rgba(%i, %i, %i, %s)' % (r, v, b, tr) for tr in [0.3, 1, 1]]
@@ -260,7 +260,7 @@ class CompanyCourseDiffs(uvclight.Viewlet, Results):
                 cid=self.context.id,
                 sid=session.id,
                 extra_questions=self.context.extra_questions)
-        
+
             for name, result in data.items():
                 diff = diffs.setdefault(name, {})
                 gbl, users = result.compute_chart()
@@ -273,7 +273,7 @@ class Home(uvclight.MenuItem):
     uvclight.auth.require('zope.Public')
     uvclight.menu(INavigationMenu)
     uvclight.layer(ICompanyRequest)
-    
+
     @property
     def action(self):
         return self.view.application_url()
