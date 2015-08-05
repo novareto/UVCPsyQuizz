@@ -10,7 +10,7 @@ from .. import wysiwyg
 from ..i18n import _
 from ..interfaces import IAnonymousRequest, ICompanyRequest, IRegistrationRequest
 from ..models import Account, Company, Course, ClassSession, Student
-from ..models import IAccount, ICompany, ICourse, IClassSession
+from ..models import ICourseSession, IAccount, ICompany, ICourse, IClassSession
 from ..models import ICompanyTransfer, ICompanies, IQuizz, TrueOrFalse
 from ..models import Criteria, CriteriaAnswer, ICriteria, ICriterias
 from .emailer import SecureMailer, prepare, ENCODING
@@ -19,19 +19,20 @@ from collections import OrderedDict
 from cromlech.sqlalchemy import get_session
 from dolmen.forms.base.markers import NO_VALUE
 from dolmen.forms.base.errors import Error
+from dolmen.forms.base import makeAdaptiveDataManager
 from dolmen.menu import menuentry, order
 from string import Template
 from uvc.design.canvas import IContextualActionsMenu, IPersonalMenu
 from uvc.design.canvas import IDocumentActions
 from uvclight.form_components.fields import Captcha
 from uvclight import Form, EditForm, DeleteForm, Fields, SUCCESS, FAILURE
-from uvclight import action, layer, name, context, title, get_template, baseclass
+from uvclight import action, layer, name, title, get_template, baseclass
 from uvclight.auth import require
 from zope.component import getUtility
 from zope.interface import Interface
 from zope.schema import Int, Choice, Set, Password
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
-from grokcore.component import baseclass
+from grokcore.component import baseclass, Adapter, provides, context
 from siguvtheme.resources import all_dates, datepicker_de
 
 
@@ -345,7 +346,6 @@ class GlobalTransfertCompany(Form):
         return SUCCESS
 
 
-
 @menuentry(IContextualActionsMenu, order=10)
 class CreateCompany(Form):
     name('add.company')
@@ -419,6 +419,7 @@ class CreateCourse(Form):
     def update(self):
         all_dates.need()
         datepicker_de.need()
+        wysiwyg.need()
         Form.update(self)
 
     @property
@@ -454,16 +455,76 @@ class CreateCourse(Form):
         return SUCCESS
 
 
+class CourseSession(Adapter):
+    context(IClassSession)
+    provides(ICourseSession)
+
+    @apply
+    def name():
+        def fget(self):
+            return self.context.name
+        def fset(self, value):
+            self.context.name = value
+        return property(fget, fset)
+
+    @apply
+    def criterias():
+        def fget(self):
+            return self.context.criterias
+        def fset(self, value):
+            self.context.criterias = value
+        return property(fget, fset)
+
+    @apply
+    def quizz_type():
+        def fget(self):
+            return self.context.quizz_type
+        def fset(self, value):
+            self.context.quizz_type = value
+        return property(fget, fset)
+
+    @apply
+    def startdate():
+        def fget(self):
+            return self.context.course.startdate
+        def fset(self, value):
+            self.context.course.startdate = value
+        return property(fget, fset)
+
+    @apply
+    def duration():
+        def fget(self):
+            return self.context.course.duration
+        def fset(self, value):
+            self.context.course.duration = value
+        return property(fget, fset)
+
+    @apply
+    def about():
+        def fget(self):
+            return self.context.course.about
+        def fset(self, value):
+            self.context.course.about = value
+        return property(fget, fset)
+
+
 @menuentry(IDocumentActions, order=10)
 class EditCourse(EditForm):
-    context(Course)
+    context(IClassSession)
     name('edit_course')
     require('manage.company')
     title(_(u'Edit the course'))
 
-    fields = Fields(ICourse).select(
-        'name', 'criterias', 'quizz_type') + Fields(IClassSession).select('startdate', 'duration', 'about')
+    dataManager = makeAdaptiveDataManager(ICourseSession)
+    fields = Fields(ICourseSession).select(
+        'name', 'criterias', 'quizz_type', 'startdate', 'duration', 'about')
 
+    def update(self):
+        all_dates.need()
+        datepicker_de.need()
+        wysiwyg.need()
+        Form.update(self)
+    
     @property
     def action_url(self):
         return self.request.path

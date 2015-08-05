@@ -160,6 +160,10 @@ class ICourse(ILocation, IContent):
         )
 
 
+class ICourseSession(ICourse, IClassSession):
+    pass
+
+
 class IStudent(ILocation, IContent):
 
     access = schema.TextLine(
