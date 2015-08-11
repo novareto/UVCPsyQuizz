@@ -18,27 +18,27 @@ class Course(Base, Location):
 
     isEditable = True
     isDeletable = True
-    
+
     __tablename__ = 'courses'
 
     id = Column('id', Integer, primary_key=True)
     name = Column('name', String)
     startdate = Column('startdate', Date)
-    company_id = Column(String, ForeignKey('companies.id'))
+    company_id = Column(Integer, ForeignKey('companies.id'))
     quizz_type = Column('quizz_type', String)
     extra_questions = Column('extra_questions', Text)
 
     students = relationship(
-        "Student", backref="course",
+        "Student", backref="course", cascade="save-update, delete",
         collection_class=set)
 
     _sessions = relationship(
         "ClassSession", backref=backref("course", uselist=False),
-        collection_class=IntIds)
-    
+        collection_class=IntIds, cascade="save-update, delete")
+
     criterias = relationship(
         "Criteria", secondary=criterias_table, backref="courses",
-        collection_class=set)
+        collection_class=set, cascade="save-update, delete")
 
     def __init__(self, **kwargs):
         Base.__init__(self, **kwargs)
@@ -57,7 +57,7 @@ class Course(Base, Location):
         self._sessions.__parent__ = self
         # directlyProvides(self._sessions, ISessions)
         return self._sessions
-    
+
     @property
     def uncomplete(self):
         for key, student in self._students.items():

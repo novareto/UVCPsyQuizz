@@ -6,10 +6,11 @@ import uuid
 import uvclight
 import html2text
 
+from .. import wysiwyg
 from ..i18n import _
 from ..interfaces import IAnonymousRequest, ICompanyRequest, IRegistrationRequest
 from ..models import Account, Company, Course, ClassSession, Student
-from ..models import IAccount, ICompany, ICourse, IClassSession
+from ..models import ICourseSession, IAccount, ICompany, ICourse, IClassSession
 from ..models import ICompanyTransfer, ICompanies, IQuizz, TrueOrFalse
 from ..models import Criteria, CriteriaAnswer, ICriteria, ICriterias
 from .emailer import SecureMailer, prepare, ENCODING
@@ -18,19 +19,20 @@ from collections import OrderedDict
 from cromlech.sqlalchemy import get_session
 from dolmen.forms.base.markers import NO_VALUE
 from dolmen.forms.base.errors import Error
+from dolmen.forms.base import makeAdaptiveDataManager
 from dolmen.menu import menuentry, order
 from string import Template
 from uvc.design.canvas import IContextualActionsMenu, IPersonalMenu
 from uvc.design.canvas import IDocumentActions
 from uvclight.form_components.fields import Captcha
 from uvclight import Form, EditForm, DeleteForm, Fields, SUCCESS, FAILURE
-from uvclight import action, layer, name, context, title, get_template, baseclass
+from uvclight import action, layer, name, title, get_template, baseclass
 from uvclight.auth import require
 from zope.component import getUtility
 from zope.interface import Interface
 from zope.schema import Int, Choice, Set, Password
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
-from grokcore.component import baseclass
+from grokcore.component import baseclass, Adapter, provides, context
 from siguvtheme.resources import all_dates, datepicker_de
 
 
@@ -55,6 +57,7 @@ def send_activation_code(company_name, email, code, base_url):
 
         text = html2text.html2text(html.decode('utf-8'))
         mail = prepare(from_, email, title, html, text.encode('utf-8'))
+        print mail.as_string()
         sender(from_, email, mail.as_string())
     return True
 
@@ -132,13 +135,14 @@ class AddSession(Form):
     title(_(u'Add a session'))
     require('zope.Public')
 
-    fields = Fields(IClassSession).select('startdate', 'duration')
+    fields = Fields(IClassSession).select('startdate', 'duration', 'about')
 
     def update(self):
         all_dates.need()
         datepicker_de.need()
+        wysiwyg.need()
         Form.update(self)
-    
+
     @property
     def action_url(self):
         return self.request.path
@@ -161,7 +165,7 @@ class AddSession(Form):
         self.redirect('%s' % self.url(self.context))
         return SUCCESS
 
-    
+
 class ICaptched(Interface):
 
     captcha = Captcha(
@@ -195,7 +199,7 @@ class CreateAccount(Form):
     def handle_save(self):
         data, errors = self.extractData()
         session = get_session('school')
-        
+
         if errors:
             self.flash(_(u'An error occurred.'))
             return FAILURE
@@ -222,7 +226,7 @@ class CreateAccount(Form):
         data.pop('verif')
         data.pop('captcha')
 
-        
+
         # create it
         account = Account(**data)
         code = account.activation = str(uuid.uuid1())
@@ -267,7 +271,7 @@ class TransfertCompany(Form):
     layer(ICompanyRequest)
     title(_(u'Transfer the company'))
     require('manage.company')
-    
+
     dataValidators = []
     fields = Fields(ICompanyTransfer)
 
@@ -278,11 +282,11 @@ class TransfertCompany(Form):
     @action(_(u'Add'))
     def handle_save(self):
         data, errors = self.extractData()
-        
+
         if errors:
             self.flash(_(u'An error occurred.'))
             return FAILURE
-        
+
         # create it
         account = data['account']
         self.context.account_id = account
@@ -312,7 +316,7 @@ class GlobalTransfertCompany(Form):
     layer(ICompanyRequest)
     title(_(u'Transfer the company'))
     require('manage.company')
-    
+
     dataValidators = []
     fields = Fields(ICompanies, ICompanyTransfer)
 
@@ -326,11 +330,11 @@ class GlobalTransfertCompany(Form):
     @action(_(u'Add'))
     def handle_save(self):
         data, errors = self.extractData()
-        
+
         if errors:
             self.flash(_(u'An error occurred.'))
             return FAILURE
-        
+
         # create it
         company = data['company']
         account = data['account']
@@ -342,7 +346,6 @@ class GlobalTransfertCompany(Form):
         return SUCCESS
 
 
-    
 @menuentry(IContextualActionsMenu, order=10)
 class CreateCompany(Form):
     name('add.company')
@@ -350,7 +353,7 @@ class CreateCompany(Form):
     layer(ICompanyRequest)
     title(_(u'Add a company'))
     require('manage.company')
-    
+
     dataValidators = []
     fields = Fields(ICompany).select('name', 'mnr')
 
@@ -362,11 +365,11 @@ class CreateCompany(Form):
     def handle_save(self):
         data, errors = self.extractData()
         session = get_session('school')
-        
+
         if errors:
             self.flash(_(u'An error occurred.'))
             return FAILURE
-        
+
         # create it
         company = Company(**data)
         company.account_id = self.context.email
@@ -401,7 +404,7 @@ class DeletedCompany(DeleteForm):
         self.redirect(self.application_url())
         return SUCCESS
 
-    
+
 @menuentry(IContextualActionsMenu, order=10)
 class CreateCourse(Form):
     context(Company)
@@ -411,11 +414,12 @@ class CreateCourse(Form):
 
     fields = Fields(ICourse).select(
         'name', 'criterias',
-        'quizz_type') + Fields(IClassSession).select('startdate', 'duration')
+        'quizz_type') + Fields(IClassSession).select('startdate', 'duration', 'about')
 
     def update(self):
         all_dates.need()
         datepicker_de.need()
+        wysiwyg.need()
         Form.update(self)
 
     @property
@@ -431,7 +435,8 @@ class CreateCourse(Form):
         session = get_session('school')
         csdata = dict(
             startdate=data.pop('startdate'),
-            duration=data.pop('duration')
+            duration=data.pop('duration'),
+            about=data.pop('about')
         )
         course = Course(**data)
         course.company_id = self.context.id
@@ -439,7 +444,7 @@ class CreateCourse(Form):
         session.flush()
         session.refresh(course)
         clssession = ClassSession(**csdata)
-        
+
         clssession.course_id = course.id
         clssession.company_id = self.context.id
         session.add(clssession)
@@ -450,8 +455,83 @@ class CreateCourse(Form):
         return SUCCESS
 
 
+class CourseSession(Adapter):
+    context(IClassSession)
+    provides(ICourseSession)
+
+    @apply
+    def name():
+        def fget(self):
+            return self.context.course.name
+        def fset(self, value):
+            self.context.course.name = value
+        return property(fget, fset)
+
+    @apply
+    def criterias():
+        def fget(self):
+            return self.context.course.criterias
+        def fset(self, value):
+            self.context.course.criterias = value
+        return property(fget, fset)
+
+    @apply
+    def quizz_type():
+        def fget(self):
+            return self.context.quizz_type
+        def fset(self, value):
+            self.context.quizz_type = value
+        return property(fget, fset)
+
+    @apply
+    def startdate():
+        def fget(self):
+            return self.context.startdate
+        def fset(self, value):
+            self.context.startdate = value
+        return property(fget, fset)
+
+    @apply
+    def duration():
+        def fget(self):
+            return self.context.duration
+        def fset(self, value):
+            self.context.duration = value
+        return property(fget, fset)
+
+    @apply
+    def about():
+        def fget(self):
+            return self.context.about
+        def fset(self, value):
+            self.context.about = value
+        return property(fget, fset)
+
+
 @menuentry(IDocumentActions, order=10)
 class EditCourse(EditForm):
+    context(IClassSession)
+    name('edit_course')
+    require('manage.company')
+    title(_(u'Edit the course'))
+
+    dataManager = makeAdaptiveDataManager(ICourseSession)
+    fields = Fields(ICourseSession).select(
+        'name', 'criterias', 'quizz_type', 'startdate', 'duration', 'about')
+
+    def update(self):
+        all_dates.need()
+        datepicker_de.need()
+        wysiwyg.need()
+        Form.update(self)
+
+    @property
+    def action_url(self):
+        return self.request.path
+
+
+@menuentry(IDocumentActions, order=10)
+class EditCourseBase(EditForm):
     context(Course)
     name('edit')
     require('manage.company')
@@ -650,7 +730,7 @@ class CriteriaFiltering(Form):
     ignoreContent = True
     dataValidators = []
     criterias = {}
-    
+
     @property
     def action_url(self):
         return self.request.path
@@ -687,11 +767,11 @@ class CourseStats(CriteriaFiltering):
     title(_(u'Statistics'))
     require('manage.company')
     layer(ICompanyRequest)
-    
+
     ignoreContent = True
     dataValidators = []
     criterias = {}
-    
+
     @property
     def fields(self):
         return Fields(*list(company_criterias(self.context)))
@@ -704,7 +784,7 @@ class CourseDiff(CriteriaFiltering):
     title(_(u'Diff'))
     require('manage.company')
     layer(ICompanyRequest)
-    
+
     @property
     def fields(self):
         return Fields(*list(company_criterias(self.context)))

@@ -162,3 +162,9 @@ msgstr "Löschen"
 
 msgid "Deleted with success."
 msgstr "Das Objekt wurde erfolgreich gelöscht"
+
+msgid "About"
+msgstr "Einführungstext"
+
+msgid "This Text gives Information about the Course to Participants"
+msgstr "Dieser Text wird den Teilnehmern der Erhebung als Einführung angezeigt"

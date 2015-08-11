@@ -44,7 +44,7 @@ class CompanyHomepage(Page):
 
 @menuentry(IContextualActionsMenu, order=0)
 class AccountHomepage(Page):
-    name('index')
+    name('index_old')
     title(_(u'Frontpage'))
     context(Account)
     layer(ICompanyRequest)
@@ -52,7 +52,7 @@ class AccountHomepage(Page):
 
     template = get_template('account.pt', __file__)
 
-    
+
 
 @menuentry(IContextualActionsMenu, order=0)
 class CompanyCourseHomepage(Page):
@@ -72,7 +72,7 @@ class CompanyCourseHomepage(Page):
         voc = quizz_choice(self.context)
         self.quizz_name = voc.getTermByToken(self.context.quizz_type).title
 
-        
+
 @menuentry(IContextualActionsMenu, order=0)
 class CompanySessionHomepage(Page):
     name('index')
@@ -86,7 +86,7 @@ class StudentHomepage(Page):
     name('index')
     context(Student)
     require('zope.Public')
-    
+
     template = get_template('student.pt', __file__)
 
     def update(self):
@@ -104,6 +104,6 @@ class QuizzHomepage(Page):
     name('index')
     context(anonymous.QuizzBoard)
     require('zope.Public')
-    
+
     def __call__(self):
         raise exceptions.HTTPForbidden(self.context)

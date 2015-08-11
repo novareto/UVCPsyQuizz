@@ -60,7 +60,7 @@ class IAccount(ILocation, IContent):
         description=u"Bitte vergeben Sie ein Passwort (mindestens acht Zeichen).",
         required=True,
     )
-    
+
     activated = schema.Datetime(
         title=_(u"Active account since"),
         required=False,
@@ -84,7 +84,7 @@ class ICompanies(Interface):
         required=True,
         )
 
-    
+
 class ICompany(ILocation, IContent):
 
     name = schema.TextLine(
@@ -105,7 +105,7 @@ class ICompany(ILocation, IContent):
 
 
 class IClassSession(ILocation, IContent):
-    
+
     startdate = schema.Date(
         title=_(u"Start date"),
         required=True,
@@ -119,6 +119,12 @@ class IClassSession(ILocation, IContent):
 
     students = schema.Set(
         title=_(u"Students"),
+        required=False,
+        )
+
+    about = schema.Text(
+        title=_(u"About"),
+        description=_("This Text gives Information about the Course to Participants"),
         required=False,
         )
 
@@ -153,6 +159,10 @@ class ICourse(ILocation, IContent):
         description=_(u"Type your questions : one per line."),
         required=False,
         )
+
+
+class ICourseSession(ICourse, IClassSession):
+    pass
 
 
 class IStudent(ILocation, IContent):

@@ -16,3 +16,11 @@
 .wizard-block h3 {
     margin: 0 0 5px 0;
 }
+
+ul#contextualactionsmenu {
+  display: none;
+}
+
+div.dropdown.pull-right {
+  display: none;
+}

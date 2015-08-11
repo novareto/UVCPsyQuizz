@@ -178,7 +178,7 @@ class Quizz1(Base, Location):
     student_id = Column(String, ForeignKey('students.access'))
     course_id = Column(Integer, ForeignKey('courses.id'))
     session_id = Column(Integer, ForeignKey('sessions.id'))
-    company_id = Column(String, ForeignKey('companies.id'))
+    company_id = Column(Integer, ForeignKey('companies.id'))
 
     student = relationship("Student")
 

@@ -16,16 +16,16 @@ class ClassSession(Base, Location):
 
     isEditable = True
     isDeletable = True
-    
+
     __tablename__ = 'sessions'
     model = Student
 
     id = Column('id', Integer, primary_key=True)
     startdate = Column('startdate', Date)
-    company_id = Column(String, ForeignKey('companies.id'))
-    course_id = Column(String, ForeignKey('courses.id'))
+    company_id = Column(Integer, ForeignKey('companies.id'))
+    course_id = Column(Integer, ForeignKey('courses.id'))
     duration = Column('duration', Integer)
-
+    about = Column('about', Text)
     _students = relationship(
         "Student", backref="session",
         collection_class=attribute_mapped_collection('access'))
@@ -45,7 +45,7 @@ class ClassSession(Base, Location):
         for key, student in self._students.items():
             student.__parent__ = self
             yield student
-            
+
     def __getitem__(self, key):
         student = self._students[key]
         student.__parent__ = self
@@ -58,7 +58,7 @@ class ClassSession(Base, Location):
     @property
     def quizz_type(self):
         return self.course.quizz_type
-    
+
     def generate_students(self, nb):
         for i in xrange(0, nb):
             access = self.model.generate_access()
