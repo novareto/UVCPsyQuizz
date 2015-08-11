@@ -557,6 +557,7 @@ class AnswerQuizz(Form):
             criteria_field = Choice(
                 __name__ = 'criteria_%s' % criteria.id,
                 title=criteria.title,
+                description=criteria.title,
                 vocabulary=values,
                 required=True,
             )
