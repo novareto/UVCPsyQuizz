@@ -50,28 +50,28 @@
                <span class="badge" tal:content="len(list(session.complete))"> </span> 
              </dd>
              </dl>
-             <div tal:condition="len(list(company.criterias)) != 0">
-               <legend> Auswertungsgruppen </legend>
-            <div class="actions pull-right">
-                <a href="" data-toggle="tooltip" data-placement="left" title="Neues Kriterium anlegen" class="pull-top"> <span class="glyphicon glyphicon-plus"> </span> </a>
-            </div>
-
-              <ul>
-                <li tal:repeat="crit company.criterias">
-                  <a tal:attributes="href str(company.id) + '/criterias/' + str(crit.id)" tal:content="crit.title" />
-                </li>
-              </ul>
-             </div>
         </fieldset>
         </div>
         <div tal:condition="len(list(company.courses)) == 0">
           <h3> Sie haben bis jetzt für Ihr Unternehmen <span tal:content="company.name"/> noch keine Befragung angelegt.</h3>
             Klicken Sie bitte <a href="" tal:attributes="href view.url(context, str(company.id) + '/add.course')">hier </a> um eine neue Befragung anzulegen.
         </div>
-        <div tal:condition="len(list(company.criterias)) == 0">
-          <h3> Sie haben bis jetzt für Ihr Unternehmen <span tal:content="company.name"/> noch kein Unternehmensprofil angelegt.</h3>
-            Klicken Sie bitte <a href="" tal:attributes="href view.url(context, str(company.id) + '/criterias/add.criteria')">hier </a> um ein Unternehmensprofil anzulegen.
-        </div>
+        <fieldset>
+          <legend> Auswertungsgruppen </legend>
+          <div class="actions pull-right">
+            <a href="" tal:attributes="href view.url(context, str(company.id) + '/criterias/add.criteria')" data-toggle="tooltip" data-placement="left" title="Neues Kriterium anlegen" class="pull-top"> <span class="glyphicon glyphicon-plus"> </span> </a>
+          </div>
+
+          <ul>
+            <li tal:repeat="crit company.criterias">
+            <a tal:attributes="href str(company.id) + '/criterias/' + str(crit.id)" tal:content="crit.title" />
+              </li>
+            </ul>
+          <div tal:condition="len(list(company.criterias)) == 0">
+            <h3> Sie haben bis jetzt für Ihr Unternehmen <span tal:content="company.name"/> noch kein Unternehmensprofil angelegt.</h3>
+              Klicken Sie bitte <a href="" tal:attributes="href view.url(context, str(company.id) + '/criterias/add.criteria')">hier </a> um ein Unternehmensprofil anzulegen.
+            </div>
+          </fieldset>
       </div>
     </div>
   </div>

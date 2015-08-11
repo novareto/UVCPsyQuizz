@@ -111,7 +111,8 @@ class CreateCriterias(Form):
         session.flush()
         session.refresh(criteria)
         self.flash(_(u'Criteria added with success.'))
-        self.redirect(self.url(self.context))
+        #self.redirect(self.url(self.context))
+        self.redirect(self.application_url())
         return SUCCESS
 
 
@@ -451,7 +452,8 @@ class CreateCourse(Form):
         session.flush()
         session.refresh(clssession)
         self.flash(_(u'Course added with success.'))
-        self.redirect('%s/%s' % (self.url(self.context), course.id))
+        self.redirect(self.application_url())
+        #self.redirect('%s/%s' % (self.url(self.context), course.id))
         return SUCCESS
 
 
