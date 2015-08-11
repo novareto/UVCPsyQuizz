@@ -26,15 +26,15 @@ class Company(Base, Location):
     account_id = Column(String, ForeignKey('accounts.email'))
     
     students = relationship(
-        "Student", backref="company")
+        "Student", backref="company", cascade="save-update, delete")
 
     _courses = relationship(
-        "Course", backref="company",
+        "Course", backref="company", cascade="save-update, delete",
         collection_class=attribute_mapped_collection('id'))
 
     _criterias = relationship(
         "Criteria", backref=backref("company", uselist=False),
-        collection_class=IntIds)
+        collection_class=IntIds, cascade="save-update, delete")
 
     @property
     def criterias(self):

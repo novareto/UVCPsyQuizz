@@ -13,6 +13,7 @@
           <span tal:content="company.name"/> 
             <div class="actions pull-right">
                 <a href="" data-toggle="tooltip" data-placement="left" title="Weiteres Unternehmen anlegen" tal:attributes="href view.url(context, 'add.company')"> <span class="glyphicon glyphicon-plus"> </span> </a>
+                <a href="" data-toggle="tooltip" data-placement="left" title="Unternehmen löschen" tal:attributes="href view.url(context, str(company.id) + '/delete')"> <span class="glyphicon glyphicon-minus"> </span> </a>
             </div>
         </a>
       </h4>
@@ -26,6 +27,7 @@
             </legend>
             <div class="actions pull-right">
               <a href="" data-toggle="tooltip" data-placement="left" title="Erhebung bearbeiten" tal:attributes="href view.url(context, str(company.id) + '/' + str(course.id) + '/sessions/' + str(session.id) + '/edit_course')"> <span class="glyphicon glyphicon-edit"> </span> </a>
+              <a href="" data-toggle="tooltip" data-placement="left" title="Erhebung löschen" tal:attributes="href view.url(context, str(company.id) + '/' + str(course.id) + '/delete')"> <span class="glyphicon glyphicon-minus"> </span> </a>
               <a href="" data-toggle="tooltip" data-placement="left" title="weitere Erhebung anlegen" tal:attributes="href view.url(context, str(company.id) + '/add.course')"> <span class="glyphicon glyphicon-plus"> </span> </a>
             </div>
             <dl class="dl-horizontal">

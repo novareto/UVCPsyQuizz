@@ -29,16 +29,16 @@ class Course(Base, Location):
     extra_questions = Column('extra_questions', Text)
 
     students = relationship(
-        "Student", backref="course",
+        "Student", backref="course", cascade="save-update, delete",
         collection_class=set)
 
     _sessions = relationship(
         "ClassSession", backref=backref("course", uselist=False),
-        collection_class=IntIds)
+        collection_class=IntIds, cascade="save-update, delete")
 
     criterias = relationship(
         "Criteria", secondary=criterias_table, backref="courses",
-        collection_class=set)
+        collection_class=set, cascade="save-update, delete")
 
     def __init__(self, **kwargs):
         Base.__init__(self, **kwargs)

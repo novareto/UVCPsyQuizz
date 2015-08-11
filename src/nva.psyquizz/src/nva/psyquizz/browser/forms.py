@@ -544,6 +544,7 @@ class EditCourseBase(EditForm):
     def action_url(self):
         return self.request.path
 
+
 @menuentry(IDocumentActions, order=20)
 class DeleteCourse(DeleteForm):
     context(Course)
