@@ -519,8 +519,9 @@ class EditCourse(EditForm):
 
     dataManager = makeAdaptiveDataManager(ICourseSession)
     fields = Fields(ICourseSession).select(
-        'name', 'criterias', 'quizz_type', 'startdate', 'duration', 'about')
-
+        'name', 'criterias', 'quizz_type') + Fields(ICourseSession).select(
+            'startdate', 'duration', 'about')
+    
     def update(self):
         all_dates.need()
         datepicker_de.need()

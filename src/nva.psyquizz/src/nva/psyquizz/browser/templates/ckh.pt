@@ -18,7 +18,10 @@
         </a>
       </h4>
     </div>
-    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne" tal:attributes="id string:collapse${company.id}">
+    <div id="collapseOne" class="panel-collapse collapse"
+	 role="tabpanel" aria-labelledby="headingOne"
+	 tal:attributes="id string:collapse${company.id};
+			 class repeat['company'].start and 'panel-collapse collapse in' or 'panel-collapse collapse'">
       <div class="panel-body">
         <div tal:repeat="course company.courses">
           <fieldset tal:repeat="session course.sessions">
@@ -39,7 +42,7 @@
              </dd>
              <dt> Link: </dt> 
              <dd>
-                 <span class="glyphicon glyphicon-play-circle"/> <span tal:content="'%s/quizz/generic-%s' % (view.application_url(), session.id)"></span> 
+                 <span class="glyphicon glyphicon-play-circle"/> <span tal:content="'%s/quizz/generic-%s' % (view.application_url(), view.generic_id(session.id))"></span> 
              </dd>
              <dt> Auswertung: </dt> 
              <dd> 
