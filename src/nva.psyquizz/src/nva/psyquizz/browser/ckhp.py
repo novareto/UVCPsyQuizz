@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import base64
 from ..i18n import _
 from ..interfaces import ICompanyRequest
 from ..models import Account
@@ -21,3 +22,6 @@ class AccountHomepage(Page):
     def quizz_name(self, course):
         voc = quizz_choice(course)
         return voc.getTermByToken(course.quizz_type).title
+
+    def generic_id(self, id):
+        return base64.urlsafe_b64encode(str(id + 2098) + ' complexificator')

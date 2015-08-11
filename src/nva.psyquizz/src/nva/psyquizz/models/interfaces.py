@@ -161,7 +161,7 @@ class ICourse(ILocation, IContent):
         )
 
 
-class ICourseSession(ICourse, IClassSession):
+class ICourseSession(IClassSession, ICourse):
     pass
 
 

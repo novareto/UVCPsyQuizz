@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import base64
 from datetime import date
 from . import Site
 from ..interfaces import IAnonymousRequest, QuizzAlreadyCompleted, QuizzClosed
@@ -13,6 +14,10 @@ from zope.component import getGlobalSiteManager
 from zope.interface import implementer
 
 
+def get_id(secret):
+    return int(base64.urlsafe_b64decode(secret).split(' ', 1)[0]) - 2098
+
+
 @implementer(IContent, IPublicationRoot)
 class QuizzBoard(SQLContainer):
     model = Student
@@ -24,7 +29,7 @@ class QuizzBoard(SQLContainer):
     def __getitem__(self, id):
         if id.startswith('generic'):
             try:
-                sessionid = int(id.split('-', 1)[1])
+                sessionid = get_id(str(id[8:]))
                 session = self.session.query(ClassSession).get(sessionid)
                 assert session is not None
                 if date.today() > session.enddate:
