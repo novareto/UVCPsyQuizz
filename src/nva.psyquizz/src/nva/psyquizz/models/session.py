@@ -26,7 +26,6 @@ class ClassSession(Base, Location):
     course_id = Column(Integer, ForeignKey('courses.id'))
     duration = Column('duration', Integer)
     about = Column('about', Text)
-    
     _students = relationship(
         "Student", backref="session",
         collection_class=attribute_mapped_collection('access'))

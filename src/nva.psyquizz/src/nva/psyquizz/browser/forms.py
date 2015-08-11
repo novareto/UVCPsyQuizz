@@ -58,7 +58,7 @@ def send_activation_code(company_name, email, code, base_url):
         text = html2text.html2text(html.decode('utf-8'))
         mail = prepare(from_, email, title, html, text.encode('utf-8'))
         print mail.as_string()
-        #sender(from_, email, mail.as_string())
+        sender(from_, email, mail.as_string())
     return True
 
 
@@ -462,17 +462,17 @@ class CourseSession(Adapter):
     @apply
     def name():
         def fget(self):
-            return self.context.name
+            return self.context.course.name
         def fset(self, value):
-            self.context.name = value
+            self.context.course.name = value
         return property(fget, fset)
 
     @apply
     def criterias():
         def fget(self):
-            return self.context.criterias
+            return self.context.course.criterias
         def fset(self, value):
-            self.context.criterias = value
+            self.context.course.criterias = value
         return property(fget, fset)
 
     @apply
@@ -486,25 +486,25 @@ class CourseSession(Adapter):
     @apply
     def startdate():
         def fget(self):
-            return self.context.course.startdate
+            return self.context.startdate
         def fset(self, value):
-            self.context.course.startdate = value
+            self.context.startdate = value
         return property(fget, fset)
 
     @apply
     def duration():
         def fget(self):
-            return self.context.course.duration
+            return self.context.duration
         def fset(self, value):
-            self.context.course.duration = value
+            self.context.duration = value
         return property(fget, fset)
 
     @apply
     def about():
         def fget(self):
-            return self.context.course.about
+            return self.context.about
         def fset(self, value):
-            self.context.course.about = value
+            self.context.about = value
         return property(fget, fset)
 
 
@@ -524,7 +524,7 @@ class EditCourse(EditForm):
         datepicker_de.need()
         wysiwyg.need()
         Form.update(self)
-    
+
     @property
     def action_url(self):
         return self.request.path

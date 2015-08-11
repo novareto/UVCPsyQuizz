@@ -20,7 +20,7 @@ from uvc.design.canvas import menus
 from dolmen.message import receive
 from dolmen.template import ITemplate
 from grokcore.component import adapter, implementer
-from nva.psyquizz import quizzjs
+from nva.psyquizz import quizzjs, quizzcss
 from uvc.design.canvas import IAboveContent, IBelowContent
 from uvc.design.canvas import IContextualActionsMenu
 from uvc.design.canvas import menus
@@ -65,6 +65,7 @@ class FlashMessages(uvclight.Viewlet):
     template = uvclight.get_template('flashmessages.cpt', __file__)
 
     def update(self):
+        quizzcss.need()
         received = receive()
         if received is not None:
             self.messages = list(received)
