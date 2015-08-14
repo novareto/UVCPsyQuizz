@@ -40,6 +40,13 @@ class ICriteria(IContent):
         required=True,
     )
 
+    @invariant
+    def check_items(data):
+        items = data.items
+        clean = filter(None, items.split('\n'))
+        if len(clean) < 2:
+            raise Invalid(_(u"Please provide at least 2 criteria items."))
+
 
 class IAccount(ILocation, IContent):
 

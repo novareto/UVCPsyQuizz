@@ -15,12 +15,6 @@
 	 tal:attributes="id qname;
 	                 class repeat['qname'].start and 'collapse in' or 'collapse'">
 
-      <h2>
- Statistik für	
-	<span tal:content="data[qname]['total']" /> /
-	<span tal:content="data[qname]['all']" /> Teilnehmer 
-      </h2>
-
       <dl>
 	<tal:criterias repeat="criteria data[qname]['criterias'].items()">
 	  <dt tal:content="criteria[1]['title']" />

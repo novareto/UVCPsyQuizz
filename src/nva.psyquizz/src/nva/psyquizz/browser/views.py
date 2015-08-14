@@ -10,7 +10,7 @@ from ..interfaces import QuizzAlreadyCompleted, QuizzClosed
 from ..models import IQuizz, Company, Course, Student, TrueOrFalse
 from dolmen.menu import menuentry
 from uvc.design.canvas import IContextualActionsMenu
-
+from cromlech.browser import getSession
 from uvclight import Page, View, MenuItem
 from uvclight import layer, title, name, menu, context, get_template
 from uvclight.auth import require
@@ -33,12 +33,15 @@ class LogoutMenu(MenuItem):
 
 
 class Logout(View):
+   name(u'logout')
    context(interface.Interface)
-
+   layer(ICompanyRequest)
+   require('zope.Public')
+   
    def update(self):
        session = getSession()
-       if session:
-           del session['username']
+       if session is not None:
+          session.clear()
 
    def render(self):
        return self.redirect(self.application_url())
