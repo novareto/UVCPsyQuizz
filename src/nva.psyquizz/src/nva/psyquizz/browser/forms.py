@@ -482,7 +482,8 @@ class CourseSession(Adapter):
         def fget(self):
             return self.context.quizz_type
         def fset(self, value):
-            self.context.quizz_type = value
+            pass
+            #self.context.quizz_type = value
         return property(fget, fset)
 
     @apply
