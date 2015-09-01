@@ -114,6 +114,7 @@ class CreateCriterias(Form):
         session.flush()
         session.refresh(criteria)
         self.flash(_(u'Criteria added with success.'))
+        #self.redirect(self.url(self.context))
         self.redirect(self.application_url())
         return SUCCESS
 
@@ -465,6 +466,7 @@ class CreateCourse(Form):
         session.refresh(clssession)
         self.flash(_(u'Course added with success.'))
         self.redirect(self.application_url())
+        #self.redirect('%s/%s' % (self.url(self.context), course.id))
         return SUCCESS
 
 
@@ -724,6 +726,7 @@ class AnswerQuizz(Form):
             criteria_field = Choice(
                 __name__ = 'criteria_%s' % criteria.id,
                 title=criteria.title,
+                description=criteria.title,
                 vocabulary=values,
                 required=True,
             )
