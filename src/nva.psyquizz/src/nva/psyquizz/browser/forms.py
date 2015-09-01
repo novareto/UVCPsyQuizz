@@ -19,7 +19,10 @@ from collections import OrderedDict
 from cromlech.sqlalchemy import get_session
 from dolmen.forms.base.markers import NO_VALUE
 from dolmen.forms.base.errors import Error
+from dolmen.forms.base import SuccessMarker
 from dolmen.forms.base import makeAdaptiveDataManager
+from dolmen.forms.base.utils import set_fields_data, apply_data_event
+from dolmen.forms.crud.actions import message
 from dolmen.menu import menuentry, order
 from string import Template
 from uvc.design.canvas import IContextualActionsMenu, IPersonalMenu
@@ -264,6 +267,11 @@ class DeletedAccount(DeleteForm):
         self.redirect(self.application_url())
         return SUCCESS
 
+    @action(_(u'Cancel'))
+    def handle_cancel(self):
+        self.redirect(self.url(self.context))
+        return SUCCESS
+
 
 @menuentry(IDocumentActions, order=10)
 class TransfertCompany(Form):
@@ -405,6 +413,11 @@ class DeletedCompany(DeleteForm):
         self.redirect(self.application_url())
         return SUCCESS
 
+    @action(_(u'Cancel'))
+    def handle_cancel(self):
+        self.redirect(self.url(self.context))
+        return SUCCESS
+
 
 @menuentry(IContextualActionsMenu, order=10)
 class CreateCourse(Form):
@@ -480,10 +493,9 @@ class CourseSession(Adapter):
     @apply
     def quizz_type():
         def fget(self):
-            return self.context.quizz_type
+            return self.context.course.quizz_type
         def fset(self, value):
-            pass
-            #self.context.quizz_type = value
+            self.context.course.quizz_type = value
         return property(fget, fset)
 
     @apply
@@ -512,11 +524,14 @@ class CourseSession(Adapter):
 
 
 @menuentry(IDocumentActions, order=10)
-class EditCourse(EditForm):
+class EditCourse(Form):
     context(IClassSession)
     name('edit_course')
     require('manage.company')
     title(_(u'Edit the course'))
+
+    ignoreContent = False
+    ignoreRequest = False
 
     dataManager = makeAdaptiveDataManager(ICourseSession)
     fields = Fields(ICourseSession).select(
@@ -533,14 +548,35 @@ class EditCourse(EditForm):
     def action_url(self):
         return self.request.path
 
+    @action(_(u'Update'))
+    def handle_save(self):
+        data, errors = self.extractData()
+        if errors:
+            self.flash(_(u"An error occured"))
+            return FAILURE
+
+        apply_data_event(self.fields, self.getContentData(), data)
+        self.flash(_(u"Content updated"))
+        self.redirect(self.application_url())
+        return SUCCESS
+
+    @action(_(u'Cancel'))
+    def handle_cancel(self):
+        self.redirect(self.url(self.context))
+        return SUCCESS
+
+    
 
 @menuentry(IDocumentActions, order=10)
-class EditCourseBase(EditForm):
+class EditCourseBase(Form):
     context(Course)
     name('edit')
     require('manage.company')
     title(_(u'Edit the course'))
 
+    ignoreContent = False
+    ignoreRequest = False
+    
     fields = Fields(ICourse).select(
         'name', 'startdate')
 
@@ -548,6 +584,24 @@ class EditCourseBase(EditForm):
     def action_url(self):
         return self.request.path
 
+    @action(_(u'Update'))
+    def handle_save(self):
+        data, errors = self.extractData()
+        if errors:
+            self.flash(_(u"An error occured"))
+            return FAILURE
+
+        apply_data_event(self.fields, self.getContentData(), data)
+        self.flash(_(u"Content updated"))
+        self.redirect(self.application_url())
+        return SUCCESS
+
+    @action(_(u'Cancel'))
+    def handle_cancel(self):
+        self.redirect(self.url(self.context))
+        return SUCCESS
+
+    
 
 @menuentry(IDocumentActions, order=20)
 class DeleteCourse(DeleteForm):
@@ -569,7 +623,12 @@ class DeleteCourse(DeleteForm):
         self.redirect(self.application_url())
         return SUCCESS
 
+    @action(_(u'Cancel'))
+    def handle_cancel(self):
+        self.redirect(self.url(self.context))
+        return SUCCESS
 
+    
 @menuentry(IContextualActionsMenu, order=10)
 class PopulateCourse(Form):
     context(IClassSession)
@@ -597,6 +656,32 @@ class PopulateCourse(Form):
         return self.redirect(self.url(self.context))
 
 
+@menuentry(IDocumentActions, order=20)
+class DeleteSession(DeleteForm):
+    context(CourseSession)
+    name('delete')
+    require('manage.company')
+    title(_(u'Delete'))
+
+    @property
+    def action_url(self):
+        return self.request.path
+
+    @action(_(u'Delete'))
+    def handle_save(self):
+        session = get_session('school')
+        session.delete(self.context)
+        session.flush()
+        self.flash(_(u'Deleted with success.'))
+        self.redirect(self.application_url())
+        return SUCCESS
+
+    @action(_(u'Cancel'))
+    def handle_cancel(self):
+        self.redirect(self.url(self.context))
+        return SUCCESS
+
+    
 class AnswerQuizz(Form):
     context(Student)
     layer(IAnonymousRequest)
