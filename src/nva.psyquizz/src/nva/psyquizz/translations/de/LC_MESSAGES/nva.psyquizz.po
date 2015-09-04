@@ -168,3 +168,6 @@ msgstr "Einführungstext"
 
 msgid "This Text gives Information about the Course to Participants"
 msgstr "Dieser Text wird den Teilnehmern der Erhebung als Einführung angezeigt"
+
+msgid "Please provide at least 2 criteria items."
+msgstr "Bitte geben Sie mindestens 2 Kriterien in der Auswertungsgruppe an"

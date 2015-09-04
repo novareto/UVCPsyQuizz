@@ -45,8 +45,8 @@ with open(os.path.join(os.path.dirname(__file__), 'mail.tpl'), 'r') as fd:
 
 
 def send_activation_code(company_name, email, code, base_url):
-    #mailer = SecureMailer('localhost')
-    mailer = SecureMailer('smtprelay.bg10.bgfe.local')
+    mailer = SecureMailer('localhost')
+    #mailer = SecureMailer('smtprelay.bg10.bgfe.local')
     from_ = 'extranet@bgetem.de'
     title = u'Aktivierung der Online-Hilfe zur Gefährdungsbeurteilung psychischer Belastung'.encode(ENCODING)
     with mailer as sender:
@@ -254,6 +254,7 @@ class DeletedAccount(DeleteForm):
     require('manage.company')
     title(_(u'Delete'))
 
+
     @property
     def action_url(self):
         return self.request.path
@@ -392,6 +393,12 @@ class CreateCompany(Form):
         self.redirect(base_url)
         return SUCCESS
 
+    @action(_(u'Abbrechen'))
+    def handle_cancel(self):
+        base_url = self.url(self.context)
+        self.redirect(base_url)
+        return SUCCESS
+
 
 @menuentry(IDocumentActions, order=20)
 class DeletedCompany(DeleteForm):
@@ -399,6 +406,10 @@ class DeletedCompany(DeleteForm):
     name('delete')
     require('manage.company')
     title(_(u'Delete'))
+
+    @property
+    def label(self):
+        return u"Löschen"
 
     @property
     def action_url(self):
@@ -562,7 +573,7 @@ class EditCourse(Form):
 
     @action(_(u'Cancel'))
     def handle_cancel(self):
-        self.redirect(self.url(self.context))
+        self.redirect(self.application_url())
         return SUCCESS
 
     

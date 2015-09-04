@@ -13,7 +13,7 @@ TrueOrFalse = SimpleVocabulary([
 
 LessToMore = SimpleVocabulary([
     SimpleTerm(value=1,
-               title='sehr wening'),
+               title='sehr wenig'),
     SimpleTerm(value=2,
                title='ziemlich wenig'),
     SimpleTerm(value=3,

@@ -139,42 +139,42 @@ class IGroup3(Interface):
     question17 = schema.Choice(
         title=u"3.4",
         description=u"Ich kann mich auf Kollegen und Kolleginnen verlassen, wenn es bei der Arbeit schwierig wird.",
-        vocabulary=LessToMore,
+        vocabulary=MoreToLess,
         required=True,
         )
 
     question18 = schema.Choice(
         title=u"3.5",
         description=u"Ich kann mich auf meine/n direkte/n Vorgesetzte/n verlassen, wenn es bei der Arbeit schwierig wird.",
-        vocabulary=LessToMore,
+        vocabulary=MoreToLess,
         required=True,
         )
 
     question19 = schema.Choice(
         title=u"3.6",
         description=u"Man hält in der Abteilung gut zusammen.",
-        vocabulary=LessToMore,
+        vocabulary=MoreToLess,
         required=True,
         )
 
     question20 = schema.Choice(
         title=u"3.7",
         description=u"Diese Arbeit erfordert enge Zusammenarbeit mit anderen Kolleginnen und Kollegen in der Organisation.",
-        vocabulary=LessToMore,
+        vocabulary=MoreToLess,
         required=True,
         )
 
     question21 = schema.Choice(
         title=u"3.8",
         description=u"Ich kann mich während der Arbeit mit verschiedenen Kolleginnen und Kollegen über dienstliche und private Dinge unterhalten.",
-        vocabulary=LessToMore,
+        vocabulary=MoreToLess,
         required=True,
         )
 
     question22 = schema.Choice(
         title=u"3.9",
         description=u"Ich bekommen von Vorgesetzten und Kollegen immer Rückmeldung über die Qualität meiner Arbeit.",
-        vocabulary=LessToMore,
+        vocabulary=MoreToLess,
         required=True,
         )
 
@@ -184,28 +184,28 @@ class IGroup4(Interface):
     question23 = schema.Choice(
         title=u"4.1",
         description=u"Über wichtige Dinge und Vorgänge in unserer Organistaion sind wir ausreichend informiert.",
-        vocabulary=LessToMore,
+        vocabulary=MoreToLess,
         required=True,
         )
 
     question24 = schema.Choice(
         title=u"4.2",
         description=u"Die Leitung der Organisation ist bereit, Ideen und Vorschläge der Beschäftigten zu berücksichtigen.",
-        vocabulary=LessToMore,
+        vocabulary=MoreToLess,
         required=True,
         )
 
     question25 = schema.Choice(
         title=u"4.3",
         description=u"Unser Unternehmen bietet gute Weiterbildungsmöglichkeiten.",
-        vocabulary=LessToMore,
+        vocabulary=MoreToLess,
         required=True,
         )
 
     question26 = schema.Choice(
         title=u"4.4",
         description=u"Bei uns gibt es gute Aufstiegschancen (z.B. auch durch Erweiterung des bisherigen Tätigkeitsfeldes).",
-        vocabulary=LessToMore,
+        vocabulary=MoreToLess,
         required=True,
         )
 

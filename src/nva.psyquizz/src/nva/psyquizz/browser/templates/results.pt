@@ -5,7 +5,7 @@
     
     <tal:quizz repeat="qname data.keys()">
       <a data-toggle="collapse" href="" class="btn btn-primary"
-	 tal:content="qname"
+	 tal:content="viewlet.rN(qname)"
 	 tal:attributes="href '#' + qname;
 	                 aria-expanded repeat['qname'].start and 'true' or 'false';
 			 aria-controls qname" />
@@ -41,7 +41,7 @@
 	      datasets: [
 	      <tal:datasets repeat="i reversed(range(1, 6))">
               {
-              title: "<tal:title content="'Data %i' % repeat['i'].number" />",
+              title: "<tal:title content="'DDDDD %i' % repeat['i'].number" />",
               fillColor: "<tal:color content="viewlet.colors[i]" />",
               strokeColor: "rgba(120,120,120,1)",
               pointColor: "rgba(120,120,120,1)",

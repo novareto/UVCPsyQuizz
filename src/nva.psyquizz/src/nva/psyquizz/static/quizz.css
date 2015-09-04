@@ -20,3 +20,9 @@
 ul#contextualactionsmenu {
   display: none;
 }
+
+
+div.dropdown.pull-right {
+  display: none;
+}
+

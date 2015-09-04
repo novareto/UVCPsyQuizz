@@ -189,6 +189,10 @@ class CompanyCourseResults(uvclight.Viewlet, Results):
 
     template = uvclight.get_template('results.pt', __file__)
 
+    def rN(self, value):
+        from nva.psyquizz.models.interfaces import deferred
+        return deferred('quizz_choice')(None).getTerm(self.context.quizz_type).title
+
     def display(self):
         quizzjs.need()
         data = self.get_data(
@@ -274,7 +278,19 @@ class Home(uvclight.MenuItem):
     uvclight.auth.require('zope.Public')
     uvclight.menu(INavigationMenu)
     uvclight.layer(ICompanyRequest)
+    uvclight.name('index')
 
     @property
     def action(self):
         return self.view.application_url()
+
+
+class Indexi(uvclight.Page):
+    uvclight.title(_(u'Startseite'))
+    uvclight.auth.require('zope.Public')
+    uvclight.menu(INavigationMenu)
+    uvclight.layer(ICompanyRequest)
+    uvclight.name('indexii')
+
+    def render(self):
+        return u"HALLO WELT"
