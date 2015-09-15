@@ -90,6 +90,15 @@ class Results(object):
         5: 'rgba(81, 174, 49, 0.9)',
         }
 
+    labels = {
+        1: 'My label one',
+        2: 'Your label two',
+        3: 'His label three',
+        4: 'Our label four',
+        5: 'their label five',
+        }
+
+
     def students_ids(self, session):
         criterias = self.view.criterias
         if not criterias:

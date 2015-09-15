@@ -41,7 +41,7 @@
 	      datasets: [
 	      <tal:datasets repeat="i reversed(range(1, 6))">
               {
-              title: "<tal:title content="'DDDDD %i' % repeat['i'].number" />",
+              title: "<tal:title content="viewlet.labels[repeat['i'].number]" />",
               fillColor: "<tal:color content="viewlet.colors[i]" />",
               strokeColor: "rgba(120,120,120,1)",
               pointColor: "rgba(120,120,120,1)",
@@ -57,6 +57,7 @@
           var ctx = document.getElementById("myUsersChart").getContext("2d");
 	  var opt = {
 	    legend : true,
+	    responsive: false,
 	    scaleOverride : true,
   	    scaleStartValue : 0,
   	    scaleSteps : 5,
@@ -114,6 +115,7 @@
 
           var opt = {
             legend : true,
+	    responsive: false,
 	    scaleShowLabelBackdrop: true,
 	    scaleShowLabels: true,
 	    scaleShowLine: true,

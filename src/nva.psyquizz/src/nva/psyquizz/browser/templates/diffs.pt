@@ -44,6 +44,7 @@
 
           var opt = {
             legend : true,
+	    responsive: false,
 	    scaleShowLabelBackdrop: true,
 	    scaleShowLabels: true,
 	    scaleShowLine: true,

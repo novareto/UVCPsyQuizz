@@ -20,6 +20,7 @@ from ul.browser.publication import Publication
 from ul.auth import _
 from ul.browser.decorators import sessionned
 from ul.sql.decorators import transaction_sql
+from uvclight import Page, context
 from uvclight import GlobalUtility, name, layer, MultiAdapter, provides, adapts
 from uvclight.auth import require
 from uvclight.backends.sql import SQLPublication
@@ -130,6 +131,15 @@ class AccountLogin(Login):
         yield Access()
 
 
+class AnonIndex(Page):
+    name('index')
+    layer(ICompanyRequest)
+    context(Interface)
+
+    def render(self):
+        return u"Anonymous index"
+
+
 @implementer(IPublicationRoot, IView, IResponseFactory)
 class NoAccess(Location):
 
@@ -140,7 +150,9 @@ class NoAccess(Location):
         return getGlobalSiteManager()
 
     def __call__(self):
-        return AccountLogin(self, self.request)()
+        if self.request.path_info == u'/login':
+            return AccountLogin(self, self.request)()
+        return AnonIndex(self, self.request)()
 
 
 class Application(SQLPublication, SecurePublication):
