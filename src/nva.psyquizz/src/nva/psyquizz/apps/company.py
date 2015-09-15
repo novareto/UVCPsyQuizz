@@ -100,6 +100,7 @@ class AccountLogin(Login):
     require('zope.Public')
 
     prefix = ''
+    postOnly = True
 
     @property
     def action_url(self):
@@ -150,7 +151,7 @@ class NoAccess(Location):
         return getGlobalSiteManager()
 
     def __call__(self):
-        if self.request.path_info == u'/login':
+        if self.request.path_info in (u'/login', u'/++activation++/login'):
             return AccountLogin(self, self.request)()
         return AnonIndex(self, self.request)()
 
