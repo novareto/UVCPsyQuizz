@@ -20,7 +20,7 @@ from ul.browser.publication import Publication
 from ul.auth import _
 from ul.browser.decorators import sessionned
 from ul.sql.decorators import transaction_sql
-from uvclight import Page, context
+from uvclight import Page, context, baseclass
 from uvclight import GlobalUtility, name, layer, MultiAdapter, provides, adapts
 from uvclight.auth import require
 from uvclight.backends.sql import SQLPublication
@@ -133,10 +133,9 @@ class AccountLogin(Login):
 
 
 class AnonIndex(Page):
-    name('index')
-    layer(ICompanyRequest)
-    context(Interface)
-
+    baseclass()
+    __component_name__ = 'index'
+    
     def render(self):
         return u"Anonymous index"
 
