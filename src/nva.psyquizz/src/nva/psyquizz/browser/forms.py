@@ -45,8 +45,8 @@ with open(os.path.join(os.path.dirname(__file__), 'mail.tpl'), 'r') as fd:
 
 
 def send_activation_code(company_name, email, code, base_url):
-    mailer = SecureMailer('localhost')
-    #mailer = SecureMailer('smtprelay.bg10.bgfe.local')
+    #mailer = SecureMailer('localhost')
+    mailer = SecureMailer('smtprelay.bg10.bgfe.local')
     from_ = 'extranet@bgetem.de'
     title = u'Aktivierung der Online-Hilfe zur Gefährdungsbeurteilung psychischer Belastung'.encode(ENCODING)
     with mailer as sender:

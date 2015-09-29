@@ -11,7 +11,7 @@ from uvclight.auth import require
 
 
 class AccountHomepage(Page):
-    name('erhebung')
+    name('index')
     title(_(u'Frontpage'))
     context(Account)
     layer(ICompanyRequest)
