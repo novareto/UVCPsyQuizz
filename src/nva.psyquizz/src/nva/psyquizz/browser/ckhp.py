@@ -11,7 +11,7 @@ from uvclight.auth import require
 
 
 class AccountHomepage(Page):
-    name('erhebung')
+    name('index')
     title(_(u'Frontpage'))
     context(Account)
     layer(ICompanyRequest)
@@ -25,3 +25,11 @@ class AccountHomepage(Page):
 
     def generic_id(self, id):
         return base64.urlsafe_b64encode(str(id + 2098) + ' complexificator')
+
+
+class ExampleText(Page):
+    context(Account)
+    layer(ICompanyRequest)
+    require('manage.company')
+
+    template = get_template('example_text.pt', __file__)

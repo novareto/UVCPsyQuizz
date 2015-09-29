@@ -51,6 +51,10 @@
              <dd>
                  <span class="glyphicon glyphicon-play-circle"/> <span tal:content="'%s/quizz/generic-%s' % (view.application_url(), view.generic_id(session.id))"></span> 
              </dd>
+             <dt> Beispieltext zur Distribution: </dt> 
+             <dd>
+             <a href="" tal:attributes="href '%s/exampletext' % (view.application_url())"> <span class="glyphicon glyphicon-comment"/> </a> 
+             </dd>
              <dt> Auswertung: </dt> 
              <dd> 
                <a href="" tal:attributes="href view.url(context, str(company.id) + '/' + str(course.id) + '/course.stats')"> <span class="glyphicon glyphicon-stats"> </span> </a> 

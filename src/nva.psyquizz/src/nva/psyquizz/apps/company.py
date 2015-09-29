@@ -3,6 +3,7 @@
 import webob.exc
 import urllib
 import urlparse
+from nva.psyquizz import browser
 
 from . import Site
 from ..interfaces import ICompanyRequest, IRegistrationRequest
@@ -20,7 +21,7 @@ from ul.browser.publication import Publication
 from ul.auth import _
 from ul.browser.decorators import sessionned
 from ul.sql.decorators import transaction_sql
-from uvclight import Page, context, baseclass
+from uvclight import Page, context, baseclass, get_template
 from uvclight import GlobalUtility, name, layer, MultiAdapter, provides, adapts
 from uvclight.auth import require
 from uvclight.backends.sql import SQLPublication
@@ -135,9 +136,8 @@ class AccountLogin(Login):
 class AnonIndex(Page):
     baseclass()
     __component_name__ = 'index'
-    
-    def render(self):
-        return u"Anonymous index"
+   
+    template = get_template('anon_index.pt', browser.__file__)
 
 
 @implementer(IPublicationRoot, IView, IResponseFactory)

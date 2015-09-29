@@ -44,7 +44,7 @@ class CompanyHomepage(Page):
 
 @menuentry(IContextualActionsMenu, order=0)
 class AccountHomepage(Page):
-    name('index')
+    name('display')
     title(_(u'Frontpage'))
     context(Account)
     layer(ICompanyRequest)

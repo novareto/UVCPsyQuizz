@@ -11,6 +11,20 @@ from zope.location import ILocation
 from zope.schema.interfaces import IContextSourceBinder
 
 
+ABOUT_TEXT = u"""
+Liebe Kolleginnen und Kollegen, <br>
+<p> herzlich Willkommen zu unserer Befragung „Gemeinsam zu gesunden Arbeitsbedingungen“! </p>
+<p>Der Fragebogen besteht aus insgesamt 26 Fragen; das Ausfüllen wird ca. 5 Minuten dauern.</br>
+Bitte beantwortet Sie alle Fragen des Fragebogens. Beim Beantworten der Fragen kann es hilfreich sein,
+nicht zu lange über die einzelnen Fragen nachzudenken. Meist ist der erste Eindruck auch der treffendste.</p> </br>
+<p>Wir möchten nochmal darauf hinweisen, dass Ihre Angaben absolut vertraulich behandelt werden. </br>Ein Rückschluss auf einzelne Personen wird nicht möglich sein.</p>
+<p>Sollten Sie Fragen oder Anmerkungen haben, wenden Sie sich bitte an:</p> </br>
+    <span style="background-color: rgb(255, 255, 0);"> Ansprechpartner und Kontaktdaten </span> </br>
+    Wir freuen uns auf Ihre Rückmeldungen!
+"""
+
+
+
 def deferred(name):
     @provider(IContextSourceBinder)
     def vocabulary(context):
@@ -133,6 +147,7 @@ class IClassSession(ILocation, IContent):
         title=_(u"About"),
         description=_("This Text gives Information about the Course to Participants"),
         required=False,
+        default=ABOUT_TEXT,
         )
 
     @invariant
