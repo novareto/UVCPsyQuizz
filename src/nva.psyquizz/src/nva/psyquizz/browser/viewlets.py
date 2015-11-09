@@ -289,9 +289,8 @@ class Home(uvclight.MenuItem):
     uvclight.layer(ICompanyRequest)
     uvclight.name('index')
 
-    @property
-    def action(self):
-        return self.view.application_url()
+    def render(self):
+        return '<a href="%s" class="navbar-brand"> %s </a>' % (self.url, self.title)
 
 
 class Indexi(uvclight.Page):
