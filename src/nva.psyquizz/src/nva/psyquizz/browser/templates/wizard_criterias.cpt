@@ -1,8 +1,0 @@
-<div class="wizard-block">
- <h3>Ihre nächsten Schritte:</h3>
- <ul>
-   <li>
-     <a href="" tal:attributes="view.url(context, 'add.criterias'"> Kriterium anlegen </a> 
-   </li>
- </ul>
-</div>

@@ -1,8 +1,0 @@
-<div class="wizard-block">
- <h3>Ihre nächsten Schritte</h3>
- <ul>
-   <li>
-     <a href="" tal:attributes="href view.url(context, 'add.session')"> Diesen Kurs starten </a> 
-   </li>
- </ul>
-</div>
