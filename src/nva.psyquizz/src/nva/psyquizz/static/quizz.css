@@ -29,3 +29,7 @@ div.dropdown.pull-right {
 .radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] {
     margin-left: -20px;
 }
+
+div#globalmenuviewlet {
+    padding-left: 0px;
+}

@@ -365,7 +365,7 @@ class CreateCompany(Form):
     require('manage.company')
 
     dataValidators = []
-    fields = Fields(ICompany).select('name', 'mnr')
+    fields = Fields(ICompany).select('name', 'mnr', 'exp_db', 'type', 'employees')
 
     @property
     def action_url(self):

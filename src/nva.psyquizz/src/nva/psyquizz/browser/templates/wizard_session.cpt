@@ -1,8 +1,0 @@
-<div class="wizard-block">
- <h3>Session</h3>
- <ul>
-   <li>
-     <a href="" tal:attributes="href view.url(context, 'session.stats')"> Auswertung ansehen </a>     
-   </li>
- </ul>
-</div>

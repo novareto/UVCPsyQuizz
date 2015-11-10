@@ -38,7 +38,7 @@ msgid "Add a course"
 msgstr "Befragung"
 
 msgid "An error occurred."
-msgstr "Une erreur est survenue."
+msgstr "Ein Fehler liegt vor."
 
 msgid "Course added with success."
 msgstr "Die Befragung wurde erfolgreich angelegt."
@@ -171,3 +171,15 @@ msgstr "Dieser Text wird den Teilnehmern der Erhebung als Einführung angezeigt"
 
 msgid "Please provide at least 2 criteria items."
 msgstr "Bitte geben Sie mindestens 2 Kriterien in der Auswertungsgruppe an"
+
+msgid "Employees"
+msgstr "Beschäftigte"
+
+msgid "Employees_desc"
+msgstr "Wie viele Beschäftigte haben Sie?" 
+
+msgid "Type"
+msgstr "Betriebsgegenstand"
+
+msgid "Type_desc"
+msgstr "Welche der folgenden Branchen beschreibt den „Betriebsgegenstand“ Ihres Unternehmens am besten. In welcher der Branchen liegt der Schwerpunkt der Tätigkeit Ihres Unternehmens?"

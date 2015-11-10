@@ -28,6 +28,10 @@ class Student(Base, Location):
     quizz_type = Column('quizz_type', String)
     completion_date = Column('completion_date', DateTime)
 
+    @property
+    def id(self):
+        return self.access
+
     @staticmethod
     def generate_access():
         return unicode(uuid.uuid4())
