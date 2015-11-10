@@ -1,7 +1,8 @@
-<div id="result">
+<form id="result" method="POST"
+      tal:attributes="action view.url(context) + '/pdf'">
+  <input type="submit" value="Export as PDF" />
   <h1> Ergebnisse </h1>
-  <div class="panel"
-       tal:define="data dict(viewlet.display());">
+  <div class="panel" tal:define="data dict(viewlet.display());">
     
     <tal:quizz repeat="qname data.keys()">
       <a data-toggle="collapse" href="" class="btn btn-primary"
@@ -30,8 +31,8 @@
       </dl>
 
       <tal:users condition="data[qname]['users'] is not None">
+	<textarea type="text" id="userschart" name="userschart" style="display: none"></textarea>
         <canvas id="myUsersChart" width="800" height="800"></canvas>
-	<div id="legendDiv"></div>
 	
         <script language="Javascript">
           // Get the context of the canvas element we want to select
@@ -61,15 +62,28 @@
 	    scaleOverride : true,
   	    scaleStartValue : 0,
   	    scaleSteps : 5,
-  	    scaleStepWidth : 20};
+  	    scaleStepWidth : 20,
+	    bezierCurve : false,
+            onAnimationComplete: done
+	    };
 
           var myNewChart = new Chart(ctx).HorizontalStackedBar(data, opt);
-	  document.getElementById("legendDiv").innerHTML = myNewChart.generateLegend();
+
+	  function done() {
+	     var url = document.getElementById("myUsersChart").toDataURL();
+	     document.getElementById("userschart").value = url;
+	  }
         </script>
       </tal:users>
 
       <tal:chart condition="data[qname]['chart'] is not None">
-	<canvas id="myChart" width="800" height="800"></canvas>
+	<textarea type="text" id="chart" name="chart" style="display: none"></textarea>
+	<canvas id="myChart" width="800" height="400"></canvas>
+	<div class="legend" style="width: 350px; margin: 0 auto 5em auto; text-align: center; border: 2px solid #666;">
+	  <em><b>1-2</b>: good</em>&nbsp;&nbsp;
+	  <em><b>3</b>: average</em>&nbsp;&nbsp;
+	  <em><b>4-5</b>: horrendus</em>&nbsp;&nbsp;
+	</div>
 	
 	<script language="Javascript">
 	  // Get the context of the canvas element we want to select
@@ -97,24 +111,9 @@
 	  ]
 	  };
 
-          function computeGraphBG(area, ctx, data, statData, posi,posj, vars) {
-	    alert(area, ctx, data, statData, posi,posj, vars);
-	  }
-
-          function assignColorFromValue(area, ctx, data,statData, posi,posj,othervars){
-	    switch(parseInt(data[posi].value)) {
-                  case 0 : rtcolor="blue"; break;
-                  case 1 : rtcolor="red"; break;
-                  case 2 : rtcolor="yellow"; break;
-                  case 3 : rtcolor="pink"; break;
-                  case 4 : rtcolor="rgba(255,255,0,0.5)"; break;
-                  default : rtcolor="rgba(255,0,255,0.5)"; break;
-            }
-            return rtcolor;
-          }
-
           var opt = {
             legend : true,
+	    showSingleValue : true,
 	    responsive: false,
 	    scaleShowLabelBackdrop: true,
 	    scaleShowLabels: true,
@@ -122,23 +121,18 @@
 	    scaleBeginAtZero: true,
 	    graphMin: 0,
 	    graphMax: 5,
-	    defaultFillColor : assignColorFromValue,
+	    bezierCurve : false,
+            onAnimationComplete: done,
 	  }
 
-      function assignColorFromValue(area, ctx, data,statData, posi,posj,othervars){
-        switch(parseInt(data[posi].value)) {
-            case 0 : rtcolor="blue"; break;
-            case 1 : rtcolor="red"; break;
-            case 2 : rtcolor="yellow"; break;
-            case 3 : rtcolor="pink"; break;
-            case 4 : rtcolor="rgba(255,255,0,0.5)"; break;
-            default : rtcolor="rgba(255,0,255,0.5)"; break;
-        }
-        return rtcolor;
-      }
-
 	  var ctx = document.getElementById("myChart").getContext("2d");
-          var myNewChart = new Chart(ctx).Radar(data, opt);
+	  myChart = new Chart(ctx).Radar(data, opt);
+
+	  function done() {
+	     var url = document.getElementById("myChart").toDataURL();
+	     document.getElementById("chart").value = url;
+	  }
+	  
 	</script>
       </tal:chart>
       
@@ -157,4 +151,4 @@
     </div>
 
   </div>
-</div>
+</form>
