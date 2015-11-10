@@ -22,6 +22,7 @@ install_requires = [
     'zope.cachedescriptors',
     'siguvtheme.uvclight',
     'html2text',
+    'reportlab',
     ]
 
 tests_require = [
