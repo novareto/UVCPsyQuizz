@@ -9,6 +9,7 @@ from zope import schema
 from zope.interface import invariant, Invalid, Interface
 from zope.location import ILocation
 from zope.schema.interfaces import IContextSourceBinder
+from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 
 
 ABOUT_TEXT = u"""
@@ -30,6 +31,36 @@ def deferred(name):
     def vocabulary(context):
         return deferred_vocabularies[name](context)
     return vocabulary
+
+
+@provider(IContextSourceBinder)
+def vocab_type(context):
+    rc = [SimpleTerm('1', '1', u'Energieversorgungsunternehmen'),
+          SimpleTerm('2', '2', u'Betriebe der Gas-, Fernwärme- und Wasserversorgung sowie Abwasserentsorgung'),
+          SimpleTerm('3', '3', u'Betriebe für elektrotechnische, feinmechanische und augenoptische Erzeugnisse'),
+          SimpleTerm('4', '4', u'Mess-, Informations- und Medizintechnik'),
+          SimpleTerm('5', '5', u'Luft- und Raumfahrzeugtechnik'),
+          SimpleTerm('6', '6', u'Elektroinstallationsbetriebe'),
+          SimpleTerm('7', '7', u'Graveure, Goldschmiede, Uhrmacher'),
+          SimpleTerm('8', '8', u'Herstellung und Bearbeitung von Textilien, Bekleidung, Wäsche'),
+          SimpleTerm('9', '9', u'Herstellung von Schuhen'),
+          SimpleTerm('10', '10', u'Offset-, Sieb-, Tief- und Digitaldruck'),
+          SimpleTerm('11', '11', u'Grafik und Druckvorstufe'),
+          SimpleTerm('12', '12', u'Herstellung von Wellpappe, Kartonagen'),
+          SimpleTerm('13', '13', u'Papierverarbeitung'),
+          SimpleTerm('14', '14', u'Fotografie und Bildjournalismus'),
+          ]
+    return SimpleVocabulary(rc)
+
+
+@provider(IContextSourceBinder)
+def vocab_employees(context):
+    rc = [SimpleTerm('1', '1', u'Weniger als 10'),
+          SimpleTerm('2', '2', u'Mehr als 10 und weniger als 50'),
+          SimpleTerm('3', '3', u'Mehr als 50 und weniger als 250'),
+          SimpleTerm('4', '4', u'Mehr als 250')
+          ]
+    return SimpleVocabulary(rc)
 
 
 class IQuizz(Interface):
@@ -122,6 +153,26 @@ class ICompany(ILocation, IContent):
     courses = schema.Set(
         title=_(u"Courses"),
         required=False,
+    )
+
+    exp_db = schema.Bool(
+        title=_(u'Forschungsdatenbank'),
+        description=_(u'Dürfen wir die Ergebnisse in der ForschungsDB verwenden'),
+        required=True,
+    )
+
+    employees = schema.Choice(
+        title=_(u'Employees'),
+        description=_(u'Employees_desc'),
+        required=False,
+        source=vocab_employees,
+    )
+
+    type = schema.Choice(
+        title=_(u'Type'),
+        description=_(u'Type_desc'),
+        required=False,
+        source=vocab_type,
     )
 
 

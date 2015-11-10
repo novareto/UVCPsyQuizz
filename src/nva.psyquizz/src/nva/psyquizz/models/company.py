@@ -23,6 +23,9 @@ class Company(Base, Location):
     id = Column('id', Integer, primary_key=True)
     name = Column('name', String)
     mnr = Column('mnr', String)
+    employees = Column('employees', String)
+    exp_db = Column('exp_db', String)
+    type = Column('type', String)
     account_id = Column(String, ForeignKey('accounts.email'))
     
     students = relationship(

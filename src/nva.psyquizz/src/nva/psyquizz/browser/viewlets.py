@@ -50,6 +50,7 @@ class Crumbs(BreadcrumbsRenderer, uvclight.Viewlet):
     uvclight.order(10)
     uvclight.name('crumbs')
     uvclight.layer(ICompanyRequest)
+    uvclight.baseclass()
 
     resolver = staticmethod(resolve_name)
 
