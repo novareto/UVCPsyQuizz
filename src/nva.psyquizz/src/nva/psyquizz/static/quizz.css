@@ -26,3 +26,6 @@ div.dropdown.pull-right {
   display: none;
 }
 
+.radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] {
+    margin-left: -20px;
+}
