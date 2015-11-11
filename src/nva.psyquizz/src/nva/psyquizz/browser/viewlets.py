@@ -33,6 +33,7 @@ from sqlalchemy import or_, and_
 from dolmen.breadcrumbs.renderer import BreadcrumbsRenderer
 from cromlech.browser import IPublicationRoot
 from uvc.content import IDescriptiveSchema
+from siguvtheme.uvclight.viewlets import PersonalMenuViewlet
 
 
 def resolve_name(item):
@@ -291,15 +292,10 @@ class Home(uvclight.MenuItem):
     uvclight.name('index')
 
     def render(self):
-        return '<a href="%s" class="navbar-brand"> %s </a>' % (self.url, self.title)
+        return '<a href="%s" class="navbar-brand"> %s </a>' % (self.view.application_url(), self.title)
 
 
-class Indexi(uvclight.Page):
-    uvclight.title(_(u'Startseite'))
-    uvclight.auth.require('zope.Public')
-    uvclight.menu(INavigationMenu)
+class PersonalMenuViewlet(PersonalMenuViewlet):
     uvclight.layer(ICompanyRequest)
-    uvclight.name('indexii')
-
-    def render(self):
-        return u"HALLO WELT"
+    template = uvclight.get_template('personalmenuviewlet.cpt', __file__)
+    uvclight.auth.require('manage.company')

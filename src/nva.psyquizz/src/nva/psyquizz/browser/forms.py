@@ -129,12 +129,6 @@ class EditCriteria(EditForm):
     fields = Fields(ICriteria).select('title', 'items')
 
     @property
-    def actions(self):
-        from dolmen.forms.base import Actions
-        from dolmen.forms.crud.actions import DeleteAction
-        return EditForm.actions + Actions(DeleteAction(u'Entfernen'))
-
-    @property
     def action_url(self):
         return self.request.path
 
@@ -286,7 +280,6 @@ class DeletedAccount(DeleteForm):
     require('manage.company')
     title(_(u'Delete'))
 
-
     @property
     def action_url(self):
         return self.request.path
@@ -303,88 +296,6 @@ class DeletedAccount(DeleteForm):
     @action(_(u'Cancel'))
     def handle_cancel(self):
         self.redirect(self.url(self.context))
-        return SUCCESS
-
-
-@menuentry(IDocumentActions, order=10)
-class TransfertCompany(Form):
-    name('transfer.company')
-    context(Company)
-    layer(ICompanyRequest)
-    title(_(u'Transfer the company'))
-    require('manage.company')
-
-    dataValidators = []
-    fields = Fields(ICompanyTransfer)
-
-    @property
-    def action_url(self):
-        return self.request.path
-
-    @action(_(u'Add'))
-    def handle_save(self):
-        data, errors = self.extractData()
-
-        if errors:
-            self.flash(_(u'An error occurred.'))
-            return FAILURE
-
-        # create it
-        account = data['account']
-        self.context.account_id = account
-
-        # redirect
-        self.flash(_(u'Company transfered with success.'))
-        self.redirect(self.application_url())
-        return SUCCESS
-
-
-#@menuentry(IPersonalMenu, order=10)
-class TranserCompany(uvclight.MenuItem):
-    context(Interface)
-    layer(ICompanyRequest)
-    title(_(u'Transfer the company'))
-    require('manage.company')
-    uvclight.menu(IPersonalMenu)
-
-    @property
-    def action(self):
-        return self.view.application_url() + '/transfer/company'
-
-
-class GlobalTransfertCompany(Form):
-    name('transfer.company')
-    context(Interface)
-    layer(ICompanyRequest)
-    title(_(u'Transfer the company'))
-    require('manage.company')
-
-    dataValidators = []
-    fields = Fields(ICompanies, ICompanyTransfer)
-
-    @property
-    def action_url(self):
-        return self.request.path
-
-    #def action(self):
-    #    return self.request.path
-
-    @action(_(u'Add'))
-    def handle_save(self):
-        data, errors = self.extractData()
-
-        if errors:
-            self.flash(_(u'An error occurred.'))
-            return FAILURE
-
-        # create it
-        company = data['company']
-        account = data['account']
-        company.account_id = account
-
-        # redirect
-        self.flash(_(u'Company transfered with success.'))
-        self.redirect(self.application_url())
         return SUCCESS
 
 

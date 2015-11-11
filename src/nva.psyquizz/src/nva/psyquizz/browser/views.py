@@ -18,13 +18,13 @@ from zope.component import getUtilitiesFor, getUtility
 from zope.schema import getFieldsInOrder
 from cromlech.sqlalchemy import get_session
 from zope import interface
-from uvc.design.canvas import IPersonalMenu
+from uvc.design.canvas import IPersonalMenu, IFooterMenu
 
 
 class LogoutMenu(MenuItem):
    context(interface.Interface)
-   menu(IPersonalMenu)
-   title(u'Logout')
+   menu(IFooterMenu)
+   title(u'Abmelden')
    layer(ICompanyRequest)
 
    @property
@@ -84,5 +84,3 @@ class Registered(Page):
 
     def render(self):
         return u"Ihre Registrierung war erfolgreich. Sie erhalten in Kürze eine E-Mail mit den Aktivierungslink"
-
-

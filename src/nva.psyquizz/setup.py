@@ -23,6 +23,7 @@ install_requires = [
     'siguvtheme.uvclight',
     'html2text',
     'reportlab',
+    'uvc.composedview',
     ]
 
 tests_require = [

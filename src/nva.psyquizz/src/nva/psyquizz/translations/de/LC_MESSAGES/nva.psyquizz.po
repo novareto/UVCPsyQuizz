@@ -186,3 +186,6 @@ msgstr "Welche der folgenden Branchen beschreibt den „Betriebsgegenstand“ Ih
 
 msgid "Dürfen wir die Ergebnisse in der ForschungsDB verwenden"
 msgstr "Ich stimme einer Auswertung der Daten zu wissenschaftlichen Zwecken zu."
+
+msgid "Edit Account"
+msgstr "Profil bearbeiten"
