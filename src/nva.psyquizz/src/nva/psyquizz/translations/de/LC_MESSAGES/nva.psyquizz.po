@@ -189,3 +189,9 @@ msgstr "Ich stimme einer Auswertung der Daten zu wissenschaftlichen Zwecken zu."
 
 msgid "Edit Account"
 msgstr "Profil bearbeiten"
+
+msgid "Update"
+msgstr "Bearbeiten"
+
+msgid "Cancel"
+msgstr "Abbrechen"

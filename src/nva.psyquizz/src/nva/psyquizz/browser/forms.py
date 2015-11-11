@@ -698,7 +698,7 @@ class AnswerQuizz(Form):
             criteria_field = Choice(
                 __name__ = 'criteria_%s' % criteria.id,
                 title=criteria.title,
-                description=criteria.title,
+                description=u"Wählen Sie das Zutreffende aus.",
                 vocabulary=values,
                 required=True,
             )
