@@ -33,3 +33,20 @@ div.dropdown.pull-right {
 div#globalmenuviewlet {
     padding-left: 0px;
 }
+
+dt {
+   font-weight: normal;
+}
+
+.dl-horizontal dd {
+        margin-left: 250px;
+}
+
+.dl-horizontal dt {
+    width: 225px;
+}
+
+span.field-required {
+  display: none;
+  visibility: hidden;
+}

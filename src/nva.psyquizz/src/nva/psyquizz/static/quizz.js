@@ -3,6 +3,7 @@ $( document ).ready(function() {
     $('div#form-field-activation').hidden(); 
     $('div.breadcrumb').hide();
     $('div#form-field-activation').hide(); 
+    $('span.field-required).hide()
 });
 
 function dataURItoBlob(dataURI) {

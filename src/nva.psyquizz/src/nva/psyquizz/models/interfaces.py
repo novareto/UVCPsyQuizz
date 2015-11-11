@@ -58,7 +58,8 @@ def vocab_employees(context):
     rc = [SimpleTerm('1', '1', u'Weniger als 10'),
           SimpleTerm('2', '2', u'Mehr als 10 und weniger als 50'),
           SimpleTerm('3', '3', u'Mehr als 50 und weniger als 250'),
-          SimpleTerm('4', '4', u'Mehr als 250')
+          SimpleTerm('4', '4', u'Mehr als 250 und weniger als 500'),
+          SimpleTerm('5', '5', u'Mehr als 500')
           ]
     return SimpleVocabulary(rc)
 
@@ -88,6 +89,8 @@ class ICriteria(IContent):
     @invariant
     def check_items(data):
         items = data.items
+        if not items:
+            raise Invalid(_(u"Please provide at least 2 criteria items."))
         clean = filter(None, items.split('\n'))
         if len(clean) < 2:
             raise Invalid(_(u"Please provide at least 2 criteria items."))
@@ -180,11 +183,13 @@ class IClassSession(ILocation, IContent):
 
     startdate = schema.Date(
         title=_(u"Start date"),
+        description=u"Bitte geben Sie an, ab wann die Befragungsseite für Ihre Beschäftigten zugänglich sein soll.",
         required=True,
         )
 
     duration = schema.Choice(
         title=_(u"Duration of the session's validity"),
+        description=u"Bitte geben Sie an, wie lange die Befragungsseite für Ihre Beschäftigten zugänglich sein soll.",
         required=True,
         vocabulary=vocabularies.durations,
         )
@@ -212,6 +217,7 @@ class ICourse(ILocation, IContent):
 
     name = schema.TextLine(
         title=_(u"Course name"),
+        description=u"Bitte geben Sie Ihrer Befragung eine eindeutige Bezeichnung wie z.B. Beurteilung Psychischer Belastung 2015 – Werk Bexbach",
         required=True,
         )
 
@@ -222,7 +228,8 @@ class ICourse(ILocation, IContent):
         )
 
     criterias = schema.Set(
-        title=_(u"Criterias"),
+        title=_(u"Auswertungsgruppen festlegen"),
+        description=u"Bitte wählen Sie aus, welche Auswertungsgruppen in dieser Befragung angewendet werden sollen.",
         value_type=schema.Choice(source=deferred('criterias_choice')),
         required=False,
         )

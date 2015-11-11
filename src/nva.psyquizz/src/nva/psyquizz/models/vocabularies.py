@@ -33,7 +33,7 @@ MoreToLess = SimpleVocabulary([
     SimpleTerm(value=3,
                title=u'trifft mittelmäßig zu'),
     SimpleTerm(value=2,
-               title=u'trifft über-wiegend zu'),
+               title=u'trifft überwiegend zu'),
     SimpleTerm(value=1,
                title=u'trifft völlig zu'),
     ])

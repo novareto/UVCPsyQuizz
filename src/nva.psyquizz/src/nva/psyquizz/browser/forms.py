@@ -124,12 +124,44 @@ class EditCriteria(EditForm):
     name('index')
     title(_(u'Edit criteria'))
     require('zope.Public')
+    label = ""
 
     fields = Fields(ICriteria).select('title', 'items')
 
     @property
+    def actions(self):
+        from dolmen.forms.base import Actions
+        from dolmen.forms.crud.actions import DeleteAction
+        return EditForm.actions + Actions(DeleteAction(u'Entfernen'))
+
+    @property
     def action_url(self):
         return self.request.path
+
+
+class DeletedCriteria(DeleteForm):
+    context(ICriteria)
+    name('delete')
+    title(_(u'Delete'))
+    require('zope.Public')
+
+    @property
+    def action_url(self):
+        return self.request.path
+
+    @action(_(u'Delete'))
+    def handle_save(self):
+        session = get_session('school')
+        session.delete(self.context)
+        session.flush()
+        self.flash(_(u'Deleted with success.'))
+        self.redirect(self.application_url())
+        return SUCCESS
+
+    @action(_(u'Cancel'))
+    def handle_cancel(self):
+        self.redirect(self.url(self.context))
+        return SUCCESS
 
 
 @menuentry(IContextualActionsMenu, order=10)
@@ -367,6 +399,13 @@ class CreateCompany(Form):
     dataValidators = []
     fields = Fields(ICompany).select('name', 'mnr', 'exp_db', 'type', 'employees')
 
+    def updateForm(self):
+        super(CreateCompany, self).updateForm()
+        self.fieldWidgets.get('form.field.exp_db').template = get_template('checkbox.cpt', __file__)
+        name = self.fieldWidgets['form.field.name']
+        nv = u""
+        name.value = {'form.field.name': nv} 
+
     @property
     def action_url(self):
         return self.request.path
@@ -438,14 +477,22 @@ class CreateCourse(Form):
     title(_(u'Add a course'))
 
     fields = Fields(ICourse).select(
-        'name', 'criterias',
-        'quizz_type') + Fields(IClassSession).select('startdate', 'duration', 'about')
+        'name', 'criterias') + Fields(IClassSession).select('startdate', 'duration', 'about')  # Remove temporary QUIZZ-TYPE FIELD
 
     def update(self):
         all_dates.need()
         datepicker_de.need()
         wysiwyg.need()
         Form.update(self)
+
+    def updateForm(self):
+        super(CreateCourse, self).updateForm()
+        name = self.fieldWidgets['form.field.name']
+        nv = u"Beurteilung Psychischer Belastung"
+        courses = len(list(self.context.courses))
+        if courses > 0:
+            nv = "%s (%s)" % (nv, str(courses + 1))
+        name.value = {'form.field.name': nv} 
 
     @property
     def action_url(self):
@@ -454,6 +501,8 @@ class CreateCourse(Form):
     @action(_(u'Add'))
     def handle_save(self):
         data, errors = self.extractData()
+        print data
+        data['quizz_type'] = 'quizz2'  # XXX Remove temporary the FIELD
         if errors:
             self.flash(_(u'An error occurred.'))
             return FAILURE
@@ -545,9 +594,10 @@ class EditCourse(Form):
     ignoreRequest = False
 
     dataManager = makeAdaptiveDataManager(ICourseSession)
-    fields = Fields(ICourseSession).select(
-        'name', 'criterias', 'quizz_type') + Fields(ICourseSession).select(
-            'startdate', 'duration', 'about')
+    #fields = Fields(ICourseSession).select(
+    #    'name', 'criterias', 'quizz_type') + Fields(ICourseSession).select(
+    #        'startdate', 'duration', 'about')
+    fields = Fields(ICourseSession).select('duration', 'about')
     
     def update(self):
         all_dates.need()

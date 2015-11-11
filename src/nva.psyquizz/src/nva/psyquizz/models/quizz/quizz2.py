@@ -117,7 +117,7 @@ class IGroup3(Interface):
 
     question14 = schema.Choice(
         title=u"3.1",
-        description=u"Wenn Sie Ihre Tätigkeit insgesammt betrachten, inwieweit können Sie die Reihenfolge der Arbeitsschritte selbst bestimmen?",
+        description=u"Wenn Sie Ihre Tätigkeit insgesamt betrachten, inwieweit können Sie die Reihenfolge der Arbeitsschritte selbst bestimmen?",
         vocabulary=LessToMore,
         required=True,
         )

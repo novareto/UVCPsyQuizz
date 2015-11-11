@@ -3,7 +3,7 @@
 import base64
 from ..i18n import _
 from ..interfaces import ICompanyRequest
-from ..models import Account
+from ..models import Account, ClassSession
 from ..models.deferred import quizz_choice
 from uvclight import Page
 from uvclight import layer, name, context, title, get_template
@@ -28,8 +28,11 @@ class AccountHomepage(Page):
 
 
 class ExampleText(Page):
-    context(Account)
+    context(ClassSession)
     layer(ICompanyRequest)
     require('manage.company')
-
     template = get_template('example_text.pt', __file__)
+
+    def generic_id(self, id):
+        return base64.urlsafe_b64encode(str(id + 2098) + ' complexificator')
+

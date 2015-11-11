@@ -50,7 +50,7 @@ msgid "Added ${nb} accesses with success."
 msgstr "$nb Fragebogen erfolgreich angelegt."
 
 msgid "Thank you for answering the quizz"
-msgstr "Vielen Dank für Ihre Teilname am Fragebogen. Ihre Antworten werden ausschließlich anonymisiert verarbeitet."
+msgstr "Vielen Dank für Ihre Teilnahme. Ihre Angaben wurden gespeichert."
 
 msgid "Frontpage"
 msgstr "Startseite"
@@ -104,16 +104,16 @@ msgid "Add a criteria"
 msgstr "Auswertungsgruppen bilden"
 
 msgid "Label"
-msgstr "Kriterium (z. B. Standort, Abteilung, Tätigkeit)"
+msgstr "Kriterium (z. B. Abteilung, Tätigkeit, Standort)"
 
 msgid "Please enter one criteria per line"
 msgstr "Auswertungsgruppen"
 
 msgid "Description items"
-msgstr "Nennen Sie mindestens zwei unterschiedliche Ausprägungen (Beispiel Standort: „Hamburg“ und „Berlin“). ￼Trennzeichen für die Kriterien erläutern „Return“"
+msgstr "Nennen Sie mindestens zwei unterschiedliche Ausprägungen (Beispiel Abteilung: „Personal“ und „Buchhaltung“). Bitte geben Sie jeden Ausprägung in eine neue Zeile ein, indem Sie die Eingabetaste („Return“) betätigen."
 
 msgid "Description Label"
-msgstr "Mithilfe der Kriterien können Sie unterschiedliche Auswertungsgruppen bilden: (z.B. Kriterium Standort ermöglicht die Auswertungsgruppen Berlin, Bremen, Hannover)"
+msgstr "Mithilfe der Kriterien können Sie unterschiedliche Auswertungsgruppen bilden: (das Kriterium Abteilung könnte bspw. die Auswertungsgruppen Personal, Buchhaltung, Vertrieb und Produktion ermöglichen). Bitte beachten Sie bei der Wahl Ihrer Kriterien darauf, dass Ihre Auswertungsgruppen möglichst nicht kleiner als 10 Beschäftigte werden." 
 
 msgid "Company ID"
 msgstr "Mitgliedsnummer"
@@ -167,7 +167,7 @@ msgid "About"
 msgstr "Einführungstext"
 
 msgid "This Text gives Information about the Course to Participants"
-msgstr "Dieser Text wird den Teilnehmern der Erhebung als Einführung angezeigt"
+msgstr "Dieser Text wird Ihren Beschäftigten als erste Seite vor Beginn der eigentlichen Befragung angezeigt. Sie haben die Möglichkeit den vorgegeben Text nach Ihren Wünschen anzupassen."
 
 msgid "Please provide at least 2 criteria items."
 msgstr "Bitte geben Sie mindestens 2 Kriterien in der Auswertungsgruppe an"
@@ -176,10 +176,13 @@ msgid "Employees"
 msgstr "Beschäftigte"
 
 msgid "Employees_desc"
-msgstr "Wie viele Beschäftigte haben Sie?" 
+msgstr "Wie viele Beschäftigte hat der Betrieb, für den Sie die Befragung anlegen?" 
 
 msgid "Type"
 msgstr "Betriebsgegenstand"
 
 msgid "Type_desc"
 msgstr "Welche der folgenden Branchen beschreibt den „Betriebsgegenstand“ Ihres Unternehmens am besten. In welcher der Branchen liegt der Schwerpunkt der Tätigkeit Ihres Unternehmens?"
+
+msgid "Dürfen wir die Ergebnisse in der ForschungsDB verwenden"
+msgstr "Ich stimme einer Auswertung der Daten zu wissenschaftlichen Zwecken zu."

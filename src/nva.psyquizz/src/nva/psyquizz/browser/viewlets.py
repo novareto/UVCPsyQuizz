@@ -92,11 +92,11 @@ class Results(object):
         }
 
     labels = {
-        1: 'My label one',
-        2: 'Your label two',
-        3: 'His label three',
-        4: 'Our label four',
-        5: 'their label five',
+        1: '+ +',
+        2: '+',
+        3: '+ / -',
+        4: '-',
+        5: '- -',
         }
 
 

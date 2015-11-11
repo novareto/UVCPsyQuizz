@@ -7,9 +7,10 @@ Bitte beantworten Sie alle Fragen offen und ehrlich. Wir sichern Ihnen vollstän
 Die Auswertung der Ergebnisse erfolgt automatisiert über unsere Berufsgenossenschaft Elektro, Textil, Energie und Medienerzeugnisse. <br/>
 Keine Mitarbeiterin und kein Mitarbeiter unserer Firma wird Einblick in die originalen Datensätze erhalten, eine Rückverfolgung wird nicht möglich sein.<br/> 
 Die Aussagekraft der Ergebnisse hängt von einer möglichst hohen Beteiligung ab. Geben Sie Ihrer Meinung Gewicht!<br/>
-Die Befragung läuft vom {Startdatum} bis zum {Startdatum + Dauer}. Während dieses Zeitraums haben Sie die Möglichkeit,
+Die Befragung läuft vom <span tal:content="string: ${context.startdate.strftime('%d.%m.%Y')} - ${context.enddate.strftime('%d.%m.%Y')}"></span>. Während dieses Zeitraums haben Sie die Möglichkeit,
 über folgende Internetadresse an unserer Befragung teilzunehmen: <br/>
-{LINK}
+<a href="" tal:attributes="href '%s/quizz/generic-%s' % (view.application_url(), view.generic_id(context.id))"> Link </a>
+<br>
 Über diesen Link gelangen Sie direkt auf den Fragebogen unseres Unternehmens. <br/>
 Das Ausfüllen wird etwa 5 Minuten in Anspruch nehmen. Nehmen Sie sich diese Zeit, <br/>
 Ihre Meinung zu äußern, wir freuen uns auf Ihre Rückmeldung und bedanken uns bei Ihnen für Ihre Mitarbeit! <br/>

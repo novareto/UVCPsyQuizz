@@ -98,6 +98,7 @@
 	 href="">Weiter →</a>
     </div>
   <div class="question" tal:attributes="id 'question-%d' % (len(view.fieldWidgets) + 1)">
+    <p class="lead"> Klicken Sie auf „Abschließen“ um Ihre Daten abzusenden. </p>
     <div class="action" tal:repeat="widget view.actionWidgets">
       <tal:widget tal:content="structure widget.render()" />
     </div>
