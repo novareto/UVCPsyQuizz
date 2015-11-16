@@ -46,6 +46,11 @@ def resolve_name(item):
     return name, name
 
 
+class ResultsExtra(uvclight.ViewletManager):
+    uvclight.order(10)
+    uvclight.name('results_extra')
+
+
 class Crumbs(BreadcrumbsRenderer, uvclight.Viewlet):
     uvclight.viewletmanager(IAboveContent)
     uvclight.order(10)

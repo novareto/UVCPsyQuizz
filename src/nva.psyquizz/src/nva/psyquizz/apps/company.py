@@ -1,30 +1,40 @@
 # -*- coding: utf-8 -*-
 
+import os
 import webob.exc
 import urllib
 import urlparse
-from nva.psyquizz import browser
+import html2text
+
+from datetime import datetime
+from string import Template
 
 from . import Site
+from ..browser.emailer import prepare, SecureMailer, ENCODING
 from ..interfaces import ICompanyRequest, IRegistrationRequest
-from ..models import Company, Account
+from ..models import Account
+
 from cromlech.browser import IPublicationRoot, IView, IResponseFactory
 from cromlech.browser.interfaces import ITraverser
 from cromlech.security import Interaction, unauthenticated_principal
 from cromlech.sqlalchemy import get_session
-from datetime import datetime
-from dolmen.forms.base import Fields, SuccessMarker,action
+from dolmen.forms.base import FAILURE, SUCCESS, Fields, SuccessMarker,action
+from dolmen.forms.base.errors import Error
+from nva.psyquizz import browser
 from ul.auth import SecurePublication, ICredentials
+from ul.auth import _
 from ul.auth.browser import Login, ILoginForm
 from ul.browser.context import ContextualRequest
-from ul.browser.publication import Publication
-from ul.auth import _
 from ul.browser.decorators import sessionned
+from ul.browser.publication import Publication
 from ul.sql.decorators import transaction_sql
-from uvclight import Page, context, baseclass, get_template
-from uvclight import GlobalUtility, name, layer, MultiAdapter, provides, adapts
+from uvclight import Form
+from uvclight import GlobalUtility, Page, MultiAdapter
+from uvclight import name, layer, context, baseclass, get_template
+from uvclight import provides, adapts, title
 from uvclight.auth import require
 from uvclight.backends.sql import SQLPublication
+
 from zope.component import getGlobalSiteManager
 from zope.interface import Interface, alsoProvides, implementer
 from zope.location import Location
@@ -32,9 +42,13 @@ from zope.schema import TextLine
 from zope.security.proxy import removeSecurityProxy
 
 
+with open(os.path.join(os.path.dirname(__file__), 'forgotten.tpl'), 'r') as fd:
+    data = unicode(fd.read(), 'utf-8')
+    forgotten_template = Template(data.encode(ENCODING))
+
+
 class IActivationRequest(ICompanyRequest):
     pass
-    
 
 
 class ActivationTraverser(MultiAdapter):
@@ -95,6 +109,66 @@ class IActivation(Interface):
         required=True)
     
 
+def send_forgotten_password(email, password):
+    #mailer = SecureMailer('localhost')
+    mailer = SecureMailer('smtprelay.bg10.bgfe.local')
+    from_ = 'extranet@bgetem.de'
+    title = (u'Forgotten password').encode(ENCODING)
+    with mailer as sender:
+        html = forgotten_template.substitute(
+            title=title,
+            encoding=ENCODING,
+            email=email.encode(ENCODING),
+            password=password.encode(ENCODING))
+
+        text = html2text.html2text(html.decode('utf-8'))
+        mail = prepare(from_, email, title, html, text.encode('utf-8'))
+        print mail.as_string()
+        sender(from_, email, mail.as_string())
+    return True
+
+
+class IForgotten(Interface):
+
+    username = TextLine(
+        title=_(u"Your username"),
+        required=True,
+        )
+
+
+class ForgotPassword(Form):
+    context(Interface)
+    name('forgotten')
+    title(_(u'Recover password'))
+    require('zope.Public')
+
+    fields = Fields(IForgotten)
+
+    @property
+    def action_url(self):
+        return self.request.path
+
+    @action(_(u'Request'))
+    def handle_request(self):
+        data, errors = self.extractData()
+        if errors:
+            self.flash(_(u'An error occurred.'))
+            return FAILURE
+
+        session = get_session('school')
+        account = session.query(Account).get(data['username'])
+        if account is None:
+            self.errors.append(
+                Error(u'User does not exist',
+                      identifier='form.field.username'))
+            return FAILURE
+        else:
+            send_forgotten_password(account.email, account.password)
+            self.flash(_(u'Password sent to the appropriate email.'))
+            self.redirect(self.application_url())
+            return SUCCESS
+
+    
 class AccountLogin(Login):
     name('login')
     layer(ICompanyRequest)
@@ -152,6 +226,8 @@ class NoAccess(Location):
     def __call__(self):
         if self.request.path_info in (u'/login', u'/++activation++/login'):
             return AccountLogin(self, self.request)()
+        if self.request.path_info in (u'/forgotten',):
+            return ForgotPassword(self, self.request)()
         return AnonIndex(self, self.request)()
 
 

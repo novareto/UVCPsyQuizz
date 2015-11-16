@@ -3,7 +3,6 @@
 import json
 
 from collections import OrderedDict
-from ..apps import anonymous
 from ..i18n import _
 from ..interfaces import ICompanyRequest, IRegistrationRequest
 from ..interfaces import QuizzAlreadyCompleted, QuizzClosed

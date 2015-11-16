@@ -61,8 +61,8 @@ class EditAccount(EditForm):
 
 
 @menuentry(IDocumentActions, order=10)
-class TransfertCompany(Form):
-    name('transfer.company')
+class TransferCompany(Form):
+    name('transfer_company')
     uvclight.provides(ITab)
     context(MyPrefs)
     layer(ICompanyRequest)
@@ -92,7 +92,7 @@ class TransfertCompany(Form):
         return SUCCESS
 
 
-class TranserCompany(uvclight.MenuItem):
+class TransferCompanyItem(uvclight.MenuItem):
     context(Interface)
     layer(ICompanyRequest)
     title(_(u'Transfer the company'))
@@ -101,13 +101,13 @@ class TranserCompany(uvclight.MenuItem):
 
     @property
     def action(self):
-        return self.view.application_url() + '/transfer/company'
+        return self.view.application_url() + '/transfer_company'
 
 
-class GlobalTransfertCompany(Form):
+class GlobalTransferCompany(Form):
     uvclight.provides(ITab)
     context(MyPrefs)
-    name('transfer.company')
+    name('transfer_company')
     layer(ICompanyRequest)
     title(_(u'Transfer the company'))
     require('manage.company')

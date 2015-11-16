@@ -1,8 +1,5 @@
 <form id="result" method="POST"
       tal:attributes="action view.url(context) + '/pdf'">
-  <h1> Ergebnisse </h1>
-  <p> Hier sehen Sie die Auswertung für Ihre Befragung bezogen auf alle Beschäftigten. Durch Auswahl einer oder mehrerer Auswertungsgruppen haben Sie die Möglichkeit sich eine detaillierte Auswertung anzeigen zu lassen (Bitte beachten Sie Auswertungsgruppen oder Kombinationen die weniger als ausgefüllte Fragebogen umfassen, können aus Datenschutzgründen leider nicht angezeigt werden) </p>
-
 
   <div class="panel" tal:define="data dict(viewlet.display());">
     
@@ -42,12 +39,48 @@
 	  <em><b>4-5</b>: horrendus</em>&nbsp;&nbsp;
 	</div>
 	
-	<script language="Javascript">
+	<script language="Javascript"
+                tal:define="length len(data[qname]['chart'].keys())">
 	  // Get the context of the canvas element we want to select
 
 	  var data = {
 	  labels: <span tal:replace="[k.encode('iso-8859-1') for k in data[qname]['chart'].keys()]" />,
 	  datasets: [
+	  {
+	      fillColor: "Green",
+	      strokeColor: "rgba(120,120,120,0)",
+	      pointStrokeColor: "transparent",
+              pointColor: "rgba(120,120,120,0)",
+              data: <span tal:replace="[5] * length" />
+          },
+	 {
+	     fillColor: "GreenYellow",
+	     strokeColor: "rgba(120,120,120,0)",
+	     pointStrokeColor: "transparent",
+             pointColor: "rgba(120,120,120,0)",
+             data: <span tal:replace="[4] * length" />
+          },
+          {
+	      fillColor: "Yellow",
+	      strokeColor: "rgba(120,120,120,0)",
+	      pointStrokeColor: "transparent",
+              pointColor: "rgba(120,120,120,0)",
+              data: <span tal:replace="[3] * length" />
+          },
+	  {
+	      fillColor: "Orange",
+	      strokeColor: "rgba(120,120,120,0)",
+	      pointStrokeColor: "transparent",
+              pointColor: "rgba(120,120,120,0)",
+              data: <span tal:replace="[2] * length" />
+          },
+          {
+	      fillColor: "Red",
+	      strokeColor: "rgba(120,120,120,0)",
+	      pointStrokeColor: "transparent",
+              pointColor: "rgba(120,120,120,0)",
+              data: <span tal:replace="[1] * length" />
+          },
           {
 	  scaleShowLine : true,
 	  scaleBeginAtZero : true,
@@ -57,9 +90,9 @@
 	  scaleShowGridLines: true,
 	  scaleGridLineWidth: 1,
           label: "My First dataset",
-          fillColor: "rgba(220,220,220,0.3)",
-          strokeColor: "rgba(120,120,120,1)",
-          pointColor: "rgba(120,120,120,1)",
+	      fillColor: "rgba(255,255,255,0.6)",
+          strokeColor: "rgba(255,255,255,1)",
+          pointColor: "rgba(255,255,255,1)",
           pointStrokeColor: "#fff",
           pointHighlightFill: "#fff",
           pointHighlightStroke: "rgba(220,220,220,1)",
@@ -78,7 +111,7 @@
 	    scaleBeginAtZero: true,
 	    graphMin: 0,
 	    graphMax: 5,
-	    bezierCurve : false,
+	    bezierCurve: false,
             onAnimationComplete: done,
 	  }
 

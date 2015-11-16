@@ -1,8 +1,51 @@
-<div class="page-header">
-  <h1> Gemeinsam zu gesunden Arbeitsbedingungen 
-    <small>In fünf Schritten zur Befragung</small>
-  </h1>
-
-  <p> Falls Sie bereits einen Account haben klicken Sie bitte <a href="login"> hier </a> </p>
-  <p> Um sich neu zu registrieren klicken sie auf <a href="register"> registrieren </a> </p>
+<div class="row">
+  <div class="col-md-3">
+    <div class="well">
+      <form role="form" noValidate="true" method="post"
+	    enctype="multipart/form-data" novalidate="novalidate"
+	    action="/login">
+	<div>
+	  <div id="field-username" class="form-group">
+	    <label for="username" class="control-label">
+              <span>E-Mail</span>
+              <span> * </span> 
+	    </label>
+	    <input type="text" value="" id="username" name="username"
+		   class="field field-textline form-control field-required"
+		   required="required" />      
+	  </div>
+	  <div id="field-password" class="form-group">
+	    <label for="password" class="control-label">
+              <span>Passwort</span>
+              <span> * </span> 
+	    </label>
+	    <input type="password" id="password" name="password"
+		   class="field field-password form-control field-required"
+		   required="required" />
+	  </div>
+	  <input id="came_from" name="came_from" class="field"
+		 type="hidden" value="" />
+	</div>
+	<div class="form-group">
+	  <input type="submit" id="action-login" name="action.login"
+		 value="Anmelden" class="action btn btn-default" />
+	</div>
+	<div>
+	  <p>
+	    Um sich neu zu registrieren klicken sie auf
+	    <a href="register">registrieren</a>
+	  </p>
+	  <p>
+	    <a href="forgotten">Forgotten password</a>
+	  </p>
+	</div>
+      </form>
+    </div>
+  </div>
+  <div class="col-md-9">
+    <h1>
+      Gemeinsam zu gesunden Arbeitsbedingungen 
+      <small>In fünf Schritten zur Befragung</small>
+    </h1>
+  </div>
 </div>

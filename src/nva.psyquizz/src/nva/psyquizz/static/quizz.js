@@ -1,9 +1,9 @@
 $( document ).ready(function() {
     $('div#field-came_from').hide();
-    $('div#form-field-activation').hidden(); 
+    $('div#form-field-activation').hide(); 
     $('div.breadcrumb').hide();
     $('div#form-field-activation').hide(); 
-    $('span.field-required).hide()
+    $('span.field-required').hide();
 });
 
 function dataURItoBlob(dataURI) {

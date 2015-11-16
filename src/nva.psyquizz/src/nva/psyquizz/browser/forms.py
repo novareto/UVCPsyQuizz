@@ -33,10 +33,11 @@ from uvclight import action, layer, name, title, get_template, baseclass
 from uvclight.auth import require
 from zope.component import getUtility
 from zope.interface import Interface
-from zope.schema import Int, Choice, Set, Password
+from zope.schema import TextLine, Int, Choice, Set, Password
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 from grokcore.component import baseclass, Adapter, provides, context
 from siguvtheme.resources import all_dates, datepicker_de
+from zope.interface import invariant, Invalid
 
 
 with open(os.path.join(os.path.dirname(__file__), 'mail.tpl'), 'r') as fd:
@@ -48,7 +49,8 @@ def send_activation_code(company_name, email, code, base_url):
     #mailer = SecureMailer('localhost')
     mailer = SecureMailer('smtprelay.bg10.bgfe.local')
     from_ = 'extranet@bgetem.de'
-    title = u'Aktivierung der Online-Hilfe zur Gefährdungsbeurteilung psychischer Belastung'.encode(ENCODING)
+    title = (u'Aktivierung der Online-Hilfe zur Gefährdungsbeurteilung'
+             + u' psychischer Belastung').encode(ENCODING)
     with mailer as sender:
         html = mail_template.substitute(
             title=title,
@@ -806,6 +808,12 @@ class CriteriaFiltering(Form):
         self.criterias = {int(k): v for k,v in data.items()
                           if v is not NO_VALUE}
         return SUCCESS
+
+    def render(self):
+        pre = u"""<h1> Ergebnisse </h1>
+  <p>Hier sehen Sie die Auswertung für Ihre Befragung bezogen auf alle Beschäftigten. Durch Auswahl einer oder mehrerer Auswertungsgruppen haben Sie die Möglichkeit sich eine detaillierte Auswertung anzeigen zu lassen (Bitte beachten Sie Auswertungsgruppen oder Kombinationen die weniger als ausgefüllte Fragebogen umfassen, können aus Datenschutzgründen leider nicht angezeigt werden)</p>"""
+        form_render = Form.render(self)
+        return pre + form_render
 
 
 @menuentry(IContextualActionsMenu, order=10)
