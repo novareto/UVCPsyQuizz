@@ -296,8 +296,8 @@ class Home(uvclight.MenuItem):
     uvclight.layer(ICompanyRequest)
     uvclight.name('index')
 
-    def render(self):
-        return '<a href="%s" class="navbar-brand"> %s </a>' % (self.view.application_url(), self.title)
+    def action(self):
+        return '%s/%s' % (self.view.application_url(), self.title)
 
 
 class PersonalMenuViewlet(PersonalMenuViewlet):

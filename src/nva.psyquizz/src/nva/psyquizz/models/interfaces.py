@@ -24,6 +24,16 @@ nicht zu lange über die einzelnen Fragen nachzudenken. Meist ist der erste Eind
     Wir freuen uns auf Ihre Rückmeldungen!
 """
 
+ABOUT_TEXT = u"""
+<p>Liebe Kolleginnen und Kollegen,</p>
+<p> herzlich Willkommen zu unserer Befragung „Gemeinsam zu gesunden Arbeitsbedingungen“! </p>
+<p>Der Fragebogen besteht aus insgesamt 26 Fragen; das Ausfüllen wird ca. 5 Minuten dauern. Bitte beantworteten Sie alle Fragen des Fragebogens. Beim Beantworten der Fragen kann es hilfreich sein, nicht zu lange über die einzelnen Fragen nachzudenken. Meist ist der erste Eindruck auch der treffendste.</p>
+<p>Wir möchten nochmal darauf hinweisen, dass Ihre Angaben absolut vertraulich behandelt werden. Ein Rückschluss auf einzelne Personen wird nicht möglich sein.</p>
+<p>Sollten Sie Fragen oder Anmerkungen haben, wenden Sie sich bitte an:</p>
+<p> <span style="background-color: rgb(255, 255, 0);">Ansprechpartner und Kontaktdaten </span></p>
+<p>Wir freuen uns auf Ihre Rückmeldungen!</p>
+"""
+
 
 
 def deferred(name):

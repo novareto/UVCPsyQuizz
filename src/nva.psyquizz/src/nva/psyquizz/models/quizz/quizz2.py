@@ -31,7 +31,7 @@ class IGroup1(Interface):
 
     question3 = schema.Choice(
         title=u"1.3",
-        description=u"Bei meiner Arbeit habe ich insgesammt gesehen häufig wechselnde, unterschiedliche Arbeitsaufgaben.",
+        description=u"Bei meiner Arbeit habe ich insgesamt gesehen häufig wechselnde, unterschiedliche Arbeitsaufgaben.",
         vocabulary=MoreToLess,
         required=True,
         )
@@ -65,7 +65,7 @@ class IGroup2(Interface):
 
     question7 = schema.Choice(
         title=u"2.2",
-        description=u"Es werden zu hohe Anforderungen an meine Konzentrations fähigkeit gestellt.",
+        description=u"Es werden zu hohe Anforderungen an meine Konzentrationsfähigkeit gestellt.",
         vocabulary=MoreToLess,
         required=True,
         )
