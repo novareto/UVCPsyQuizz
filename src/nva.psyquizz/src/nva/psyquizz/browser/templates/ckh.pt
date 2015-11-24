@@ -12,27 +12,25 @@
   </div>
   <div class="panel-group" id="accordion" role="tablist"
        aria-multiselectable="true">
-    <div class="panel panel-default" tal:repeat="company iter(context)">
-      <div class="panel-heading" role="tab" id="headingOne"
-	   tal:attributes="id string:heading${company.id}">
-	<h4 class="panel-title">
-          <a role="button" data-toggle="collapse"
-	     data-parent="#accordion" href="#collapseOne"
-	     aria-expanded="true" aria-controls="collapseOne"
-	     tal:attributes="href string:#collapse${company.id}">
-            <span tal:content="company.name" /> 
-            <div class="actions pull-right">
-              <!-- <a href="" data-toggle="tooltip" data-placement="left"
-                   title="Weiteres Unternehmen anlegen" tal:attributes="href view.url(context, 'add.company')"> <span class="glyphicon glyphicon-plus"> </span> </a>-->
-              <a href="" data-toggle="tooltip" data-placement="left" title="Unternehmen löschen" tal:attributes="href view.url(context, str(company.id) + '/delete')"> <span class="glyphicon glyphicon-trash"> </span> </a>
-            </div>
-          </a>
-	</h4>
-      </div>
+    <div class="panel panel-default" tal:repeat="company iter(context)"
+	 role="tab" id="headingOne"
+	 tal:attributes="id string:heading${company.id}">
+      <h4 class="panel-heading panel-title">
+        <span role="button" data-toggle="collapse"
+	      data-parent="#accordion" href="#collapseOne"
+	      aria-expanded="true" aria-controls="collapseOne"
+	      tal:attributes="href string:#collapse${company.id}">
+          <span tal:content="company.name" /> 
+          <span class="actions pull-right">
+            <!-- <a href="" data-toggle="tooltip" data-placement="left"
+                 title="Weiteres Unternehmen anlegen" tal:attributes="href view.url(context, 'add.company')"> <span class="glyphicon glyphicon-plus"> </span> </a>-->
+            <a href="" data-toggle="tooltip" data-placement="left" title="Unternehmen löschen" tal:attributes="href view.url(context, str(company.id) + '/delete')"> <span class="glyphicon glyphicon-trash"> </span> </a>
+          </span>
+        </span>
+      </h4>
       <div id="collapseOne" class="panel-collapse collapse"
 	   role="tabpanel" aria-labelledby="headingOne"
-	   tal:attributes="id string:collapse${company.id};
-			   class repeat['company'].start and 'panel-collapse collapse in' or 'panel-collapse collapse'">
+	   tal:attributes="id string:collapse${company.id}">
 	<div class="panel-body">
           <h3> Auswertungsgruppen </h3>
           <div class="actions pull-right">

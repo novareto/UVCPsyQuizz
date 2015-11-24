@@ -53,33 +53,19 @@
               pointColor: "rgba(120,120,120,0)",
               data: <span tal:replace="[5] * length" />
           },
-	 {
-	     fillColor: "GreenYellow",
-	     strokeColor: "rgba(120,120,120,0)",
-	     pointStrokeColor: "transparent",
-             pointColor: "rgba(120,120,120,0)",
-             data: <span tal:replace="[4] * length" />
-          },
           {
 	      fillColor: "Yellow",
 	      strokeColor: "rgba(120,120,120,0)",
 	      pointStrokeColor: "transparent",
               pointColor: "rgba(120,120,120,0)",
-              data: <span tal:replace="[3] * length" />
-          },
-	  {
-	      fillColor: "Orange",
-	      strokeColor: "rgba(120,120,120,0)",
-	      pointStrokeColor: "transparent",
-              pointColor: "rgba(120,120,120,0)",
-              data: <span tal:replace="[2] * length" />
+              data: <span tal:replace="[3.5] * length" />
           },
           {
 	      fillColor: "Red",
 	      strokeColor: "rgba(120,120,120,0)",
 	      pointStrokeColor: "transparent",
               pointColor: "rgba(120,120,120,0)",
-              data: <span tal:replace="[1] * length" />
+              data: <span tal:replace="[1.5] * length" />
           },
           {
 	  scaleShowLine : true,
@@ -90,11 +76,11 @@
 	  scaleShowGridLines: true,
 	  scaleGridLineWidth: 1,
           label: "My First dataset",
-	      fillColor: "rgba(255,255,255,0.6)",
-          strokeColor: "rgba(255,255,255,1)",
-          pointColor: "rgba(255,255,255,1)",
-          pointStrokeColor: "#fff",
-          pointHighlightFill: "#fff",
+          fillColor: "rgba(255,255,255,0)",
+          strokeColor: "rgba(0,0,0,1)",
+          pointColor: "rgba(0,0,0,1)",
+          pointStrokeColor: "#000",
+          pointHighlightFill: "#000",
           pointHighlightStroke: "rgba(220,220,220,1)",
           data: <span tal:replace="[v['avg'] for v in data[qname]['chart'].values()]" />
           },

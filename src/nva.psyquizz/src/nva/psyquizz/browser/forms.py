@@ -705,6 +705,7 @@ class AnswerQuizz(Form):
                 required=True,
             )
             criteria_fields.append(criteria_field)
+        self.nbcriterias = len(criteria_fields)
         fields = Fields(*criteria_fields) + fields
 
 
