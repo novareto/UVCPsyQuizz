@@ -33,12 +33,13 @@
       <tal:chart condition="data[qname]['chart'] is not None">
 	<textarea type="text" id="chart" name="chart" style="display: none"></textarea>
 	<canvas id="myChart" width="800" height="400"></canvas>
-	<div class="legend" style="width: 350px; margin: 0 auto 5em auto; text-align: center; border: 2px solid #666;">
-	  <em><b>1-2</b>: good</em>&nbsp;&nbsp;
-	  <em><b>3</b>: average</em>&nbsp;&nbsp;
-	  <em><b>4-5</b>: horrendus</em>&nbsp;&nbsp;
-	</div>
-	
+
+  <div class="legend" style="width: 550px; margin: 0 auto 5em auto; text-align: center; border: 2px solid #666;">
+    <em><b>> 3,5</b>: in diesem Bereich scheint alles in Ordnung</em><br>
+    <em><b>> 2,5 < 3,5</b>: diesen Bereich sollten Sie sich noch mal genauer ansehen</em><br>
+    <em><b> < 2,5  </b>: in diesem Bereich scheint Handlungsbedarf zu bestehen </em>&nbsp;&nbsp;
+  </div>
+
 	<script language="Javascript"
                 tal:define="length len(data[qname]['chart'].keys())">
 	  // Get the context of the canvas element we want to select
