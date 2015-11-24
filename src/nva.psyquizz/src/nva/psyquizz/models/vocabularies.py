@@ -25,7 +25,7 @@ LessToMore = SimpleVocabulary([
     ])
 
 
-MoreToLess = SimpleVocabulary([
+MoreToLessN = SimpleVocabulary([
     SimpleTerm(value=5,
                title=u'trifft gar nicht zu'),
     SimpleTerm(value=4,
@@ -35,6 +35,19 @@ MoreToLess = SimpleVocabulary([
     SimpleTerm(value=2,
                title=u'trifft überwiegend zu'),
     SimpleTerm(value=1,
+               title=u'trifft völlig zu'),
+    ])
+
+MoreToLess = SimpleVocabulary([
+    SimpleTerm(value=1,
+               title=u'trifft gar nicht zu'),
+    SimpleTerm(value=2,
+               title=u'trifft wenig zu'),
+    SimpleTerm(value=3,
+               title=u'trifft mittelmäßig zu'),
+    SimpleTerm(value=4,
+               title=u'trifft überwiegend zu'),
+    SimpleTerm(value=5,
                title=u'trifft völlig zu'),
     ])
 
