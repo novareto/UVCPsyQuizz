@@ -13,6 +13,7 @@ from . import Site
 from ..browser.emailer import prepare, SecureMailer, ENCODING
 from ..interfaces import ICompanyRequest, IRegistrationRequest
 from ..models import Account
+from .. import quizzjs
 
 from cromlech.browser import IPublicationRoot, IView, IResponseFactory
 from cromlech.browser.interfaces import ITraverser
@@ -180,6 +181,9 @@ class AccountLogin(Login):
     @property
     def action_url(self):
         return self.request.path
+
+    def update(self):
+        quizzjs.need()
     
     @property
     def fields(self):

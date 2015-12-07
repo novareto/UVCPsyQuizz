@@ -1,0 +1,49 @@
+<div class="row">
+<button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal">
+  Hilfe 
+</button>
+<div class="modal fade" id="myModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Hilfe</h4>
+      </div>
+      <div class="modal-body">
+        <p class="lead">Kriterium: <p>
+        <p>
+        Bitte geben Sie hier das Kriterium an, anhand dessen Sie die Auswertungsgruppen für Ihren Betrieb
+        bilden. Ein Kriterium kann z.B. Abteilung, Arbeitsgruppe, Team oder Führungskraft sein.
+        </p>
+        <p class="lead"> Auswertungsgruppe </p>
+        <p> 
+        Geben Sie hier die Auswertungsgruppen ein, die sich aus Ihrem Kriterium ergeben. Das Kriterium
+        Abteilung könnte bspw. die Auswertungsgruppen Fertigung, Vertrieb, Softwareentwicklung und
+        Personalabteilung ergeben. Ein tätigkeitsbezogenes Kriterium wie Führungskraft hätte die
+        Ausprägungen ja oder nein.
+        </p>
+        <p>
+        Bitte trennen Sie die einzelnen Ausprägungen durch ein Return (Eingabetaste).
+        </p>
+        <p>
+        Die Auswertungsgruppen erscheinen später auf der ersten Seite der Befragung als Auswahlfeld und
+        Ihre Beschäftigten geben an, zu welcher Auswertungsgruppe/zu welchen Auswertungsgruppen sie
+        gehören. Kombinationen sind bspw. denkbar wenn nach Abteilungen ausgewertet wird uns es eine
+        eigene Auswertungsgruppe Führungskraft gibt. Dann gibt der Beschäftigte z.B. an Abteilung –
+        Fertigung und Führungskraft – nein.
+        <p>
+        </p> 
+        <b>
+          Bitte achten Sie bei der Wahl Ihrer Auswertungsgruppen auf die Mindestgröße. Aus
+          Datenschutzgründen werden Ihnen nach Durchführung der Befragung nur Auswertungen von
+          Gruppen angezeigt, von denen mindestens sieben ausgefüllte „Fragebögen“ vorliegen.
+        </b>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

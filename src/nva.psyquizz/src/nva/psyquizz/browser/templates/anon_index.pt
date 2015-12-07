@@ -8,7 +8,6 @@
 	  <div id="field-username" class="form-group">
 	    <label for="username" class="control-label">
               <span>E-Mail</span>
-              <span> * </span> 
 	    </label>
 	    <input type="text" value="" id="username" name="username"
 		   class="field field-textline form-control field-required"
@@ -17,7 +16,6 @@
 	  <div id="field-password" class="form-group">
 	    <label for="password" class="control-label">
               <span>Passwort</span>
-              <span> * </span> 
 	    </label>
 	    <input type="password" id="password" name="password"
 		   class="field field-password form-control field-required"
@@ -36,7 +34,7 @@
 	    <a href="register">registrieren</a>
 	  </p>
 	  <p>
-	    <a href="forgotten">Forgotten password</a>
+	    <a href="forgotten">Passwort vergessen</a>
 	  </p>
 	</div>
       </form>

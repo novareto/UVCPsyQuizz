@@ -21,29 +21,34 @@ from uvc.design.canvas import IPersonalMenu, IFooterMenu
 
 
 class LogoutMenu(MenuItem):
-   context(interface.Interface)
-   menu(IFooterMenu)
-   title(u'Abmelden')
-   layer(ICompanyRequest)
+    context(interface.Interface)
+    menu(IFooterMenu)
+    title(u'Abmelden')
+    layer(ICompanyRequest)
 
-   @property
-   def action(self):
-       return self.view.application_url() + '/logout'
+    @property
+    def action(self):
+        return self.view.application_url() + '/logout'
 
+    @property
+    def available(self):
+        if self.request.principal.id == "user.unauthenticated":
+            return False
+        return True
 
 class Logout(View):
-   name(u'logout')
-   context(interface.Interface)
-   layer(ICompanyRequest)
-   require('zope.Public')
+    name(u'logout')
+    context(interface.Interface)
+    layer(ICompanyRequest)
+    require('zope.Public')
    
-   def update(self):
-       session = getSession()
-       if session is not None:
-          session.clear()
+    def update(self):
+        session = getSession()
+        if session is not None:
+           session.clear()
 
-   def render(self):
-       return self.redirect(self.application_url())
+    def render(self):
+        return self.redirect(self.application_url())
 
 
 class QuizzErrorPage(Page):

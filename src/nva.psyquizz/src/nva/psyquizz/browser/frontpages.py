@@ -20,7 +20,7 @@ from zope.component import getUtility
 from zope.schema import getFieldsInOrder
 
 
-@menuentry(IContextualActionsMenu, order=0)
+#@menuentry(IContextualActionsMenu, order=0)
 class CriteriasListing(Page):
     name('index')
     title(_(u'Frontpage'))

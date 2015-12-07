@@ -297,10 +297,20 @@ class Home(uvclight.MenuItem):
     uvclight.name('index')
 
     def action(self):
-        return '%s/%s' % (self.view.application_url(), self.title)
+        return '%s' % (self.view.application_url())
+
+    @property
+    def url(self):
+        return self.action()
 
 
 class PersonalMenuViewlet(PersonalMenuViewlet):
     uvclight.layer(ICompanyRequest)
     template = uvclight.get_template('personalmenuviewlet.cpt', __file__)
     uvclight.auth.require('manage.company')
+
+    @property
+    def available(self):
+        if self.request.principal.id == "user.unauthenticated":
+            return False
+        return True

@@ -5,7 +5,7 @@
       Herzlich Willkommen bei der Online-Hilfe der BG ETEM für Ihre
       Gefährdungsbeurteilung psychischer Belastung. Mit diesem Werkzeug
       können Sie die psychische Belastung unkompliziert erheben. Auf den
-      folgenden Seiten können Sie das Profil Ihres Unternehmens
+      folgenden Seiten können Sie das Profil Ihres Betriebes
       beschreiben, Befragungen anlegen, Ergebnisse einsehen und mit
       früheren Befragungen vergleichen.
     </p>
@@ -32,10 +32,11 @@
 	   role="tabpanel" aria-labelledby="headingOne"
 	   tal:attributes="id string:collapse${company.id}">
 	<div class="panel-body">
-          <h3> Auswertungsgruppen </h3>
+          <h3> Auswertungsgruppen 
           <div class="actions pull-right">
-            <a href="" tal:attributes="href view.url(context, str(company.id) + '/criterias/add.criteria')" data-toggle="tooltip" data-placement="left" title="Neue Auswertungsgruppen anlegen" class="pull-top"> <span class="glyphicon glyphicon-plus"> </span> </a>
+            <a href="" tal:attributes="href view.url(context, str(company.id) + '/criterias/add.criteria')" data-toggle="tooltip" data-placement="left" title="Neue Auswertungsgruppe anlegen" class="pull-top"> <span class="glyphicon glyphicon-plus"> </span> </a>
           </div>
+          </h3>
 	  
           <ul>
             <li tal:repeat="crit company.criterias">
@@ -45,7 +46,7 @@
             </li>
           </ul>
           <div tal:condition="len(list(company.criterias)) == 0">
-            <p> Sie haben bis jetzt für Ihr Unternehmen <span tal:content="company.name"/> noch keine Auswertungsgruppen angelegt.
+            <p> Sie haben bis jetzt für Ihren Betrieb  <span tal:content="company.name"/> noch keine Auswertungsgruppen angelegt.
             Klicken Sie bitte <a href="" tal:attributes="href view.url(context, str(company.id) + '/criterias/add.criteria')">hier </a> um Auswertungsgruppen anzulegen.
             </p>
           </div>
@@ -104,7 +105,7 @@
       </div>
       <br /><br />
       <div class="actions pull-right">
-        <a href="" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Weiteres Unternehmen anlegen" tal:attributes="href view.url(context, 'add.company')"> <span class="glyphicon glyphicon-plus"> </span>  weiteres Unternehmen  </a>
+        <a href="" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Weiteres Unternehmen anlegen" tal:attributes="href view.url(context, 'add.company')"> <span class="glyphicon glyphicon-plus"> </span>  Betrieb anlegen  </a>
       </div>
       <br />
     </div>

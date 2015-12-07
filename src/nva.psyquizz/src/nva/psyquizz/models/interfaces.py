@@ -99,11 +99,12 @@ class ICriteria(IContent):
     @invariant
     def check_items(data):
         items = data.items
+        msg = _('Bitte geben Sie mindestens 2 Kriterien in der Auswertungsgruppe an')
         if not items:
-            raise Invalid(_(u"Please provide at least 2 criteria items."))
+            raise Invalid(msg)
         clean = filter(None, items.split('\n'))
         if len(clean) < 2:
-            raise Invalid(_(u"Please provide at least 2 criteria items."))
+            raise Invalid(msg)
 
 
 class IAccount(ILocation, IContent):
@@ -239,7 +240,7 @@ class ICourse(ILocation, IContent):
 
     criterias = schema.Set(
         title=_(u"Auswertungsgruppen festlegen"),
-        description=u"Bitte wählen Sie aus, welche Auswertungsgruppen in dieser Befragung angewendet werden sollen.",
+        description=u"Bitte entfernen Sie das Häkchen, falls Sie einzelne Auswertungsgruppen nicht in Ihrer Befragung verwenden wollen.",
         value_type=schema.Choice(source=deferred('criterias_choice')),
         required=False,
         )
