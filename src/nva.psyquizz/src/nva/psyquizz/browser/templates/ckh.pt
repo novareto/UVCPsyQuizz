@@ -21,12 +21,12 @@
 	      aria-expanded="true" aria-controls="collapseOne"
 	      tal:attributes="href string:#collapse${company.id}">
           <span tal:content="company.name" /> 
+        </span>
           <span class="actions pull-right">
             <!-- <a href="" data-toggle="tooltip" data-placement="left"
                  title="Weiteres Unternehmen anlegen" tal:attributes="href view.url(context, 'add.company')"> <span class="glyphicon glyphicon-plus"> </span> </a>-->
             <a href="" data-toggle="tooltip" data-placement="left" title="Unternehmen löschen" tal:attributes="href view.url(context, str(company.id) + '/delete')"> <span class="glyphicon glyphicon-trash"> </span> </a>
           </span>
-        </span>
       </h4>
       <div id="collapseOne" class="panel-collapse collapse"
 	   role="tabpanel" aria-labelledby="headingOne"

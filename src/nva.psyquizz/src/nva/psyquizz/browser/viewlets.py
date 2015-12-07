@@ -105,7 +105,14 @@ class Results(object):
         5: '- -',
         }
 
-
+    def avg(self, res):
+        return (
+            (1.0 * res[1]) / 100.0 +
+            (2.0 * res[2]) / 100.0 +
+            (3.0 * res[3]) / 100.0 +
+            (4.0 * res[4]) / 100.0 +
+            (5.0 * res[5]) / 100.0)
+        
     def students_ids(self, session):
         criterias = self.view.criterias
         if not criterias:
