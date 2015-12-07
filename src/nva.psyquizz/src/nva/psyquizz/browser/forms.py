@@ -689,7 +689,8 @@ class AnswerQuizz(Form):
     @property
     def fields(self):
         fields = Fields(self.quizz.__schema__)
-
+        fields.sort(key=lambda c: c.interface[c.identifier].order)
+        
         criteria_fields = []
         for criteria in self.context.course.criterias:
             values = SimpleVocabulary([
@@ -707,8 +708,7 @@ class AnswerQuizz(Form):
             criteria_fields.append(criteria_field)
         self.nbcriterias = len(criteria_fields)
         fields = Fields(*criteria_fields) + fields
-
-
+        
         questions_text = self.context.course.extra_questions
         questions_fields = []
         if questions_text:

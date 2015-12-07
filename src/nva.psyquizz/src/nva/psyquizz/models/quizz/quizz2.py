@@ -21,14 +21,14 @@ class IGroup1(Interface):
         vocabulary=LessToMore,
         required=True,
         )
-
+    
     question2 = schema.Choice(
         title=u"1.2",
         description=u"Können Sie bei Ihrer Arbeit Ihr Wissen und Können voll einsetzen?",
         vocabulary=LessToMore,
         required=True,
         )
-
+    
     question3 = schema.Choice(
         title=u"1.3",
         description=u"Bei meiner Arbeit habe ich insgesammt gesehen häufig wechselnde, unterschiedliche Arbeitsaufgaben.",
