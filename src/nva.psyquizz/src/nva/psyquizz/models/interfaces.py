@@ -24,6 +24,16 @@ nicht zu lange über die einzelnen Fragen nachzudenken. Meist ist der erste Eind
     Wir freuen uns auf Ihre Rückmeldungen!
 """
 
+ABOUT_TEXT = u"""
+<p>Liebe Kolleginnen und Kollegen,</p>
+<p> herzlich Willkommen zu unserer Befragung „Gemeinsam zu gesunden Arbeitsbedingungen“! </p>
+<p>Der Fragebogen besteht aus insgesamt 26 Fragen; das Ausfüllen wird ca. 5 Minuten dauern. Bitte beantworteten Sie alle Fragen des Fragebogens. Beim Beantworten der Fragen kann es hilfreich sein, nicht zu lange über die einzelnen Fragen nachzudenken. Meist ist der erste Eindruck auch der treffendste.</p>
+<p>Wir möchten nochmal darauf hinweisen, dass Ihre Angaben absolut vertraulich behandelt werden. Ein Rückschluss auf einzelne Personen wird nicht möglich sein.</p>
+<p>Sollten Sie Fragen oder Anmerkungen haben, wenden Sie sich bitte an:</p>
+<p> <span style="background-color: rgb(255, 255, 0);">Ansprechpartner und Kontaktdaten </span></p>
+<p>Wir freuen uns auf Ihre Rückmeldungen!</p>
+"""
+
 
 
 def deferred(name):
@@ -89,11 +99,12 @@ class ICriteria(IContent):
     @invariant
     def check_items(data):
         items = data.items
+        msg = _('Bitte geben Sie mindestens 2 Kriterien in der Auswertungsgruppe an')
         if not items:
-            raise Invalid(_(u"Please provide at least 2 criteria items."))
+            raise Invalid(msg)
         clean = filter(None, items.split('\n'))
         if len(clean) < 2:
-            raise Invalid(_(u"Please provide at least 2 criteria items."))
+            raise Invalid(msg)
 
 
 class IAccount(ILocation, IContent):
@@ -229,7 +240,7 @@ class ICourse(ILocation, IContent):
 
     criterias = schema.Set(
         title=_(u"Auswertungsgruppen festlegen"),
-        description=u"Bitte wählen Sie aus, welche Auswertungsgruppen in dieser Befragung angewendet werden sollen.",
+        description=u"Bitte entfernen Sie das Häkchen, falls Sie einzelne Auswertungsgruppen nicht in Ihrer Befragung verwenden wollen.",
         value_type=schema.Choice(source=deferred('criterias_choice')),
         required=False,
         )

@@ -296,11 +296,21 @@ class Home(uvclight.MenuItem):
     uvclight.layer(ICompanyRequest)
     uvclight.name('index')
 
-    def render(self):
-        return '<a href="%s" class="navbar-brand"> %s </a>' % (self.view.application_url(), self.title)
+    def action(self):
+        return '%s' % (self.view.application_url())
+
+    @property
+    def url(self):
+        return self.action()
 
 
 class PersonalMenuViewlet(PersonalMenuViewlet):
     uvclight.layer(ICompanyRequest)
     template = uvclight.get_template('personalmenuviewlet.cpt', __file__)
     uvclight.auth.require('manage.company')
+
+    @property
+    def available(self):
+        if self.request.principal.id == "user.unauthenticated":
+            return False
+        return True

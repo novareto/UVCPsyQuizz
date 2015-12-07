@@ -103,15 +103,15 @@ class TrueFalseQuizzStats(QuizzStats):
 class ChartedQuizzStats(QuizzStats):
 
     averages = {
-        u'Handlungssspielraum': ('1.1', '1.2', '1.3'),
-        u'Vielseitiges Arbeiten': ('1.4', '1.5', '2.1'),
-        u'Ganzheitliches Arbeiten': ('2.2', '2.3'),
-        u'Soziale Rückendeckung': ('2.4', '2.5', '2.6'),
-        u'Zusammenarbeit': ('2.7', '2.8', '3.1'),
-        u'Passende inhaltliche Arbeitsanforderungen': ('3.2', '3.3'),
-        u'Passende mengenmäßige Arbeit': ('3.4', '3.5'),
-        u'Passende Arbeitsabläufe': ('3.6', '3.7'),
-        u'Passende Arbeitsumgebung': ('3.8', '3.9'),
+        u'Handlungssspielraum': ('3.1', '3.2', '3.3'),
+        u'Vielseitiges Arbeiten': ('1.1', '1.2', '1.3'),
+        u'Ganzheitliches Arbeiten': ('1.4', '1.5'),
+        u'Soziale Rückendeckung': ('3.4', '3.5', '3.6'),
+        u'Zusammenarbeit': ('3.7', '3.8', '3.9'),
+        u'Passende inhaltliche Arbeitsanforderungen': ('2.1', '2.2'),
+        u'Passende mengenmäßige Arbeit': ('2.3', '2.4'),
+        u'Passende Arbeitsabläufe': ('2.5', '2.6'),
+        u'Passende Arbeitsumgebung': ('2.7', '2.8'),
         u'Information und Mitsprache': ('4.1', '4.2'),
         u'Entwicklungsmöglichkeiten': ('4.3', '4.4'),
         }

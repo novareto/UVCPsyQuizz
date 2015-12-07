@@ -4,9 +4,10 @@ import os
 import json
 import uuid
 import uvclight
+import datetime
 import html2text
 
-from .. import wysiwyg
+from .. import wysiwyg, quizzjs
 from ..i18n import _
 from ..interfaces import IAnonymousRequest, ICompanyRequest, IRegistrationRequest
 from ..models import Account, Company, Course, ClassSession, Student
@@ -49,8 +50,7 @@ def send_activation_code(company_name, email, code, base_url):
     #mailer = SecureMailer('localhost')
     mailer = SecureMailer('smtprelay.bg10.bgfe.local')
     from_ = 'extranet@bgetem.de'
-    title = (u'Aktivierung der Online-Hilfe zur Gefährdungsbeurteilung'
-             + u' psychischer Belastung').encode(ENCODING)
+    title = (u'Gemeinsam zu gesunden Arbeitsbedingungen – Aktivierung').encode(ENCODING)
     with mailer as sender:
         html = mail_template.substitute(
             title=title,
@@ -141,6 +141,12 @@ class DeletedCriteria(DeleteForm):
     title(_(u'Delete'))
     require('zope.Public')
 
+    label = u"Auswertungsgruppe löschen"
+
+    @property
+    def description(self):
+        return u"Wollen sie die Auswertungsgruppe '%s' wirklich löschen" % (self.context.title)
+
     @property
     def action_url(self):
         return self.request.path
@@ -156,7 +162,7 @@ class DeletedCriteria(DeleteForm):
 
     @action(_(u'Cancel'))
     def handle_cancel(self):
-        self.redirect(self.url(self.context))
+        self.redirect(self.application_url())
         return SUCCESS
 
 
@@ -201,7 +207,7 @@ class AddSession(Form):
 class ICaptched(Interface):
 
     captcha = Captcha(
-        title=u'Captcha',
+        title=u'Eingabe Sicherheitscode',
         required=True)
 
 
@@ -401,7 +407,7 @@ class CreateCourse(Form):
     def updateForm(self):
         super(CreateCourse, self).updateForm()
         name = self.fieldWidgets['form.field.name']
-        nv = u"Beurteilung Psychischer Belastung"
+        nv = u"Beurteilung Psychischer Belastung %s" % datetime.datetime.now().strftime('%Y')
         courses = len(list(self.context.courses))
         if courses > 0:
             nv = "%s (%s)" % (nv, str(courses + 1))
@@ -522,7 +528,7 @@ class EditCourse(Form):
     def action_url(self):
         return self.request.path
 
-    @action(_(u'Update'))
+    @action(u'Aktualisieren')
     def handle_save(self):
         data, errors = self.extractData()
         if errors:
@@ -668,6 +674,9 @@ class AnswerQuizz(Form):
     def update(self):
         course = self.context.course
         self.quizz = getUtility(IQuizz, name=course.quizz_type)
+        startdate = course.sessions[self.context.session_id].startdate
+        if datetime.date.today() < startdate:
+            self.flash(u'Der Kurs beginnt erst am %s deshalb werden Ihre ergebnisse nicht gespeichert' % startdate.strftime('%d.%m.%Y'))
         Form.update(self)
 
     @property

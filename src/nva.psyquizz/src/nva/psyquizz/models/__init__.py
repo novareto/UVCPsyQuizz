@@ -51,4 +51,4 @@ from .criterias import ICriteria, Criteria, CriteriaAnswer
 from .session import IClassSession, ClassSession
 from .student import IStudent, Student
 from .account import IAccount, Account
-from .vocabularies import TrueOrFalse, MoreToLess, LessToMore
+from .vocabularies import TrueOrFalse, MoreToLess, MoreToLessN, LessToMore

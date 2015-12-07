@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from .. import MoreToLess, LessToMore, IQuizz
+from .. import MoreToLess, MoreToLessN, LessToMore, IQuizz
 
 from nva.psyquizz import Base
 from nva.psyquizz.stats import ChartedQuizzStats
@@ -31,7 +31,7 @@ class IGroup1(Interface):
     
     question3 = schema.Choice(
         title=u"1.3",
-        description=u"Bei meiner Arbeit habe ich insgesammt gesehen häufig wechselnde, unterschiedliche Arbeitsaufgaben.",
+        description=u"Bei meiner Arbeit habe ich insgesamt gesehen häufig wechselnde, unterschiedliche Arbeitsaufgaben.",
         vocabulary=MoreToLess,
         required=True,
         )
@@ -59,56 +59,56 @@ class IGroup2(Interface):
         description=u"Bei dieser Arbeit gibt es Sachen, die zu kompliziert sind (z.B. \
                 aufgrund keiner oder unklarer Arbeitsbeschreibungen oder aufgrund mangelnder \
                 Qualifizierung).",
-        vocabulary=MoreToLess,
+        vocabulary=MoreToLessN,
         required=True,
         )
 
     question7 = schema.Choice(
         title=u"2.2",
-        description=u"Es werden zu hohe Anforderungen an meine Konzentrations fähigkeit gestellt.",
-        vocabulary=MoreToLess,
+        description=u"Es werden zu hohe Anforderungen an meine Konzentrationsfähigkeit gestellt.",
+        vocabulary=MoreToLessN,
         required=True,
         )
 
     question8 = schema.Choice(
         title=u"2.3",
         description=u"Ich stehe häufig unter Zeitdruck.",
-        vocabulary=MoreToLess,
+        vocabulary=MoreToLessN,
         required=True,
         )
 
     question9 = schema.Choice(
         title=u"2.4",
         description=u"Ich habe zu viel Arbeit.",
-        vocabulary=MoreToLess,
+        vocabulary=MoreToLessN,
         required=True,
         )
 
     question10 = schema.Choice(
         title=u"2.5",
         description=u"Oft stehen mir die benötigten Informationen, Materialien und Arbeitsmittel nicht zur Verfügung.",
-        vocabulary=MoreToLess,
+        vocabulary=MoreToLessN,
         required=True,
         )
 
     question11 = schema.Choice(
         title=u"2.6",
         description=u"Ich werde bei meiner eigentlichen Arbeit immer wieder von anderen Personen unterbrochen.",
-        vocabulary=MoreToLess,
+        vocabulary=MoreToLessN,
         required=True,
         )
 
     question12 = schema.Choice(
         title=u"2.7",
         description=u"An meinen Arbeitsplatz gibt es ungünstige Umgebungsbedingungen wie Lärm, Klima, Staub.",
-        vocabulary=MoreToLess,
+        vocabulary=MoreToLessN,
         required=True,
         )
 
     question13 = schema.Choice(
         title=u"2.8",
         description=u"An meinem Arbeitsplatz sind Räume und Raumausstattung ungenügend",
-        vocabulary=MoreToLess,
+        vocabulary=MoreToLessN,
         required=True,
         )
 

@@ -2,7 +2,7 @@ $( document ).ready(function() {
     $('div#field-came_from').hide();
     $('div#form-field-activation').hide(); 
     $('div.breadcrumb').hide();
-    $('div#form-field-activation').hide(); 
+    $('div#field-activation').hide(); 
     $('span.field-required').hide();
 
     $('.panel').on('hidden.bs.collapse', function (e) {
