@@ -683,18 +683,6 @@ class AnswerQuizz(Form):
     def action_url(self):
         return '%s/%s' % (self.request.script_name, self.context.access)
 
-    def updateWidgets(self):
-        Form.updateWidgets(self)
-        groups = OrderedDict()
-        for widget in self.fieldWidgets:
-            if widget.component.identifier.startswith('criteria_'):
-                iface = IStudentFilters
-            else:
-                iface = widget.component.interface or IExtraQuestions
-            group = groups.setdefault(iface, [])
-            group.append(widget)
-        self.groups = groups
-
     @property
     def fields(self):
         fields = Fields(self.quizz.__schema__)

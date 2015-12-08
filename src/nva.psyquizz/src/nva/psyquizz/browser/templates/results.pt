@@ -134,7 +134,7 @@
           // Get the context of the canvas element we want to select
 
 	    var data = {
-	      labels: <span tal:replace="[k.encode('iso-8859-1') for k in data[qname]['users'].keys()]" />,
+	      labels: <span tal:replace="[k.encode('iso-8859-1') for k in reversed(data[qname]['users'].keys())]" />,
 	      datasets: [
 	      <tal:datasets repeat="i reversed(range(1, 6))">
               {
@@ -145,7 +145,7 @@
               pointStrokeColor: "#fff",
               pointHighlightFill: "#fff",
               pointHighlightStroke: "rgba(220,220,220,1)",
-              data: <span tal:replace="[v[i] for v in data[qname]['users'].values()]" />
+              data: <span tal:replace="[v[i] for v in reversed(data[qname]['users'].values())]" />
               },
 	      </tal:datasets>
 	      ]

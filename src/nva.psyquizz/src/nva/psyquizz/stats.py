@@ -102,19 +102,19 @@ class TrueFalseQuizzStats(QuizzStats):
             
 class ChartedQuizzStats(QuizzStats):
 
-    averages = {
-        u'Handlungssspielraum': ('3.1', '3.2', '3.3'),
-        u'Vielseitiges Arbeiten': ('1.1', '1.2', '1.3'),
-        u'Ganzheitliches Arbeiten': ('1.4', '1.5'),
-        u'Soziale Rückendeckung': ('3.4', '3.5', '3.6'),
-        u'Zusammenarbeit': ('3.7', '3.8', '3.9'),
-        u'Passende inhaltliche Arbeitsanforderungen': ('2.1', '2.2'),
-        u'Passende mengenmäßige Arbeit': ('2.3', '2.4'),
-        u'Passende Arbeitsabläufe': ('2.5', '2.6'),
-        u'Passende Arbeitsumgebung': ('2.7', '2.8'),
-        u'Information und Mitsprache': ('4.1', '4.2'),
-        u'Entwicklungsmöglichkeiten': ('4.3', '4.4'),
-        }
+    averages = OrderedDict((
+        (u'Handlungssspielraum', ('1', '2', '3')),
+        (u'Vielseitiges Arbeiten', ('4', '5', '6')),
+        (u'Ganzheitliches Arbeiten', ('7', '8')),
+        (u'Soziale Rückendeckung', ('9', '10', '11')),
+        (u'Zusammenarbeit', ('12', '13', '14')),
+        (u'Passende inhaltliche Arbeitsanforderungen', ('15', '16')),
+        (u'Passende mengenmäßige Arbeit', ('17', '18')),
+        (u'Passende Arbeitsabläufe', ('19', '20')),
+        (u'Passende Arbeitsumgebung', ('21', '22')),
+        (u'Information und Mitsprache', ('23', '24')),
+        (u'Entwicklungsmöglichkeiten', ('25', '26')),
+        ))
 
     determine_average = {}
     for label, questions in averages.items():
@@ -125,8 +125,8 @@ class ChartedQuizzStats(QuizzStats):
 
     def compute_chart(self):
         answers = self.get_answers()
-        averages = {}
-        users_averages = {}
+        averages = OrderedDict()
+        users_averages = OrderedDict()
 
         for answer in answers:
             values = averages.setdefault(
@@ -138,7 +138,7 @@ class ChartedQuizzStats(QuizzStats):
                 values['sum'] += (value_answer['nb'] * value_answer['value'])
 
         for user in self.users:
-            avg = user['averages'] = {}
+            avg = user['averages'] = OrderedDict()
             for title, ids in self.averages.items():
                 group = users_averages.setdefault(title, {})
                 group['total'] = group.get('total', 0) + 1
