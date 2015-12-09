@@ -3,15 +3,6 @@
 
   <div class="panel" tal:define="data dict(viewlet.display());">
 
-<!--    
-    <tal:quizz repeat="qname data.keys()">
-      <a data-toggle="collapse" href="" class="btn btn-primary"
-	 tal:content="viewlet.rN(qname)"
-	 tal:attributes="href '#' + qname;
-	                 aria-expanded repeat['qname'].start and 'true' or 'false';
-			 aria-controls qname" />
-    </tal:quizz>
--->
     <div tal:repeat="qname data.keys()" 
 	 tal:attributes="id qname;
 	                 class repeat['qname'].start and 'collapse in' or 'collapse'">
@@ -122,7 +113,7 @@
       <table class="table table-bordered table-stripped">
 	<tr tal:repeat="res data[qname]['users'].items()">
 	  <th tal:content="res[0]" />
-	  <td tal:content="viewlet.avg(res[1])" />
+	  <td tal:content="'%.2f' % viewlet.avg(res[1])" />
 	</tr>
       </table>
 
@@ -172,20 +163,6 @@
         </script>
       </tal:users>
 
-    <!--  
-      <dl tal:repeat="question data[qname]['results']">
-	<dt tal:content="question['title']" />
-	<dd>
-	  <ul>
-	    <li tal:repeat="answer question['answers']">
-	      <span tal:content="answer['title']" /> :
-	      <b tal:content="answer['value']" />
-	      <i tal:content="'(%.2f%%)' % answer['percent']" />
-	    </li>
-	  </ul>
-	</dd>
-      </dl>
-    -->
     </div>
 
   </div>

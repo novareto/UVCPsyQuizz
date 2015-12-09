@@ -21,6 +21,10 @@ $( document ).ready(function() {
 	$('#' + sessionStorage.getItem("accordion")).addClass('in');
     }
 
+    $('input[type=checkbox]').change(function() {
+	$(this).closest("form").submit();
+    });
+
 });
 
 function dataURItoBlob(dataURI) {

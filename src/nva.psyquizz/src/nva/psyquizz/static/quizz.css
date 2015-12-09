@@ -50,3 +50,16 @@ span.field-required {
   display: none;
   visibility: hidden;
 }
+
+#criterias label {
+    font-weight: normal;
+}
+
+#criterias .control-label {
+    display: block;
+    font-weight: bold;
+}
+
+#criterias input[type=submit] {
+    display: none;
+}

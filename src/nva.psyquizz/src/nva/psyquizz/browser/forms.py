@@ -809,9 +809,8 @@ class CriteriaFiltering(Form):
 
     def render(self):
         pre = u"""<h1> Ergebnisse </h1>
-  <p>Hier sehen Sie die Auswertung für Ihre Befragung bezogen auf alle Beschäftigten. Durch Auswahl einer oder mehrerer Auswertungsgruppen haben Sie die Möglichkeit sich eine detaillierte Auswertung anzeigen zu lassen (Bitte beachten Sie Auswertungsgruppen oder Kombinationen die weniger als ausgefüllte Fragebogen umfassen, können aus Datenschutzgründen leider nicht angezeigt werden)</p>"""
-        form_render = Form.render(self)
-        return pre + form_render
+  <p>Hier sehen Sie die Auswertung für Ihre Befragung bezogen auf alle Beschäftigten. Durch Auswahl einer oder mehrerer Auswertungsgruppen haben Sie die Möglichkeit sich eine detaillierte Auswertung anzeigen zu lassen (Bitte beachten Sie Auswertungsgruppen oder Kombinationen die weniger als ausgefüllte Fragebogen umfassen, können aus Datenschutzgründen leider nicht angezeigt werden)</p><div id='criterias'>%s</div>""" % Form.render(self)
+        return pre
 
 
 @menuentry(IContextualActionsMenu, order=10)
