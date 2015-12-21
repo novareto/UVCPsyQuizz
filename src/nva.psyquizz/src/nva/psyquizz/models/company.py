@@ -36,8 +36,8 @@ class Company(Base, Location):
         collection_class=attribute_mapped_collection('id'))
 
     _criterias = relationship(
-        "Criteria", backref=backref("company", uselist=False),
-        collection_class=IntIds, cascade="save-update, delete")
+        "Criteria", backref=backref("company", uselist=False), single_parent=True,
+        collection_class=IntIds, cascade="save-update, delete, delete-orphan")
 
     @property
     def criterias(self):
