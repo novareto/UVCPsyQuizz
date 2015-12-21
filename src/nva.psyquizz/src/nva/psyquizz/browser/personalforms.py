@@ -28,7 +28,7 @@ class EditAccount(EditForm):
     context(MyPrefs)
     name('edit')
     require('manage.company')
-    title(u'Benutzerprofil bearbeiten')
+    title = u'Benutzerprofil bearbeiten'
 
     def __init__(self, context, request):
         super(EditAccount, self).__init__(context, request)

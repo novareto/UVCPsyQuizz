@@ -367,7 +367,11 @@ class DeletedCompany(DeleteForm):
 
     @property
     def label(self):
-        return u"Löschen"
+        return u"Betrieb löschen"
+
+    @property
+    def description(self):
+        return u"Wollen sie den Betrieb %s wirklich löschen" % self.context.name
 
     @property
     def action_url(self):
@@ -589,6 +593,12 @@ class DeleteCourse(DeleteForm):
     name('delete')
     require('manage.company')
     title(_(u'Delete'))
+
+    label = u"Befragung löschen"
+
+    @property
+    def description(self):
+        return u"Wollen sie die Befragung %s wirklich löschen" % self.context.name
 
     @property
     def action_url(self):
