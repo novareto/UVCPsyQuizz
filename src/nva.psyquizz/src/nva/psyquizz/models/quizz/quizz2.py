@@ -156,7 +156,7 @@ class IQuizz2(Interface):
 
     question21 = schema.Choice(
         title=u"21",
-        description=u"An meinen Arbeitsplatz gibt es ungünstige Umgebungsbedingungen wie Lärm, Klima, Staub.",
+        description=u"An meinem Arbeitsplatz gibt es ungünstige Umgebungsbedingungen wie Lärm, Klima, Staub.",
         vocabulary=MoreToLessN,
         required=True,
         )

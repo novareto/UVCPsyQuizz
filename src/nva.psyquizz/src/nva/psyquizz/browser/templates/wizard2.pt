@@ -78,7 +78,7 @@
 	  <span tal:replace="len(view.fieldWidgets) - view.nbcriterias" /></h1>
       </tal:frage>
       <tal:criteria condition="repeat['widget'].number <= view.nbcriterias">
-	<h1>Lorem Ipsum</h1>
+      <h1><span tal:content="widget.title"/></h1>
       </tal:criteria>
       
       <tal:description tal:condition="widget.description">

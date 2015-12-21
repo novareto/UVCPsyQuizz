@@ -110,7 +110,7 @@ msgid "Please enter one criteria per line"
 msgstr "Auswertungsgruppen"
 
 msgid "Description items"
-msgstr "Nennen Sie mindestens zwei unterschiedliche Ausprägungen (Beispiel Abteilung: „Personal“ und „Buchhaltung“). Bitte geben Sie jeden Ausprägung in eine neue Zeile ein, indem Sie die Eingabetaste („Return“) betätigen. Bitte achten Sie bei der Wahl Ihrer Auswertungsgruppen - aus Datenschutzgründen werden Ihnen nach Durchführung der Befragung nur Auswertungen von Gruppen angezeigt, von denen mindestens sieben ausgefüllte „Fragebögen“ vorliegen."
+msgstr "Nennen Sie mindestens zwei unterschiedliche Ausprägungen (Beispiel Abteilung: „Personal“ und „Buchhaltung“). Bitte geben Sie jeder Ausprägung in eine neue Zeile ein, indem Sie die Eingabetaste („Return“) betätigen. Bitte achten Sie bei der Wahl Ihrer Auswertungsgruppen - aus Datenschutzgründen werden Ihnen nach Durchführung der Befragung nur Auswertungen von Gruppen angezeigt, von denen mindestens sieben ausgefüllte „Fragebögen“ vorliegen."
 
 msgid "Description Label"
 msgstr "Mithilfe der Kriterien können Sie unterschiedliche Auswertungsgruppen bilden: (das Kriterium Abteilung könnte bspw. die Auswertungsgruppen Personal, Buchhaltung, Vertrieb und Produktion ermöglichen). Bitte beachten Sie bei der Wahl Ihrer Kriterien darauf, dass Ihre Auswertungsgruppen möglichst nicht kleiner als 10 Beschäftigte werden." 

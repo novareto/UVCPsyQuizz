@@ -257,7 +257,7 @@ class CreateAccount(Form):
             self.flash(_(u'User with given email already exists.'))
             self.errors.append(
                 Error(identifier='form.field.email',
-                      title='Email already exists'))
+                      title='Diese E-Mail Adresse existiert bereits im System.'))
             return FAILURE
 
         # pop the captcha and verif, it's not a needed data
@@ -536,7 +536,7 @@ class EditCourse(Form):
             return FAILURE
 
         apply_data_event(self.fields, self.getContentData(), data)
-        self.flash(_(u"Content updated"))
+        self.flash(_(u"Der Inhalt wurde aktualisiert."))
         self.redirect(self.application_url())
         return SUCCESS
 

@@ -99,7 +99,7 @@ class Access(GlobalUtility):
                         url=activate_url(request.path, **kws))
             else:
                 return SuccessMarker(
-                    'Needs activation', False,
+                    'Aktivierungs-Key Fehlt', False,
                     url=activate_url(request.path, **kws))
         return None
 
