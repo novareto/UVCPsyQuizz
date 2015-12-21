@@ -50,7 +50,7 @@ class EditAccount(EditForm):
             return FAILURE
 
         apply_data_event(self.fields, self.getContentData(), data)
-        self.flash(_(u"Content updated"))
+        self.flash(_(u"Der Inhalt wurde aktualisiert."))
         self.redirect(self.application_url())
         return SUCCESS
 

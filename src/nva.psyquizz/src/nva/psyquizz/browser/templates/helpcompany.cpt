@@ -10,17 +10,13 @@
         <h4 class="modal-title">Hilfe</h4>
       </div>
       <div class="modal-body">
-        <p class="lead"> Hilfe </p>
-        <p>Name des Unternehmens:</p>
-        <blockquote>
+        <p class="lead"> Name des Unternehmens: </p>
             <p>
             Bitte geben Sie hier den Namen Ihres Betriebes oder eine für Sie eindeutige Bezeichnung für Ihren
             Betrieb ein.
             </p>
-        </blockquote>
 
-        <p>Mitgliedsnummer:</p>
-        <blockquote>
+        <p class="lead">Mitgliedsnummer:</p>
             <p>
             Bitte tragen Sie hier die ersten acht Ziffern Ihrer Mitgliedsnummer ein. So können wir sicherstellen,
             dass nur Mitgliedsbetriebe unserer Berufsgenossenschaft diesen Service nutzen und somit keine
@@ -28,10 +24,8 @@
             Ihre Mitgliedsnummer wird nicht dauerhaft gespeichert. Ein Rückschluss auf Ihren Betrieb ist zu
             keinem Zeitpunkt möglich.
             </p>
-        </blockquote>
 
-        <p>Forschungsdatenbank:</p>
-        <blockquote>
+        <p class="lead">Forschungsdatenbank:</p>
             <p>
             Hier haben Sie die Möglichkeit, uns die Nutzung Ihrer Daten zu Forschungszwecken zu ermöglichen.
             Indem Sie uns angeben, aus welcher Branche Ihr Betrieb stammt und wieviel Beschäftigte Sie haben,
@@ -40,23 +34,18 @@
             Wir speichern lediglich die Anzahl der Beschäftigten, die Branche sowie die Ergebnisse des
             Fragebogens.
             </p>
-        </blockquote>
 
-        <p>Beschäftigte::</p>
-        <blockquote>
+        <p class="lead">Beschäftigte:</p>
             <p>
             Falls Sie der Nutzung Ihrer Daten zu Forschungszwecken zugestimmt haben, geben Sie bitte hier an,
             wie viele Personen in Ihrem Betrieb beschäftigt sind. 
             </p>
-        </blockquote>
 
-        <p>Betriebsgegenstand::</p>
-        <blockquote>
+        <p class="lead">Betriebsgegenstand:</p>
             <p>
             Bitte geben Sie hier an, welcher Branche Ihr Betrieb am ehesten zuzuordnen ist. Orientieren Sie sich
             hier am Geschäftszweck Ihres Betriebes.
             </p>
-        </blockquote>
 
       </div>
       <div class="modal-footer">

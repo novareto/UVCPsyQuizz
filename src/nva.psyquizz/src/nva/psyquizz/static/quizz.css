@@ -63,3 +63,7 @@ span.field-required {
 #criterias input[type=submit] {
     display: none;
 }
+
+div.tab-content {
+    padding: 16px;
+}

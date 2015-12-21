@@ -303,7 +303,7 @@ class DeletedAccount(DeleteForm):
 
     @action(_(u'Cancel'))
     def handle_cancel(self):
-        self.redirect(self.url(self.context))
+        self.redirect(self.url(self.application_url()))
         return SUCCESS
 
 
@@ -388,7 +388,7 @@ class DeletedCompany(DeleteForm):
 
     @action(_(u'Cancel'))
     def handle_cancel(self):
-        self.redirect(self.url(self.context))
+        self.redirect(self.application_url())
         return SUCCESS
 
 
@@ -615,7 +615,7 @@ class DeleteCourse(DeleteForm):
 
     @action(_(u'Cancel'))
     def handle_cancel(self):
-        self.redirect(self.url(self.context))
+        self.redirect(self.application_url())
         return SUCCESS
 
     
@@ -668,7 +668,7 @@ class DeleteSession(DeleteForm):
 
     @action(_(u'Cancel'))
     def handle_cancel(self):
-        self.redirect(self.url(self.context))
+        self.redirect(self.url(self.application_url()))
         return SUCCESS
 
     
