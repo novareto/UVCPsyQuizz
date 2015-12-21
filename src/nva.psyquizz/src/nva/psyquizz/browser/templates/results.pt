@@ -40,25 +40,25 @@
 	  labels: <span tal:replace="[k.encode('iso-8859-1') for k in data[qname]['chart'].keys()]" />,
 	  datasets: [
 	  {
-	      fillColor: "Green",
+	      fillColor: "#afca06",
 	      strokeColor: "rgba(120,120,120,0)",
 	      pointStrokeColor: "transparent",
               pointColor: "rgba(120,120,120,0)",
               data: <span tal:replace="[5] * length" />
           },
           {
-	      fillColor: "Yellow",
+	      fillColor: "#FFCC00",
 	      strokeColor: "rgba(120,120,120,0)",
 	      pointStrokeColor: "transparent",
               pointColor: "rgba(120,120,120,0)",
               data: <span tal:replace="[3.5] * length" />
           },
           {
-	      fillColor: "Red",
+	      fillColor: "#F39200",
 	      strokeColor: "rgba(120,120,120,0)",
 	      pointStrokeColor: "transparent",
               pointColor: "rgba(120,120,120,0)",
-              data: <span tal:replace="[1.5] * length" />
+              data: <span tal:replace="[2.5] * length" />
           },
           {
 	  scaleShowLine : true,
