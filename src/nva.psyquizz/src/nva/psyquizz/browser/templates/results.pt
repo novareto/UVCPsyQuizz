@@ -150,8 +150,8 @@
   	    scaleStartValue : 0,
   	    scaleSteps : 5,
   	    scaleStepWidth : 20,
-        scaleShowLabels: true,
-        scaleLabel: "<%=value%>",
+            scaleShowLabels: true,
+            scaleLabel: "<%=value%>",
 	    bezierCurve : false,
             onAnimationComplete: done
 	    };
