@@ -85,7 +85,7 @@
 	    showSingleValue : true,
 	    responsive: false,
 	    scaleShowLabelBackdrop: true,
-	    scaleShowLabels: true,
+	    scaleShowLabels: false,
 	    scaleShowLine: true,
 	    scaleBeginAtZero: true,
 	    graphMin: 0,
@@ -150,6 +150,8 @@
   	    scaleStartValue : 0,
   	    scaleSteps : 5,
   	    scaleStepWidth : 20,
+        scaleShowLabels: true,
+        scaleLabel: "<%=value%>",
 	    bezierCurve : false,
             onAnimationComplete: done
 	    };
