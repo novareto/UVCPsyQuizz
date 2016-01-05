@@ -2,11 +2,15 @@
       tal:attributes="action view.url(context) + '/pdf'">
 
   <div class="panel" tal:define="data dict(viewlet.display());">
-
+    
     <div tal:repeat="qname data.keys()" 
 	 tal:attributes="id qname;
 	                 class repeat['qname'].start and 'collapse in' or 'collapse'">
 
+      <h2>
+	Total answers : <span tal:content="data[qname]['total']" />
+      </h2>
+      
       <dl>
 	<tal:criterias repeat="criteria data[qname]['criterias'].items()">
 	  <dt tal:content="criteria[1]['title']" />
