@@ -25,6 +25,8 @@ $( document ).ready(function() {
 	$("#form-action-filter").click();
     });
 
+
+
 });
 
 function dataURItoBlob(dataURI) {

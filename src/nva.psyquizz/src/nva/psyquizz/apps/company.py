@@ -13,7 +13,7 @@ from . import Site
 from ..browser.emailer import prepare, SecureMailer, ENCODING
 from ..interfaces import ICompanyRequest, IRegistrationRequest
 from ..models import Account
-from .. import quizzjs
+from .. import quizzjs, lbg
 
 from cromlech.browser import IPublicationRoot, IView, IResponseFactory
 from cromlech.browser.interfaces import ITraverser
@@ -114,7 +114,7 @@ def send_forgotten_password(email, password):
     #mailer = SecureMailer('localhost')
     mailer = SecureMailer('smtprelay.bg10.bgfe.local')
     from_ = 'extranet@bgetem.de'
-    title = (u'Forgotten password').encode(ENCODING)
+    title = (u'Ihre Passwortanfrage').encode(ENCODING)
     with mailer as sender:
         html = forgotten_template.substitute(
             title=title,
@@ -132,7 +132,7 @@ def send_forgotten_password(email, password):
 class IForgotten(Interface):
 
     username = TextLine(
-        title=_(u"Your username"),
+        title=_(u"Passwort vergessen"),
         required=True,
         )
 
@@ -149,7 +149,7 @@ class ForgotPassword(Form):
     def action_url(self):
         return self.request.path
 
-    @action(_(u'Request'))
+    @action(_(u'Neues Passwort anfragen'))
     def handle_request(self):
         data, errors = self.extractData()
         if errors:
@@ -165,7 +165,7 @@ class ForgotPassword(Form):
             return FAILURE
         else:
             send_forgotten_password(account.email, account.password)
-            self.flash(_(u'Password sent to the appropriate email.'))
+            self.flash(_(u'Ihr Passwort wurde an Ihre E-Mail-Adresse verschickt.'))
             self.redirect(self.application_url())
             return SUCCESS
 
@@ -216,6 +216,9 @@ class AnonIndex(Page):
     __component_name__ = 'index'
    
     template = get_template('anon_index.pt', browser.__file__)
+
+    def update(self):
+        lbg.need()
 
 
 @implementer(IPublicationRoot, IView, IResponseFactory)
