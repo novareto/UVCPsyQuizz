@@ -7,7 +7,7 @@
     <div id="activation">
       <h1>Hallo $email</h1>
       <p>
-        Your password is : $password
+        Ihr Passwort lautet : $password
       </p>
     </div>
   </body>
