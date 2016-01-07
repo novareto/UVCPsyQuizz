@@ -8,7 +8,7 @@
 	                 class repeat['qname'].start and 'collapse in' or 'collapse'">
 
       <h2>
-	Total answers : <span tal:content="data[qname]['total']" />
+	Anzahl ausgefüllte Fragebögen: <span tal:content="data[qname]['total']" />
       </h2>
       
       <dl>
@@ -108,19 +108,20 @@
 	  
 	</script>
       </tal:chart>
-      <p class="lead">Verteilung der Antworten</p>
-<p>Hier sehen Sie zusätzlich die Verteilung der Antworten. Bei Auffälligen Verteilungen z.B. 50% der Beschäftigten antworten sehr positiv, 
-50% sehr negativ sollten Sie sich diesen Bereich trotz eines unauffälligen Mittelwertes noch einmal genauer anschauen.</p>
 
 <tal:users condition="data[qname]['users'] is not None">
   
-      <table class="table table-bordered table-stripped">
+      <p class="lead">Mittelwerte</p>
+      <table id="mt" class="table table-bordered table-stripped">
 	<tr tal:repeat="res data[qname]['users'].items()">
 	  <th tal:content="res[0]" />
 	  <td tal:content="'%.2f' % viewlet.avg(res[1])" />
 	</tr>
       </table>
 
+      <p class="lead">Verteilung der Antworten</p>
+<p>Hier sehen Sie zusätzlich die Verteilung der Antworten. Bei Auffälligen Verteilungen z.B. 50% der Beschäftigten antworten sehr positiv, 
+50% sehr negativ sollten Sie sich diesen Bereich trotz eines unauffälligen Mittelwertes noch einmal genauer anschauen.</p>
   
 	<textarea type="text" id="userschart" name="userschart" style="display: none"></textarea>
         <canvas id="myUsersChart" width="800" height="800"></canvas>

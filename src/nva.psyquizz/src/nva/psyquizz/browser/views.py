@@ -66,7 +66,7 @@ class CourseExpiredPage(Page):
     require('zope.Public')
 
     def render(self):
-        return _(u"The course access is expired.")
+        return _(u"Der Fragebogen ist für den öffentlichen Zugang geschlossen.")
 
 
 class CriteriasAccess(MenuItem):

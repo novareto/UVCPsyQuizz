@@ -67,3 +67,8 @@ span.field-required {
 div.tab-content {
     padding: 16px;
 }
+
+#mt > tbody > tr > th
+{
+        border: 2px solid #dddddd;
+    }

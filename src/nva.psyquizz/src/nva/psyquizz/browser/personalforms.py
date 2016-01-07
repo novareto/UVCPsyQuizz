@@ -63,7 +63,7 @@ class EditAccount(EditForm):
 @menuentry(IDocumentActions, order=10)
 class TransferCompany(Form):
     name('transfer_company')
-    uvclight.provides(ITab)
+    # uvclight.provides(ITab)
     context(MyPrefs)
     layer(ICompanyRequest)
     title(_(u'Transfer the company'))
