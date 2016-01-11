@@ -2,7 +2,7 @@ import uvclight
 from cStringIO import StringIO
 from zope.interface import Interface
 from reportlab.lib.pagesizes import letter
-from reportlab.platypus import SimpleDocTemplate, Image, Paragraph
+from reportlab.platypus import SimpleDocTemplate, Image, Paragraph, Table
 from reportlab.lib.styles import getSampleStyleSheet
 from tempfile import NamedTemporaryFile
 from binascii import a2b_base64
@@ -37,10 +37,9 @@ class GeneratePDF(uvclight.Page):
         chart = read_data_uri(self.request.form['chart'])
         userschart = read_data_uri(self.request.form['userschart'])
 
-        parts.append(Paragraph(u'HALLO WELT', styles['Normal']))
+        parts.append(Paragraph(u'Auswertungsbericht', styles['Normal']))
         parts.append(Image(userschart, width=350, height=350))
 
-        parts.append(Paragraph(u'HALLO WELT2', styles['Normal']))
         image = Image(chart, width=500, height=500,kind='proportional')
         parts.append(image)
 
