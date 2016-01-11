@@ -41,10 +41,10 @@ class GeneratePDF(uvclight.Page):
         userschart = read_data_uri(self.request.form['userschart'])
 
         parts.append(Paragraph(u'HALLO WELT', styles['Normal']))
-        parts.append(Image(userschart, width=600, height=600))
+        parts.append(Image(userschart, width=350, height=350))
 
         parts.append(Paragraph(u'HALLO WELT2', styles['Normal']))
-        image = Image(chart, width=600, height=600,kind='proportional')
+        image = Image(chart, width=500, height=500,kind='proportional')
         parts.append(image)
 
         doc.build(parts)

@@ -29,20 +29,27 @@ class EditAccount(EditForm):
     name('edit')
     require('manage.company')
     title = u'Benutzerprofil bearbeiten'
+    label = description = u"Hier haben Sie die Möglichkeit, die Angaben in Ihrem Benutzerprofil zu ändern."
 
     def __init__(self, context, request):
         super(EditAccount, self).__init__(context, request)
         self.setContentData(context.context)
 
-    label = ""
-
     fields = Fields(IAccount).select('name', 'email', 'password')
+    fields['name'].description = u"Vor- und Zuname ändern"
+    fields['email'].description = u"E-Mail-Adresse ändern"
+    fields['password'].description = u"Passwort ändern (mindestens acht Zeichen)"
+
+    def updateForm(self):
+        super(EditAccount, self).updateForm()
+        field = self.fieldWidgets.get('form.field.password')
+        field.template = uvclight.get_template('pw.cpt', __file__)
 
     @property
     def action_url(self):
         return self.request.path
 
-    @action(_(u'Update'))
+    @action(_(u'Aktualisieren'))
     def handle_save(self):
         data, errors = self.extractData()
         if errors:

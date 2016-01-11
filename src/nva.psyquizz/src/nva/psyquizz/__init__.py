@@ -22,6 +22,11 @@ from siguvtheme.resources import bootstrap_css, siguv_css
 
 library = Library('nva.psyquizz', 'static')
 
+lbjs = Resource(library, 'ekko-lightbox.min.js')
+lbcss = Resource(library, 'ekko-lightbox.min.css')
+
+lbg = Group([lbjs, lbcss])
+
 #chartjs = Resource(library, 'Chart.js')
 #charthbar = Resource(library, 'Chart.StackedBar.js', depends=[chartjs])
 

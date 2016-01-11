@@ -217,56 +217,179 @@ TIPP: Informieren Sie in einem ersten Schritt Ihrer Führungskräfte möglichst 
   <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingThree">
       <h4 class="panel-title">
-        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
 4. Lösungsworkshop
         </a>
       </h4>
     </div>
-    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+    <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
       <div class="panel-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+        <p>
+        Ziel der Lösungsworkshops ist die Konkretisierung der Befragungsergebnisse und die Entwicklung von Lösungsideen in Kleingruppen. Das Vorgehen erschließt das Expertenwissen der Beschäftigten.  Durch ihre aktive Beteiligung wird die Akzeptanz der Maßnahmen erhöht.
+        </p> 
+        <p>
+        Die Gruppen werden durch interne oder externe Moderatoren geleitet.  Eine externe Moderation ist empfehlenswert, wenn soziale Konflikte oder Führungsfragen im Raum stehen.  Wenn die Moderation durch interne Mitarbeiter oder Führungskräfte durchgeführt wird, sollten Rollenkonflikte (Neutralität) vermieden werden.
+        </p>
+        <p>
+        Die Anwesenheit der Führungskraft zu Beginn des Lösungsworkshops kann helfen den Auftrag zu klären und damit das Engagement der Beteiligten zu erhöhen. Ist die Führungskraft am Ende bei der Präsentation der Ergebnisse anwesend, können mit ihrer Zustimmung erste Maßnahmen direkt auf den Weg gebracht werden. Während der Problembeschreibung und Lösungssuche wird meist freier gesprochen, wenn die direkte Führungskraft nicht im Raum ist.  
+        </p>
+        <p>
+        Die Dauer liegt zwischen 1,5 und 4 Stunden. Sie hängt von der Teilnehmerzahl und der Anzahl zu besprechender Belastungsfaktoren ab.
+        </p>
+        <p>
+        Die Teilnehmergruppe muss nicht exakt der Befragungsgruppe entsprechen. Es hat sich jedoch bewährt, entweder ein gesamtes Team im Lösungsworkshop zu haben oder eine repräsentative Anzahl Freiwilliger.  Die Gruppe sollte nicht weniger als fünf und nicht mehr als zwölf  Personen umfassen.  
+        </p>
+
+        <table class="table table-bordered">
+          <tr>
+             <th> Ablauf </th>
+             <th> Vorgehen </th>
+             <th> Zeit </th>
+         </tr>
+         <tr>
+            <td>Begrüßung und Klärung der Rahmenbedingungen </td>
+            <td> 
+Vorstellung von Moderator und Teilnehmern.  Ziel nennen:  Die Verbesserung der Arbeitsbedingungen. Vereinbarung zur Vertraulichkeit:  Das gesprochene Wort bleibt im Raum. Alles Schriftliche, das raus geht, wird am Ende gemeinsam beschlossen. 
+            </td>
+            <td> 15- 30 Minuten</td>
+         </tr>
+         <tr>
+            <td> Ergebnispräsentation</td>
+            <td> 
+Erhebungsergebnisse aus der Onlinebefragung (z.B. auf Poster): 
+Was ist positiv? (Ressourcen)
+Wo muss genauer hingeschaut werden?
+</td>
+            <td>15 Minuten </td>
+         </tr>
+         <tr>
+            <td> Priorisierung </td>
+            <td>Schwerpunktthemen: Was sollten wir zunächst anpacken? 
+(Priorität wird auf dem Poster markiert. Jeder setzt Klebepunkte) </td>
+            <td> 5 - Minuten</td>
+         </tr>
+         <tr>
+            <td> Problembeschreibung</td>
+            <td>(„Auswertungsposter: Lösungen finden“ oder Flipchart): Was sind typische Situationen, wo sich das Problem zeigt? 
+Was wurde  bisher getan?
+Wie bewältige ich die Anforderungen? </td>
+            <td> 15 - 30 Minuten</td>
+         </tr>
+         <tr>
+            <td>Lösungssuche </td>
+            <td>Was ist die Ursache, das die Dinge falsch laufen?
+Was kann ich selbst tun?
+Welche betrieblichen Lösungen bieten sich an?
+ (Sammeln in der Gruppe oder zu zweit. Kurze Ergebnisvorstellung) </td>
+            <td>15 - 45 Minuten </td>
+         </tr>
+         <tr>
+            <td> Abschluss und Ausblick</td>
+            <td>  (ohne FK): Was soll in welcher Form weitergereicht werden? Wird noch ein weiterer Termin gebraucht? Beschreibung des weiteren Verfahrens. Hinweis auf die Vertraulichkeit des gesprochenen Wortes. Bedanken für die Teilnahme
+(mit FK): Was können wir hier beschließen? Was wird im Lenkungskreis besprochen?</td>
+            <td> 15 Minuten</td>
+         </tr>
+      </table>
+
+
+
+        <p>
+Nach dem Lösungsworkshop werden die Ergebnisse an die Führungskraft, die Steuerungsgruppe bzw. die Geschäftsleitung weitergeleitet. Nun wird entschieden, welche Ideen in welcher Form umgesetzt werden.  Werden Maßnahmen nicht umgesetzt, sollte den Beschäftigten gegenüber nachvollziehbare Gründe angegeben werden. Große Transparenz und Beteiligung der Beschäftigten erhöht die Akzeptanz des Verfahrens und der Maßnahmen. 
+        </p>
       </div>
     </div>
   </div>
   <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingThree">
       <h4 class="panel-title">
-        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
 5. Maßnahmenumsetzung
         </a>
       </h4>
     </div>
-    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+    <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
       <div class="panel-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+<p>
+Hier wird zunächst unterteilt nach Maßnahmen, die nur den eigenen Bereich der Führungskraft betreffen und Maßnahmen, die den Gesamtbetrieb oder mehrere Bereiche betreffen. 
+</p>
+<p>
+Maßnahmen die im Bereich der Führungskraft liegen, können durch diese geplant und gesteuert werden. Bereichsübergreifende Maßnahmen werden durch die Steuerungsgruppe geplant und überwacht.
+</p>
+<p>
+In einem ersten Schritt werden die Maßnahmen priosiert (z.B. nach Erwartetem Nutzen vs. Aufwand). 
+</p>
+<a data-footer="A custom footer text" data-title="A random title" data-toggle="lightbox" href="/fanstatic/nva.psyquizz/maßnahmen.jpg">
+                                <img class="img-responsive img-thumbnail" src="/fanstatic/nva.psyquizz/maßnahmen.jpg"/>
+                            </a>
+
+<p>
+Anschließend wird für jede Maßnahme ein Maßnahmenplan  erstellt der konkrete Termine und Verantwortlichkeiten enthält und die erwartete Wirkung der Maßnahme beschreibt.
+</p>
+
+<p>
+Denken Sie auch daran, Ihre Beschäftigten regelmäßig über den Stand der Maßnahmenumsetzung zu informieren. Dies kann bspw. im Rahmen von Teammeeting oder über das Intranet bzw. entsprechende Aushänge geschehen.
+</p>
       </div>
     </div>
   </div>
   <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingThree">
       <h4 class="panel-title">
-        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
 6. Wirksamkeit
         </a>
       </h4>
     </div>
-    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+    <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
       <div class="panel-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+<p>
+Mit Hilfe der Wirksamkeitskontrolle stellen Sie fest, ob Ihre Maßnahmen tatsächlich zu den gewünschten Optimierungen geführt haben.
+</p>
+<p>
+Beachten Sie, dass Maßnahmen oftmals nicht sofort wirksam werden. Planen Sie ausreichend Zeit ein, damit sich Ihre Maßnahmen auch auswirken können.
+</p>
+<p>
+Ein Weg um dies zu erreichen ist die Wiederholung der Online Befragung, bspw. einmal im Jahr. So können Sie anhand der Entwicklung der Ergebnisse feststellen, inwieweit Ihre Maßnahmen tatsächlich zu einer Optimierung der Belastungssituation geführt haben.
+</p>
+<p>
+Neben der Wiederholung der Befragung bieten sich auch Gespräche mit den Beschäftigten der betroffenen Bereiche über die Wirksamkeit der Maßnahmen an. Diese können durch die Führungskraft oder durch die Fachkraft für Arbeitssicherheit, bspw. im Rahmen der Begehungen, erfolgen. 
+</p>
+<p>
+Sollten Sie feststellen, dass Ihre Maßnahmen nicht die erwartete Wirkung erzielen, müssen Sie diese entsprechend anpassen.
+</p>
+<p>
+TIPP: Gehen Sie offen mit Misserfolgen um.  Wenn Maßnahmen nicht wirkungsvoll waren oder Widerstände auftraten, können Sie draus für die Zukunft lernen. Thematisieren Sie diese Punkte und beziehen sie in zukünftige Planungen mit ein.
+</p>
       </div>
     </div>
   </div>
   <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingThree">
       <h4 class="panel-title">
-        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
 7. Dokumentation
         </a>
       </h4>
     </div>
-    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+    <div id="collapseSeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeven">
       <div class="panel-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+<p>
+In der Dokumentation sollte nachvollziehbar sein, dass die Beurteilung der psychischen Belastung angemessen durchgeführt wurde. Dies geschieht durch die Darstellung der Ergebnisse der Beurteilung (Auswertungsberichte der Online-Befragung), die abgeleiteten Maßnahmen (Maßnahmenplan als Ergebnis des Lösungsworkshops) sowie das Ergebnis der Wirksamkeitskontrolle.
+</p>
+<p>
+Insgesamt ergeben sich daraus folgenden Mindestanforderungen an den Inhalt:
+<p>
+<ul>
+ <li> Beurteilung der Gefährdungen </li>
+ <li> Festlegung konkreter Arbeitsschutzmaßnahmen, inklusive Termine und Verantwortliche </li>
+ <li> Durchführung der Maßnahmen </li>
+ <li> Überprüfung der Wirksamkeit </li>
+ <li> Datum der Erstellung/Aktualisierung </li>
+</ul>
+<p>
+Bzgl. der Form der Dokumentation bestehen keine konkreten Anforderungen. Sie sollte jedoch so gestaltet sein, das sie auch für andere innerbetriebliche Akteure und Externe (z.B. Aufsichtsbehörden) nachvollziehbar ist
+</p>
+
       </div>
     </div>
   </div>
