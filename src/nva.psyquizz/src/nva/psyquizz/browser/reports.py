@@ -1,3 +1,4 @@
+import json
 import uvclight
 from cStringIO import StringIO
 from zope.interface import Interface
@@ -33,6 +34,8 @@ class GeneratePDF(uvclight.Page):
     def render(self):
         doc = SimpleDocTemplate(NamedTemporaryFile(), pagesize=letter)
         parts = []
+
+        avg = json.loads(self.request.form['averages'])
 
         chart = read_data_uri(self.request.form['chart'])
         userschart = read_data_uri(self.request.form['userschart'])
