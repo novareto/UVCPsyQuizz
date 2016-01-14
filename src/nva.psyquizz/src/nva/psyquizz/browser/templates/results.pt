@@ -110,6 +110,11 @@
       </tal:chart>
 
 <tal:users condition="data[qname]['users'] is not None">
+
+    <textarea type="text" id="averages" name="averages" style="display:none">
+      <tal:data
+           content="viewlet.jsonify(dict((res[0], '%.2f' % viewlet.avg(res[1])) for res in data[qname]['users'].items()))" />
+    </textarea>
   
       <p class="lead">Mittelwerte</p>
       <table id="mt" class="table table-bordered table-stripped">

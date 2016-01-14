@@ -1,11 +1,13 @@
+import json
 import uvclight
 from cStringIO import StringIO
 from zope.interface import Interface
 from reportlab.lib.pagesizes import letter
-from reportlab.platypus import SimpleDocTemplate, Image, Paragraph
+from reportlab.platypus import SimpleDocTemplate, Image, Paragraph, Table, TableStyle
 from reportlab.lib.styles import getSampleStyleSheet
 from tempfile import NamedTemporaryFile
 from binascii import a2b_base64
+from reportlab.lib import colors
 
 styles = getSampleStyleSheet()
 
@@ -34,13 +36,24 @@ class GeneratePDF(uvclight.Page):
         doc = SimpleDocTemplate(NamedTemporaryFile(), pagesize=letter)
         parts = []
 
+        avg = json.loads(self.request.form['averages'])
+
         chart = read_data_uri(self.request.form['chart'])
         userschart = read_data_uri(self.request.form['userschart'])
 
-        parts.append(Paragraph(u'HALLO WELT', styles['Normal']))
+        parts.append(Paragraph(u'Auswertungsbericht', styles['Normal']))
         parts.append(Image(userschart, width=350, height=350))
+        parts.append(Paragraph(u'Mittelwerte', styles['Normal']))
 
-        parts.append(Paragraph(u'HALLO WELT2', styles['Normal']))
+        table = Table(data=[[k,v] for k,v in avg.items()])
+        ts = TableStyle([
+            ('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
+            ('BOX', (0,0), (-1,-1), 0.25, colors.black),
+            ])
+        table.setStyle(ts) 
+        parts.append(table)
+        print parts
+
         image = Image(chart, width=500, height=500,kind='proportional')
         parts.append(image)
 

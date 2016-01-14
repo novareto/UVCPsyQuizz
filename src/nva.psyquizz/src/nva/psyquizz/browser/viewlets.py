@@ -105,6 +105,9 @@ class Results(object):
         5: '- -',
         }
 
+    def jsonify(self, da):
+        return json.dumps(da)
+
     def avg(self, res):
         return (
             (1.0 * res[1]) / 100.0 +
