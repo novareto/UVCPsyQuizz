@@ -20,8 +20,8 @@ from collections import OrderedDict
 from cromlech.sqlalchemy import get_session
 from dolmen.forms.base.markers import NO_VALUE
 from dolmen.forms.base.errors import Error
-from dolmen.forms.base import SuccessMarker
-from dolmen.forms.base import makeAdaptiveDataManager
+from dolmen.forms.base.actions import Action, Actions
+from dolmen.forms.base import SuccessMarker, makeAdaptiveDataManager
 from dolmen.forms.base.utils import set_fields_data, apply_data_event
 from dolmen.forms.crud.actions import message
 from dolmen.menu import menuentry, order
@@ -671,7 +671,60 @@ class DeleteSession(DeleteForm):
         self.redirect(self.url(self.application_url()))
         return SUCCESS
 
-    
+
+
+class SaveQuizz(Action):
+
+    def available(self, form):
+        from datetime import date
+        today = date.today()
+        return (today >= form.context.session.startdate and
+                today <= form.context.session.enddate)
+
+    def __call__(self, form):
+        data, errors = form.extractData()
+        if errors:
+            form.flash(_(u'An error occurred.'))
+            return FAILURE
+
+        session = get_session('school')
+
+        fields = form.fields
+        extra_answers = {}
+
+        keys = data.keys()
+        for key in keys:
+            if key.startswith('criteria_'):
+                cid = key.split('_', 1)[1]
+                value = data.pop(key)
+                field = fields.get(key)
+                criteria_answer = CriteriaAnswer(
+                    criteria_id=cid,
+                    student_id=form.context.access,
+                    answer=value,
+                    )
+                session.add(criteria_answer)
+            elif key.startswith('extra_'):
+                value = data.pop(key)
+                field = fields.get(key)
+                extra_answers[field.title] = value
+
+        data['extra_questions'] = json.dumps(extra_answers)
+
+        form.context.complete_quizz()
+        quizz = form.quizz(**data)
+        quizz.student_id = form.context.access
+        quizz.company_id = form.context.company_id
+        quizz.course_id = form.context.course_id
+        quizz.session_id = form.context.session_id
+
+        session.add(form.context)
+        session.add(quizz)
+        form.flash(_(u'Thank you for answering the quizz'))
+        form.redirect(form.request.url)
+        return SUCCESS
+
+
 class AnswerQuizz(Form):
     context(Student)
     layer(IAnonymousRequest)
@@ -680,6 +733,8 @@ class AnswerQuizz(Form):
     title(_(u'Answer the quizz'))
     dataValidators = []
     template = get_template('wizard2.pt', __file__)
+
+    actions = Actions(SaveQuizz(_(u'Answer')))
 
     def update(self):
         course = self.context.course
@@ -735,51 +790,6 @@ class AnswerQuizz(Form):
             field.mode = 'radio'
 
         return fields
-
-
-    @action(_(u'Answer'))
-    def handle_save(self):
-        data, errors = self.extractData()
-        if errors:
-            self.flash(_(u'An error occurred.'))
-            return FAILURE
-
-        session = get_session('school')
-
-        fields = self.fields
-        extra_answers = {}
-
-        keys = data.keys()
-        for key in keys:
-            if key.startswith('criteria_'):
-                cid = key.split('_', 1)[1]
-                value = data.pop(key)
-                field = fields.get(key)
-                criteria_answer = CriteriaAnswer(
-                    criteria_id=cid,
-                    student_id=self.context.access,
-                    answer=value,
-                    )
-                session.add(criteria_answer)
-            elif key.startswith('extra_'):
-                value = data.pop(key)
-                field = fields.get(key)
-                extra_answers[field.title] = value
-
-        data['extra_questions'] = json.dumps(extra_answers)
-
-        self.context.complete_quizz()
-        quizz = self.quizz(**data)
-        quizz.student_id = self.context.access
-        quizz.company_id = self.context.company_id
-        quizz.course_id = self.context.course_id
-        quizz.session_id = self.context.session_id
-
-        session.add(self.context)
-        session.add(quizz)
-        self.flash(_(u'Thank you for answering the quizz'))
-        self.redirect(self.request.url)
-        return SUCCESS
 
 
 def company_criterias(context):
