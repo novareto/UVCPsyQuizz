@@ -133,6 +133,7 @@ class IForgotten(Interface):
 
     username = TextLine(
         title=_(u"Passwort vergessen"),
+        description=_(u'Bitte geben Sie Ihre  E-Mail Adresse ein:'),
         required=True,
         )
 
