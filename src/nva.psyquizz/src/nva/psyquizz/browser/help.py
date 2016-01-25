@@ -6,7 +6,7 @@ import uvclight
 
 from zope.interface import Interface
 from uvc.design.canvas import IAboveContent
-from .forms import CreateCourse, CreateCompany, CreateCriterias
+from .forms import CreateCourse, CreateCompany, CreateCriterias, EditCriteria
 from .ckhp import AccountHomepage, ExampleText
 
 
@@ -30,6 +30,9 @@ class HelpFrontPage(HelpPage):
 class HelpAddCriteria(HelpPage):
     uvclight.view(CreateCriterias)
     template = uvclight.get_template('helpcriterias.cpt', __file__)
+
+class HelpEditCriteria(HelpAddCriteria):
+    uvclight.view(EditCriteria)
 
 
 class HelpCourse(HelpPage):

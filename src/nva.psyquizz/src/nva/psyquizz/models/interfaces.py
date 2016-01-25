@@ -15,16 +15,27 @@ from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 ABOUT_TEXT = u"""
 Liebe Kolleginnen und Kollegen, <br>
 <p> herzlich Willkommen zu unserer Befragung „Gemeinsam zu gesunden Arbeitsbedingungen“! </p>
-<p>Der Fragebogen besteht aus insgesamt 26 Fragen; das Ausfüllen wird ca. 5 Minuten dauern.</br>
-Bitte beantwortet Sie alle Fragen des Fragebogens. Beim Beantworten der Fragen kann es hilfreich sein,
-nicht zu lange über die einzelnen Fragen nachzudenken. Meist ist der erste Eindruck auch der treffendste.</p> </br>
+
+<p>Der Fragebogen umfasst 26 Fragen. Bitte beantworteten Sie alle Fragen des Fragebogens.
+Beim Beantworten der Fragen kann es hilfreich sein, nicht zu lange über die einzelnen Fragen
+nachzudenken. Meist ist der erste Eindruck auch der treffendste.“</p> </br>
 <p>Wir möchten nochmal darauf hinweisen, dass Ihre Angaben absolut vertraulich behandelt werden. </br>Ein Rückschluss auf einzelne Personen wird nicht möglich sein.</p>
 <p>Sollten Sie Fragen oder Anmerkungen haben, wenden Sie sich bitte an:</p> </br>
-    <span style="background-color: rgb(255, 255, 0);"> Ansprechpartner und Kontaktdaten </span> </br>
+    <span> A n s p r e c h p a r t n e r   u n d    K o n t a k t d a t e n </span> </br>
     Wir freuen uns auf Ihre Rückmeldungen!
 """
 
 ABOUT_TEXT = u"""
+<blockquote>
+<p>
+Sie können das folgenden Musteranschreiben nutzen, um Ihre Beschäftigten über die 
+Befragung zu informieren und den Link zum „Fragebogen“ zu verteilen.  
+Fügen Sie den Text dazu in eine E-Mail ein, passen ihn nach Ihren Vorstellungen an und 
+versenden ihn an Ihre Beschäftigten.
+</p>
+</blockquote>
+
+
 <p>Liebe Kolleginnen und Kollegen,</p>
 <p> herzlich Willkommen zu unserer Befragung „Gemeinsam zu gesunden Arbeitsbedingungen“! </p>
 <p>Der Fragebogen besteht aus insgesamt 26 Fragen; das Ausfüllen wird ca. 5 Minuten dauern. Bitte beantworteten Sie alle Fragen des Fragebogens. Beim Beantworten der Fragen kann es hilfreich sein, nicht zu lange über die einzelnen Fragen nachzudenken. Meist ist der erste Eindruck auch der treffendste.</p>
@@ -229,7 +240,7 @@ class ICourse(ILocation, IContent):
 
     name = schema.TextLine(
         title=_(u"Course name"),
-        description=u"Bitte geben Sie Ihrer Befragung eine eindeutige Bezeichnung wie z.B. Beurteilung Psychischer Belastung 2015 – Werk Bexbach",
+        description=u"Bitte geben Sie Ihrer Befragung eine eindeutige Bezeichnung wie z.B. Beurteilung Psychischer Belastung – Gesamtbetrieb",
         required=True,
         )
 

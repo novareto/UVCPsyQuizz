@@ -67,3 +67,59 @@ span.field-required {
 div.tab-content {
     padding: 16px;
 }
+
+
+
+/* PANEL STUFF */
+.panel-group .panel {
+    -webkit-border-top-left-radius: 5px !important;
+    -webkit-border-top-right-radius: 5px !important;
+    -moz-border-radius-topleft: 5px !important;
+    -moz-border-radius-topright: 5px !important;
+    border-top-left-radius: 5px !important;
+    border-top-right-radius: 5px !important;
+    -webkit-border-bottom-right-radius: 0px !important;
+    -webkit-border-bottom-left-radius: 0px!important;
+    -moz-border-radius-bottomright: 0px !important;
+    -moz-border-radius-bottomleft: 0px !important;
+    border-bottom-right-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+
+}
+
+.panel-group .panel + .panel {
+    border-top: none;
+    margin-top: 0px !important;
+    -webkit-border-top-left-radius: 0px !important;
+    -webkit-border-top-right-radius: 0px !important;
+    -moz-border-radius-topleft: 0px !important;
+    -moz-border-radius-topright: 0px !important;
+    border-top-left-radius: 0px!important;
+    border-top-right-radius: 0px !important;
+    -webkit-border-bottom-right-radius: 5px !important;
+    -webkit-border-bottom-left-radius: 5px !important;
+    -moz-border-radius-bottomright: 5px !important;
+    -moz-border-radius-bottomleft: 5px !important;
+    border-bottom-right-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
+}
+
+.panel-heading h4.panel-title span.status {
+    display: inline-block;
+    border-right: 1px solid #ddd;
+    margin-right: 1em;
+    margin-left: 0.5em;
+    padding: 0.5em 0.5em 0.5em 0;
+}
+
+.panel-heading {
+    padding: 0 !important;
+}
+
+.panel-heading h4.panel-title  span::before {
+    content: ">";
+}
+
+.panel-heading h4.panel-title collapsed span.status::before {
+    content: "V";
+}
