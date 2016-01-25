@@ -13,35 +13,14 @@ from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 
 
 ABOUT_TEXT = u"""
-Liebe Kolleginnen und Kollegen, <br>
+<p>Liebe Kolleginnen und Kollegen,</p>
 <p> herzlich Willkommen zu unserer Befragung „Gemeinsam zu gesunden Arbeitsbedingungen“! </p>
-
 <p>Der Fragebogen umfasst 26 Fragen. Bitte beantworteten Sie alle Fragen des Fragebogens.
 Beim Beantworten der Fragen kann es hilfreich sein, nicht zu lange über die einzelnen Fragen
 nachzudenken. Meist ist der erste Eindruck auch der treffendste.“</p> </br>
-<p>Wir möchten nochmal darauf hinweisen, dass Ihre Angaben absolut vertraulich behandelt werden. </br>Ein Rückschluss auf einzelne Personen wird nicht möglich sein.</p>
-<p>Sollten Sie Fragen oder Anmerkungen haben, wenden Sie sich bitte an:</p> </br>
-    <span> A n s p r e c h p a r t n e r   u n d    K o n t a k t d a t e n </span> </br>
-    Wir freuen uns auf Ihre Rückmeldungen!
-"""
-
-ABOUT_TEXT = u"""
-<blockquote>
-<p>
-Sie können das folgenden Musteranschreiben nutzen, um Ihre Beschäftigten über die 
-Befragung zu informieren und den Link zum „Fragebogen“ zu verteilen.  
-Fügen Sie den Text dazu in eine E-Mail ein, passen ihn nach Ihren Vorstellungen an und 
-versenden ihn an Ihre Beschäftigten.
-</p>
-</blockquote>
-
-
-<p>Liebe Kolleginnen und Kollegen,</p>
-<p> herzlich Willkommen zu unserer Befragung „Gemeinsam zu gesunden Arbeitsbedingungen“! </p>
-<p>Der Fragebogen besteht aus insgesamt 26 Fragen; das Ausfüllen wird ca. 5 Minuten dauern. Bitte beantworteten Sie alle Fragen des Fragebogens. Beim Beantworten der Fragen kann es hilfreich sein, nicht zu lange über die einzelnen Fragen nachzudenken. Meist ist der erste Eindruck auch der treffendste.</p>
 <p>Wir möchten nochmal darauf hinweisen, dass Ihre Angaben absolut vertraulich behandelt werden. Ein Rückschluss auf einzelne Personen wird nicht möglich sein.</p>
 <p>Sollten Sie Fragen oder Anmerkungen haben, wenden Sie sich bitte an:</p>
-<p> <span style="background-color: rgb(255, 255, 0);">Ansprechpartner und Kontaktdaten </span></p>
+ <p>   <span> A n s p r e c h p a r t n e r   &nbsp;    und   &nbsp     K o n t a k t d a t e n </span> </p>
 <p>Wir freuen uns auf Ihre Rückmeldungen!</p>
 """
 
@@ -97,14 +76,18 @@ class ICriterias(IContent):
 class ICriteria(IContent):
 
     title = schema.TextLine(
-        title=_(u"Label"),
-        description=_(u"Description Label"),
+        #title=_(u"Label"),
+        #description=_(u"Description Label"),
+        title=_(u"Bitte geben Sie hier den Oberbegriff für Ihre Auswertungsgruppen an:"),
+        description=u"",
         required=True,
     )
 
     items = schema.Text(
-        title=_(u"Please enter one criteria per line"),
-        description=_(u"Description items"),
+        title=_(u"Bitte geben Sie hier mindestens zwei Auswertungsgruppen an. Bitte geben Sie jede Auswertungsgruppe in eine neue Zeile ein, indem Sie die Eingabetaste („Return“) betätigen."),
+        description=u"",
+        #title=_(u"Please enter one criteria per line"),
+        #description=_(u"Description items"),
         required=True,
     )
 

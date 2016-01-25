@@ -262,7 +262,7 @@ class CompanyCourseDiffs(uvclight.Viewlet, Results):
     template = uvclight.get_template('diffs.pt', __file__)
 
     averages = [
-        u'Handlungssspielraum',
+        u'Handlungsspielraum',
         u'Vielseitiges Arbeiten',
         u'Ganzheitliches Arbeiten',
         u'Soziale Rückendeckung',

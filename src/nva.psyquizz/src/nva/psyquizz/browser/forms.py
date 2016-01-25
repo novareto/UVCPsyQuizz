@@ -97,6 +97,15 @@ class CreateCriterias(Form):
     require('zope.Public')
 
     fields = Fields(ICriteria).select('title', 'items')
+    label = u"Auswertungsgruppen anlegen"
+    description = u"""
+   Bitte geben Sie zunächst einen Oberbegriff für Ihre Auswertungsgruppen an, wie z.B. „Abteilung“. Zu 
+jedem Oberbegriff gehören mindestens zwei Auswertungsgruppen. Zum Oberbegriff „Abteilung“ 
+könnten bspw. die Auswertungsgruppen „Personalabteilung“ und „Produktion“ gehören.  
+<b>Bitte beachten Sie bei der Wahl Ihrer Auswertungsgruppen - aus Datenschutzgründen werden Ihnen nur 
+Ergebnisse von Auswertungsgruppen angezeigt, von denen mindestens sieben ausgefüllte 
+„Fragebögen“ vorliegen.</b> 
+    """
 
     @property
     def action_url(self):
