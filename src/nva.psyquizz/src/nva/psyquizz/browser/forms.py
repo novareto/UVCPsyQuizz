@@ -324,6 +324,7 @@ class CreateCompany(Form):
         name = self.fieldWidgets['form.field.name']
         nv = u""
         name.value = {'form.field.name': nv} 
+        quizzjs.need()
 
     @property
     def action_url(self):
@@ -339,6 +340,9 @@ class CreateCompany(Form):
             return FAILURE
 
         # create it
+        if not data['exp_db']:
+            data.pop('employees')
+            data.pop('type')
         company = Company(**data)
         company.account_id = self.context.email
         session.add(company)

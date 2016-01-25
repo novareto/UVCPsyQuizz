@@ -1,6 +1,6 @@
 <div>
   <div class="page-header">
-    <h1 tal:content="context.name" />
+    <h1> Startseite <small tal:content="context.name"> </small> </h1>
     <p>
       Herzlich Willkommen bei der Online-Hilfe der BG ETEM für Ihre
       Gefährdungsbeurteilung psychischer Belastung. Mit diesem Werkzeug

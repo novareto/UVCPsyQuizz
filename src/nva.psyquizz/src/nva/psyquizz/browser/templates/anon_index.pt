@@ -21,6 +21,9 @@
 		   class="field field-password form-control field-required"
 		   required="required" />
 	  </div>
+	  <p>
+	    <a href="forgotten">Passwort vergessen</a>
+	  </p>
 	  <input id="came_from" name="came_from" class="field"
 		 type="hidden" value="" />
 	</div>
@@ -32,9 +35,6 @@
 	  <p>
 	    Um sich neu zu registrieren klicken sie auf
 	    <a href="register">registrieren</a>
-	  </p>
-	  <p>
-	    <a href="forgotten">Passwort vergessen</a>
 	  </p>
 	</div>
       </form>
@@ -52,7 +52,7 @@
     Die BGETEM hilft Ihnen mit ihrem Programm Gemeinsam zu gesunden Arbeitsbedingungen (PopUp mit Text unten) dabei. Das Programm führt Sie ein sieben Schritten zur Gefährdungsbeurteilung psychischer Belastung: </p>
 
 
-
+    <div metal:define-macro="panel">
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
   <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingOne">
@@ -536,4 +536,5 @@ Bzgl. der Form der Dokumentation bestehen keine konkreten Anforderungen. Sie sol
     Beachten Sie, dass die Gefährdungsbeurteilung der psychischen Belastung nur sinnvolle Ergebnisse erzielen kann, wenn sie aktuell ist, beziehungsweise aktuell gehalten wird.
     </p>
   </div>
+</div>
 </div>

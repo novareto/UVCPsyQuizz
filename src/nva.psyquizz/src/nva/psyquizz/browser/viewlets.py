@@ -305,6 +305,7 @@ class Home(uvclight.MenuItem):
     uvclight.menu(INavigationMenu)
     uvclight.layer(ICompanyRequest)
     uvclight.name('index')
+    uvclight.order(10)
 
     def action(self):
         return '%s' % (self.view.application_url())

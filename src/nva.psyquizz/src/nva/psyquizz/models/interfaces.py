@@ -59,6 +59,7 @@ def vocab_type(context):
           SimpleTerm('12', '12', u'Herstellung von Wellpappe, Kartonagen'),
           SimpleTerm('13', '13', u'Papierverarbeitung'),
           SimpleTerm('14', '14', u'Fotografie und Bildjournalismus'),
+          SimpleTerm('15', '15', u'sonstige'),
           ]
     return SimpleVocabulary(rc)
 
@@ -160,7 +161,7 @@ class ICompany(ILocation, IContent):
 
     mnr = schema.TextLine(
         title=_(u"Company ID"),
-        description=u"Bitte tragen Sie hier die achtstellige Mitgliedsnummer Ihres Unternehmens bei der BG ETEM ein.",
+        description=u"Bitte geben Sie hier die ersten acht Stellen Ihrer Mitgliedsnummer bei der BG ETEM ein.",
         required=True,
     )
 
