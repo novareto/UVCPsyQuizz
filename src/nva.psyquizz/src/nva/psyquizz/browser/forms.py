@@ -129,10 +129,29 @@ class EditCriteria(EditForm):
     label = ""
 
     fields = Fields(ICriteria).select('title', 'items')
+    actions = Actions()
 
     @property
     def action_url(self):
         return self.request.path
+
+    @action(_(u'Cancel'))
+    def cancel(self):
+        message(_(u"Update aborted"))
+        url = self.application_url()
+        return SuccessMarker('Aborted', True, url=url)
+
+    @action(_(u"Update"))
+    def save(self):
+        data, errors = self.extractData()
+        if errors:
+            self.submissionError = errors
+            return FAILURE
+
+        apply_data_event(self.fields, self.getContentData(), data)
+        message(_(u"Content updated"))
+        url = self.application_url()
+        return SuccessMarker('Updated', True, url=url)
 
 
 class DeletedCriteria(DeleteForm):

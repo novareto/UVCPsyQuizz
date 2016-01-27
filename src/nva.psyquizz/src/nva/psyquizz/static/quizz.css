@@ -104,7 +104,7 @@ div.tab-content {
     border-bottom-left-radius: 5px !important;
 }
 
-.panel-heading h4.panel-title span.status {
+h4.panel-title span.status {
     display: inline-block;
     border-right: 1px solid #ddd;
     margin-right: 1em;
@@ -112,14 +112,10 @@ div.tab-content {
     padding: 0.5em 0.5em 0.5em 0;
 }
 
-.panel-heading {
-    padding: 0 !important;
+h4.panel-title span[role='button']::before {
+    content: "▲";
 }
 
-.panel-heading h4.panel-title  span::before {
-    content: ">";
-}
-
-.panel-heading h4.panel-title collapsed span.status::before {
-    content: "V";
+h4.panel-title span[role='button'].collapsed::before {
+    content: "▼";
 }

@@ -5,10 +5,11 @@
     
     <div tal:repeat="qname data.keys()" 
 	 tal:attributes="id qname;
-	                 class repeat['qname'].start and 'collapse in' or 'collapse'">
+	     class repeat['qname'].start and 'collapse in' or 'collapse'">
 
       <h2>
-	Anzahl ausgefüllte Fragebögen : <span tal:content="data[qname]['total']" />
+	Anzahl ausgefüllte Fragebögen :
+	<span tal:content="data[qname]['total']" />
       </h2>
       
       <dl>
@@ -17,7 +18,9 @@
 	  <dd>
 	    <ul>
 	      <li tal:repeat="answer criteria[1]['answers'].items()">
-		<strong tal:content="answer[0]" /> :
+		<strong class="criteria-name"
+			tal:attributes="data-importance answer[1]"
+			tal:content="answer[0]" /> :
 		<span tal:content="answer[1]" />
 	      </li>
 	    </ul>
@@ -25,6 +28,22 @@
 	</tal:criterias>
       </dl>
 
+      <script language="javascript">
+	$(document).ready(
+	  $(".criteria-name").each(function(index) {
+	     var name = $(this).text();
+	     var data = $(this).attr('data-importance');
+	     if (parseInt(data) < 7) {
+	         //$(this).parent('li').remove();
+		 var label = $("label:contains('" + name + "')");
+		 var field = $('input#' + label.attr('for'));
+		 label.remove();
+		 field.remove();
+	      }
+           })
+         )
+      </script>
+      
       <input type="submit" class="btn btn-primary" value="Auswertung exportieren" />
       <tal:chart condition="data[qname]['chart'] is not None">
 	<textarea type="text" id="chart" name="chart" style="display: none"></textarea>
@@ -44,7 +63,7 @@
 	  labels: <span tal:replace="[k.encode('iso-8859-1') for k in data[qname]['chart'].keys()]" />,
 	  datasets: [
 	  {
-	      fillColor: "#afca06",
+	      fillColor: "#62B645",
 	      strokeColor: "rgba(120,120,120,0)",
 	      pointStrokeColor: "transparent",
               pointColor: "rgba(120,120,120,0)",
@@ -58,7 +77,7 @@
               data: <span tal:replace="[3.5] * length" />
           },
           {
-	      fillColor: "#F39200",
+	      fillColor: "#D8262B",
 	      strokeColor: "rgba(120,120,120,0)",
 	      pointStrokeColor: "transparent",
               pointColor: "rgba(120,120,120,0)",
@@ -136,18 +155,36 @@
 	    var data = {
 	      labels: <span tal:replace="[k.encode('iso-8859-1') for k in reversed(data[qname]['users'].keys())]" />,
 	      datasets: [
-	      <tal:datasets repeat="i reversed(range(1, 6))">
               {
-              title: "<tal:title content="viewlet.labels[repeat['i'].number]" />",
-              fillColor: "<tal:color content="viewlet.colors[i]" />",
+              title: "+",
+              fillColor: "<tal:color content="viewlet.colors[1]" />",
               strokeColor: "rgba(120,120,120,1)",
               pointColor: "rgba(120,120,120,1)",
               pointStrokeColor: "#fff",
               pointHighlightFill: "#fff",
               pointHighlightStroke: "rgba(220,220,220,1)",
-              data: <span tal:replace="[v[i] for v in reversed(data[qname]['users'].values())]" />
+              data: <span tal:replace="[v[1] + v[2] for v in reversed(data[qname]['users'].values())]" />
               },
-	      </tal:datasets>
+              {
+              title: "+ / -",
+              fillColor: "<tal:color content="viewlet.colors[3]" />",
+              strokeColor: "rgba(120,120,120,1)",
+              pointColor: "rgba(120,120,120,1)",
+              pointStrokeColor: "#fff",
+              pointHighlightFill: "#fff",
+              pointHighlightStroke: "rgba(220,220,220,1)",
+              data: <span tal:replace="[v[3] for v in reversed(data[qname]['users'].values())]" />
+              },
+	      {
+              title: "-",
+              fillColor: "<tal:color content="viewlet.colors[5]" />",
+              strokeColor: "rgba(120,120,120,1)",
+              pointColor: "rgba(120,120,120,1)",
+              pointStrokeColor: "#fff",
+              pointHighlightFill: "#fff",
+              pointHighlightStroke: "rgba(220,220,220,1)",
+              data: <span tal:replace="[v[4] + v[5] for v in reversed(data[qname]['users'].values())]" />
+              },
 	      ]
           };
 
