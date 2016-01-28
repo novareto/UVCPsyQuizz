@@ -34,8 +34,7 @@ class AccountHomepage(Page):
 
 
 class SevenSteps(MenuItem):
-    view(AccountHomepage)
-    context(Account)
+    context(Interface)
     layer(ICompanyRequest)
     menu(INavigationMenu)
     order(100)

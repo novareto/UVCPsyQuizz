@@ -107,7 +107,7 @@ class IQuizz2(Interface):
 
     question14 = schema.Choice(
         title=u"14",
-        description=u"Ich bekommen von Vorgesetzten und Kollegen immer Rückmeldung über die Qualität meiner Arbeit.",
+        description=u"Ich bekomme von Vorgesetzten und Kollegen immer Rückmeldung über die Qualität meiner Arbeit.",
         vocabulary=MoreToLess,
         required=True,
         )

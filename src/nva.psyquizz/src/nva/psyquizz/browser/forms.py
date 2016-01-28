@@ -104,7 +104,9 @@ jedem Oberbegriff gehören mindestens zwei Auswertungsgruppen. Zum Oberbegriff �
 könnten bspw. die Auswertungsgruppen „Personalabteilung“ und „Produktion“ gehören.  
 <b>Bitte beachten Sie bei der Wahl Ihrer Auswertungsgruppen - aus Datenschutzgründen werden Ihnen nur 
 Ergebnisse von Auswertungsgruppen angezeigt, von denen mindestens sieben ausgefüllte 
-„Fragebögen“ vorliegen.</b> 
+„Fragebögen“ vorliegen.</b>
+<p> Wollen sie noch mehr Auswertungsmöglichkeiten haben, wie z.B. Standort oder Funktion? Über den <b> + </b> Button auf der Startseite
+können Sie weitere Oberbegriffe mit dazugehörigen Auswertungsgruppen anlegen.
     """
 
     @property
@@ -158,7 +160,7 @@ class EditCriteria(EditForm):
             return FAILURE
 
         apply_data_event(self.fields, self.getContentData(), data)
-        message(_(u"Content updated"))
+        message(_(u"Ihre Auswertungsgruppe wurde aktualisiert."))
         url = self.application_url()
         return SuccessMarker('Updated', True, url=url)
 
@@ -861,7 +863,11 @@ class CriteriaFiltering(Form):
 
     def render(self):
         pre = u"""<h1> Ergebnisse </h1>
-  <p>Hier sehen Sie die Auswertung für Ihre Befragung bezogen auf alle Beschäftigten. Durch Auswahl einer oder mehrerer Auswertungsgruppen haben Sie die Möglichkeit sich eine detaillierte Auswertung anzeigen zu lassen (Bitte beachten Sie Auswertungsgruppen oder Kombinationen die weniger als ausgefüllte Fragebogen umfassen, können aus Datenschutzgründen leider nicht angezeigt werden)</p><div id='criterias'>%s</div>""" % Form.render(self)
+  <p>Hier sehen Sie die Auswertung für alle Beschäftigten.</p>
+  <p> Durch Auswahl einer oder mehrerer Auswertungsgruppen haben Sie die Möglichkeit sich eine detaillierte Auswertung anzeigen zu lassen
+  (Bitte beachten Sie: Auswertungsgruppen oder Kombinationen die weniger als sieben ausgefüllte Fragebogen umfassen, können aus Datenschutzgründen leider nicht angezeigt werden)</p>
+  <p> Der weitere Umgang mit den Ergebnissen ist in der Übersicht 7 Schritte unter 4. Lösungsworkshops beschrieben.
+  <div id='criterias'>%s</div>""" % Form.render(self)
         return pre
 
 

@@ -14,7 +14,7 @@ vielen Dank für Ihre Registrierung bei unserer Online-Hilfe Gemeinsam zu gesund
       <br>
        <p>
        <p>Freundliche Grüße</p> </br>
-       <p>Ihre Berufsgenossenschaft Energie, Elektro, Textil, Medienerzeugnisse</p> 
+       <p>Ihre Berufsgenossenschaft Energie, Textil, Elektro, Medienerzeugnisse</p> 
       </p>
     </div>
   </body>

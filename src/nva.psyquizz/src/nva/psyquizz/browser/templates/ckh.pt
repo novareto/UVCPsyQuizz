@@ -68,7 +68,7 @@
 		  <dd tal:content="view.quizz_name(course)"> </dd> 
 		  <dt> Befragungszeitraum: </dt> 
 		  <dd>
-                    <span class="glyphicon glyphicon-calendar"/> <span tal:content="string: ${session.startdate.strftime('%d.%m.%Y')} - ${session.enddate.strftime('%d.%m.%Y')}"></span> 
+      <span class="glyphicon glyphicon-calendar"> </span> <span tal:replace="string: ${session.startdate.strftime('%d.%m.%Y')} - ${session.enddate.strftime('%d.%m.%Y')}"></span> 
 		  </dd>
 		  <dt> Link zum Fragebogen: </dt> 
 		  <dd>
