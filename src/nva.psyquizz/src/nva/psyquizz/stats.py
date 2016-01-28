@@ -103,7 +103,7 @@ class TrueFalseQuizzStats(QuizzStats):
 class ChartedQuizzStats(QuizzStats):
 
     averages = OrderedDict((
-        (u'Handlungssspielraum', ('1', '2', '3')),
+        (u'Handlungsspielraum', ('1', '2', '3')),
         (u'Vielseitiges Arbeiten', ('4', '5', '6')),
         (u'Ganzheitliches Arbeiten', ('7', '8')),
         (u'Soziale Rückendeckung', ('9', '10', '11')),

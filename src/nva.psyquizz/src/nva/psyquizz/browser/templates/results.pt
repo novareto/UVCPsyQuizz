@@ -50,9 +50,9 @@
 	<canvas id="myChart" width="800" height="400"></canvas>
 
   <div class="legend" style="width: 550px; margin: 0 auto 5em auto; text-align: center; border: 2px solid #666;">
-    <em><b>> 3,5</b>: in diesem Bereich scheint alles in Ordnung</em><br>
-    <em><b>> 2,5 < 3,5</b>: diesen Bereich sollten Sie sich noch mal genauer ansehen</em><br>
-    <em><b> < 2,5  </b>: in diesem Bereich scheint Handlungsbedarf zu bestehen </em>&nbsp;&nbsp;
+    <em><b style="color: #62B645;">> 3,5</b>: in diesem Bereich scheint alles in Ordnung</em><br>
+    <em><b style="color: #FFCC00;">> 2,5 < 3,5</b>: diesen Bereich sollten Sie sich noch mal genauer ansehen</em><br>
+    <em><b style="color: #D8262B;"> < 2,5  </b>: in diesem Bereich scheint Handlungsbedarf zu bestehen </em>&nbsp;&nbsp;
   </div>
 
 	<script language="Javascript"

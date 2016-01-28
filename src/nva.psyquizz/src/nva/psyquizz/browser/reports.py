@@ -40,7 +40,7 @@ class GeneratePDF(uvclight.Page):
         return response
 
     def headerfooter(self, canvas, doc):
-        canvas.drawString(1 * cm, 2 * cm, u"Grundlage der Befragung: KFZA - Kurfragebogen zur Arbeitsanalyse")
+        canvas.drawString(1 * cm, 2 * cm, u"Grundlage der Befragung: KFZA - Kurzfragebogen zur Arbeitsanalyse")
         canvas.drawString(1 * cm, 1.6 * cm, u"Prümper, J., Hartmannsgruber, K. & Frese, M")
         canvas.line(0.5 * cm , 2.5 * cm, 26 * cm, 2.5 * cm)
         canvas.drawString(1 * cm, 20 * cm, self.context.company.name)
@@ -59,10 +59,10 @@ class GeneratePDF(uvclight.Page):
 
         chart = read_data_uri(self.request.form['chart'])
         userschart = read_data_uri(self.request.form['userschart'])
-        parts.append(Spacer(0, 4*cm))
+        parts.append(Spacer(0, 2*cm))
         parts.append(Paragraph(u'Auswertungsgruppe', styles['Normal']))
         parts.append(Paragraph(u'Mittelwerte der Antworten', styles['Normal']))
-        image = Image(chart, width=500, height=500, kind='proportional')
+        image = Image(chart, width=700, height=700, kind='proportional')
         parts.append(image)
         parts.append(PageBreak())
         parts.append(Spacer(0, 4*cm))
@@ -76,9 +76,9 @@ class GeneratePDF(uvclight.Page):
         table.setStyle(ts)
         parts.append(table)
         parts.append(PageBreak())
-        parts.append(Spacer(0, 2*cm))
+        parts.append(Spacer(0, 1*cm))
         parts.append(Paragraph(u'Mittelwerte', styles['Normal']))
-        parts.append(Image(userschart, width=350, height=350))
+        parts.append(Image(userschart, width=500, height=400))
 
         doc.build(parts, onFirstPage=self.headerfooter, onLaterPages=self.headerfooter)
         pdf = doc.filename
