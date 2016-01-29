@@ -109,7 +109,7 @@ class ChartedQuizzStats(QuizzStats):
         (u'Passende mengenmäßige Arbeit', ('8', '9')),
         (u'Passende Arbeitsabläufe', ('10', '11')),
         (u'Passende Arbeitsumgebung', ('12', '13')),
-        (u'Handlungssspielraum', ('14', '15', '16')),
+        (u'Handlungsspielraum', ('14', '15', '16')),
         (u'Soziale Rückendeckung', ('17', '18', '19')),
         (u'Zusammenarbeit', ('20', '21', '22')),
         (u'Information und Mitsprache', ('23', '24')),

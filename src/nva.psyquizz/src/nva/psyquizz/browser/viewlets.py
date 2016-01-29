@@ -290,6 +290,8 @@ class CompanyCourseDiffs(uvclight.Viewlet, Results):
                 sid=session.id,
                 extra_questions=self.context.extra_questions)
 
+            #import pdb
+            #pdb.set_trace()
             for name, result in data.items():
                 diff = diffs.setdefault(name, {})
                 gbl, users = result.compute_chart()
