@@ -10,6 +10,7 @@ from zope.interface import invariant, Invalid, Interface
 from zope.location import ILocation
 from zope.schema.interfaces import IContextSourceBinder
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
+from uvc.validation.validation import validateZahl
 
 
 ABOUT_TEXT = u"""
@@ -76,14 +77,14 @@ class ICriterias(IContent):
 class ICriteria(IContent):
 
     title = schema.TextLine(
-        title=_(u"Label"),
+        title=_(u"Oberbegriff"),
         #description=_(u"Description Label"),
-        description=_(u"Bitte geben Sie hier den Oberbegriff für Ihre Auswertungsgruppen an:"),
+        description=_(u"Bitte geben Sie hier den Oberbegriff für Ihre Auswertungsgruppen an."),
         required=True,
     )
 
     items = schema.Text(
-        description=_(u"Bitte geben Sie hier mindestens zwei Auswertungsgruppen an. Bitte geben Sie jede Auswertungsgruppe in eine neue Zeile ein, indem Sie die Eingabetaste („Return“) betätigen."),
+        description=_(u"Bitte geben Sie jede Auswertungsgruppe in eine neue Zeile ein, indem Sie die Eingabetaste („Return“) betätigen."),
         title=_(u"Please enter one criteria per line"),
         #description=_(u"Description items"),
         required=True,
@@ -155,6 +156,7 @@ class ICompany(ILocation, IContent):
         title=_(u"Company ID"),
         description=u"Bitte geben Sie hier die ersten acht Stellen Ihrer Mitgliedsnummer bei der BG ETEM ein.",
         required=True,
+        constraint=validateZahl,
     )
 
     courses = schema.Set(

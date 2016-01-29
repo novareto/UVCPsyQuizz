@@ -102,11 +102,9 @@ class CreateCriterias(Form):
    Bitte geben Sie zunächst einen Oberbegriff für Ihre Auswertungsgruppen an, wie z.B. „Abteilung“. Zu 
 jedem Oberbegriff gehören mindestens zwei Auswertungsgruppen. Zum Oberbegriff „Abteilung“ 
 könnten bspw. die Auswertungsgruppen „Personalabteilung“ und „Produktion“ gehören.  
-<b>Bitte beachten Sie bei der Wahl Ihrer Auswertungsgruppen - aus Datenschutzgründen werden Ihnen nur 
+<b>Beachten Sie bei der Wahl Ihrer Auswertungsgruppen - aus Datenschutzgründen werden Ihnen nur 
 Ergebnisse von Auswertungsgruppen angezeigt, von denen mindestens sieben ausgefüllte 
-„Fragebögen“ vorliegen.</b>
-<p> Wollen sie noch mehr Auswertungsmöglichkeiten haben, wie z.B. Standort oder Funktion? Über den <b> + </b> Button auf der Startseite
-können Sie weitere Oberbegriffe mit dazugehörigen Auswertungsgruppen anlegen.
+„Fragebogen“ vorliegen.</b>
     """
 
     @property
@@ -347,6 +345,7 @@ class CreateCompany(Form):
 
     dataValidators = []
     fields = Fields(ICompany).select('name', 'mnr', 'exp_db', 'type', 'employees')
+    fields['mnr'].htmlAttributes = {'maxlength': 8}
 
     def updateForm(self):
         super(CreateCompany, self).updateForm()
