@@ -76,17 +76,15 @@ class ICriterias(IContent):
 class ICriteria(IContent):
 
     title = schema.TextLine(
-        #title=_(u"Label"),
+        title=_(u"Label"),
         #description=_(u"Description Label"),
-        title=_(u"Bitte geben Sie hier den Oberbegriff für Ihre Auswertungsgruppen an:"),
-        description=u"",
+        description=_(u"Bitte geben Sie hier den Oberbegriff für Ihre Auswertungsgruppen an:"),
         required=True,
     )
 
     items = schema.Text(
-        title=_(u"Bitte geben Sie hier mindestens zwei Auswertungsgruppen an. Bitte geben Sie jede Auswertungsgruppe in eine neue Zeile ein, indem Sie die Eingabetaste („Return“) betätigen."),
-        description=u"",
-        #title=_(u"Please enter one criteria per line"),
+        description=_(u"Bitte geben Sie hier mindestens zwei Auswertungsgruppen an. Bitte geben Sie jede Auswertungsgruppe in eine neue Zeile ein, indem Sie die Eingabetaste („Return“) betätigen."),
+        title=_(u"Please enter one criteria per line"),
         #description=_(u"Description items"),
         required=True,
     )

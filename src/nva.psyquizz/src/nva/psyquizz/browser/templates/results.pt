@@ -44,7 +44,7 @@
          )
       </script>
       
-      <input type="submit" class="btn btn-primary" value="Auswertung exportieren" />
+      <input type="submit" class="btn btn-primary" value="Als PDF exportieren" />
       <tal:chart condition="data[qname]['chart'] is not None">
 	<textarea type="text" id="chart" name="chart" style="display: none"></textarea>
 	<canvas id="myChart" width="800" height="400"></canvas>
