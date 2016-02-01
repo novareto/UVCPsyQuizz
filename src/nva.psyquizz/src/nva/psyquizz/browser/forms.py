@@ -6,6 +6,7 @@ import uuid
 import uvclight
 import datetime
 import html2text
+import base64
 
 from .. import wysiwyg, quizzjs
 from ..i18n import _
@@ -15,6 +16,7 @@ from ..models import ICourseSession, IAccount, ICompany, ICourse, IClassSession
 from ..models import ICompanyTransfer, ICompanies, IQuizz, TrueOrFalse
 from ..models import Criteria, CriteriaAnswer, ICriteria, ICriterias
 from .emailer import SecureMailer, prepare, ENCODING
+from .results import Results
 
 from collections import OrderedDict
 from cromlech.sqlalchemy import get_session
@@ -50,7 +52,8 @@ def send_activation_code(company_name, email, code, base_url):
     #mailer = SecureMailer('localhost')
     mailer = SecureMailer('smtprelay.bg10.bgfe.local')
     from_ = 'extranet@bgetem.de'
-    title = (u'Gemeinsam zu gesunden Arbeitsbedingungen – Aktivierung').encode(ENCODING)
+    title = (u'Gemeinsam zu gesunden Arbeitsbedingungen – Aktivierung').encode(
+        ENCODING)
     with mailer as sender:
         html = mail_template.substitute(
             title=title,
@@ -173,7 +176,8 @@ class DeletedCriteria(DeleteForm):
 
     @property
     def description(self):
-        return u"Wollen sie die Auswertungsgruppe '%s' wirklich löschen" % (self.context.title)
+        return u"Wollen sie die Auswertungsgruppe '%s' wirklich löschen" % (
+            self.context.title)
 
     @property
     def action_url(self):
@@ -825,25 +829,47 @@ class AnswerQuizz(Form):
         return fields
 
 
-def company_criterias(context):
-    for criteria in context.criterias:
+def company_criterias(view, limit=7):
+    data = view.data[view.context.quizz_type]
+    criterias = []
+    for idx, answers in data['criterias'].items():
         vocabulary = SimpleVocabulary(
-            [SimpleTerm(value=i.strip(), title=i.strip(), token=idx)
-             for idx, i in enumerate(criteria.items.split('\n'), 1)
-             if i.strip()])
+            [SimpleTerm(value=criteria, title='%s (%s)' % (criteria, number),
+                        token=base64.b64encode(criteria.encode('utf-8')))
+             for criteria, number in answers['answers'].items()
+             if number >= limit])
         yield Set(
-            __name__= '%i' % criteria.id,
-            title=criteria.title,
+            __name__= '%i' % idx,
+            title=answers['title'],
             value_type=Choice(vocabulary=vocabulary),
             required=False)
 
 
-class CriteriaFiltering(Form):
+class CriteriaFiltering(Form, Results):
     baseclass()
 
     ignoreContent = True
     dataValidators = []
     criterias = {}
+
+    description_pt = uvclight.get_template('criteria_filtering.pt', __file__)
+    results_pt = uvclight.get_template('results.pt', __file__)
+
+    @property
+    def fields(self):
+        return Fields(*list(company_criterias(self)))
+    
+    def update(self):
+        self.data = dict(self.display())
+        Form.update(self)
+    
+    def render(self):
+        form = Form.render(self)
+        description = self.description_pt.render(
+            self, target_language=self.target_language, **self.namespace())
+        filtering = self.results_pt.render(
+            self, target_language=self.target_language, **self.namespace())
+        return description + form + filtering
 
     @property
     def action_url(self):
@@ -860,15 +886,6 @@ class CriteriaFiltering(Form):
                           if v is not NO_VALUE}
         return SUCCESS
 
-    def render(self):
-        pre = u"""<h1> Ergebnisse </h1>
-  <p>Hier sehen Sie die Auswertung für alle Beschäftigten.</p>
-  <p> Durch Auswahl einer oder mehrerer Auswertungsgruppen haben Sie die Möglichkeit sich eine detaillierte Auswertung anzeigen zu lassen
-  (Bitte beachten Sie: Auswertungsgruppen oder Kombinationen die weniger als sieben ausgefüllte Fragebogen umfassen, können aus Datenschutzgründen leider nicht angezeigt werden)</p>
-  <p> Der weitere Umgang mit den Ergebnissen ist in der Übersicht 7 Schritte unter 4. Lösungsworkshops beschrieben.
-  <div id='criterias'>%s</div>""" % Form.render(self)
-        return pre
-
 
 @menuentry(IContextualActionsMenu, order=10)
 class ClassStats(CriteriaFiltering):
@@ -878,11 +895,32 @@ class ClassStats(CriteriaFiltering):
     require('manage.company')
     layer(ICompanyRequest)
 
-    @property
-    def fields(self):
-        return Fields(*list(company_criterias(self.context.course)))
+    def display(self):
+        quizzjs.need()
+        data = self.get_data(
+            self.context.course.quizz_type,
+            cid=self.context.course.id,
+            sid=self.context.id,
+            extra_questions=self.context.course.extra_questions)
 
+        for name, result in data.items():
+            compute_chart = getattr(result, 'compute_chart', None)
+            if compute_chart is None:
+                yield name, {'results': result.get_answers(),
+                             'total': result.total,
+                             'criterias': result.criterias,
+                             'all': result.total + result.missing,
+                             'users': None, 'chart': None}
+            else:
+                gbl, users = compute_chart()
+                yield name, {'results': result.get_answers(),
+                             'total': result.percent_base,
+                             'criterias': result.criterias,
+                             'all': result.percent_base + result.missing,
+                             'users': users,
+                             'chart': gbl}
 
+    
 @menuentry(IContextualActionsMenu, order=10)
 class CourseStats(CriteriaFiltering):
     context(Course)
@@ -895,11 +933,37 @@ class CourseStats(CriteriaFiltering):
     dataValidators = []
     criterias = {}
 
-    @property
-    def fields(self):
-        return Fields(*list(company_criterias(self.context)))
+    def rN(self, value):
+        from nva.psyquizz.models.interfaces import deferred
+        return deferred('quizz_choice')(None).getTerm(
+            self.context.quizz_type).title
+
+    def display(self):
+        quizzjs.need()
+        data = self.get_data(
+            self.context.quizz_type,
+            cid=self.context.id,
+            extra_questions=self.context.extra_questions)
+
+        for name, result in data.items():
+            compute_chart = getattr(result, 'compute_chart', None)
+            if compute_chart is None:
+                yield name, {'results': result.get_answers(),
+                             'total': result.percent_base,
+                             'criterias': result.criterias,
+                             'all': result.percent_base + result.missing,
+                             'users': None, 'chart': None}
+            else:
+                gbl, users = compute_chart()
+                yield name, {'results': result.get_answers(),
+                             'total': result.percent_base,
+                             'criterias': result.criterias,
+                             'all': result.percent_base + result.missing,
+                             'users': users,
+                             'chart': gbl}
 
 
+    
 @menuentry(IContextualActionsMenu, order=10)
 class CourseDiff(CriteriaFiltering):
     context(Course)
@@ -907,7 +971,3 @@ class CourseDiff(CriteriaFiltering):
     title(_(u'Diff'))
     require('manage.company')
     layer(ICompanyRequest)
-
-    @property
-    def fields(self):
-        return Fields(*list(company_criterias(self.context)))

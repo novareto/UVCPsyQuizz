@@ -11,19 +11,20 @@ history = open(join('docs', 'HISTORY.txt')).read()
 
 install_requires = [
     'crate',
-    'uvclight',
     'cromlech.sqlalchemy',
-    'uvclight[sql]',
-    'uvclight[auth]',
-    'ul.auth',
+    'dolmen.breadcrumbs',
     'dolmen.clockwork',
     'dolmen.message',
-    'dolmen.breadcrumbs',
-    'zope.cachedescriptors',
-    'siguvtheme.uvclight',
     'html2text',
     'reportlab',
+    'siguvtheme.uvclight',
+    'ul.auth',
     'uvc.composedview',
+    'uvc.validation',
+    'uvclight',
+    'uvclight[auth]',
+    'uvclight[sql]',
+    'zope.cachedescriptors',
     ]
 
 tests_require = [
