@@ -40,8 +40,12 @@ class GeneratePDF(uvclight.Page):
         return response
 
     def headerfooter(self, canvas, doc):
-        canvas.drawString(1 * cm, 2 * cm, u"Grundlage der Befragung: KFZA - Kurzfragebogen zur Arbeitsanalyse")
-        canvas.drawString(1 * cm, 1.6 * cm, u"Prümper, J., Hartmannsgruber, K. & Frese, M")
+        canvas.drawString(1 * cm, 2 * cm, u"Gemeinsam zu gesunden Arbeitsbedingungen")
+        canvas.drawString(1 * cm, 1.5 * cm, u"Psychische Belastungen online beurteilen")
+        canvas.drawString(1 * cm, 1.0 * cm, u"Ein Programm der BG ETEM")
+        canvas.drawString(15 * cm, 2 * cm, u"Grundlage der Befragung: KFZA - Kurzfragebogen")
+        canvas.drawString(15 * cm, 1.5 *cm, u"zur Arbeitsanalyse")
+        canvas.drawString(15 * cm, 1.0 * cm, u"Prümper, J., Hartmannsgruber, K. & Frese, M")
         canvas.line(0.5 * cm , 2.5 * cm, 26 * cm, 2.5 * cm)
         canvas.drawString(1 * cm, 20 * cm, self.context.company.name)
         canvas.drawString(1 * cm, 19.5 * cm, self.context.title)

@@ -84,9 +84,9 @@
 		    <span class="badge" tal:content="len(list(session.complete))"> </span> 
 		  </dd>
 		</dl>
-		<div class="actions pull-right">
-		</div>
+
               </fieldset>
+      <a href="" tal:attributes="href view.url(context, str(company.id) + '/' + str(course.id) + '/add.session')"> Kurs wiederholen  </a> 
             </div>
             <a href="" class="btn btn-danger" data-toggle="tooltip" data-placement="left" title="Unternehmen löschen" tal:attributes="href view.url(context, str(company.id) + '/delete')"> Betrieb löschen </a>
             <div tal:condition="len(list(company.courses)) == 0">
