@@ -20,15 +20,13 @@ install_requires = [
     'siguvtheme.uvclight',
     'ul.auth',
     'uvc.composedview',
-<<<<<<< HEAD
     'pysqlite',
-=======
     'uvc.validation',
     'uvclight',
     'uvclight[auth]',
     'uvclight[sql]',
     'zope.cachedescriptors',
->>>>>>> 35f1e8b1327e6609c3a6ac88e84083a32a1a55e0
+    'uvc.validation',
     ]
 
 tests_require = [
