@@ -68,6 +68,10 @@ div.tab-content {
     padding: 16px;
 }
 
+#mt > tbody > tr > th
+{
+        border: 2px solid #dddddd;
+    }
 
 
 /* PANEL STUFF */

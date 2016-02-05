@@ -70,7 +70,7 @@ class EditAccount(EditForm):
 @menuentry(IDocumentActions, order=10)
 class TransferCompany(Form):
     name('transfer_company')
-    uvclight.provides(ITab)
+    # uvclight.provides(ITab)
     context(MyPrefs)
     layer(ICompanyRequest)
     title(_(u'Transfer the company'))
@@ -142,5 +142,3 @@ class GlobalTransferCompany(Form):
         self.flash(_(u'Company transfered with success.'))
         self.redirect(self.application_url())
         return SUCCESS
-
-

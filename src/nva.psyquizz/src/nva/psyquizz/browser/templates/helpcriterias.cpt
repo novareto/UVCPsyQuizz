@@ -10,35 +10,47 @@
         <h4 class="modal-title">Hilfe</h4>
       </div>
       <div class="modal-body">
-        <p class="lead">Kriterium: <p>
+        <p class="lead">Auswertungsgruppe <p>
         <p>
-        Bitte geben Sie hier das Kriterium an, anhand dessen Sie die Auswertungsgruppen für Ihren Betrieb
-        bilden. Ein Kriterium kann z.B. Abteilung, Arbeitsgruppe, Team oder Führungskraft sein.
-        </p>
-        <p class="lead"> Auswertungsgruppe </p>
-        <p> 
-        Geben Sie hier die Auswertungsgruppen ein, die sich aus Ihrem Kriterium ergeben. Das Kriterium
-        Abteilung könnte bspw. die Auswertungsgruppen Fertigung, Vertrieb, Softwareentwicklung und
-        Personalabteilung ergeben. Ein tätigkeitsbezogenes Kriterium wie Führungskraft hätte die
-        Ausprägungen ja oder nein.
+Mit Hilfe der Auswertungsgruppen bilden Sie Gruppen von Arbeitsplätzen oder Tätigkeiten die 
+hinsichtlich Ihrer psychischen Belastungen vergleichbar sind. Diese Gruppenbildung kann bspw. 
+anhand des Organigramms erfolgen (s. Schritt 1 Vorbereitung).
         </p>
         <p>
-        Bitte trennen Sie die einzelnen Ausprägungen durch ein Return (Eingabetaste).
+Zunächst legen Sie einen Oberbegriff für Ihre Auswertungsgruppen an. Mögliche Oberbegriffe 
+könnten z.B. sein „Abteilung“, „Arbeitsgruppe“, „Standort“, „Führungskraft“ usw.
         </p>
         <p>
-        Die Auswertungsgruppen erscheinen später auf der ersten Seite der Befragung als Auswahlfeld und
-        Ihre Beschäftigten geben an, zu welcher Auswertungsgruppe/zu welchen Auswertungsgruppen sie
-        gehören. Kombinationen sind bspw. denkbar wenn nach Abteilungen ausgewertet wird uns es eine
-        eigene Auswertungsgruppe Führungskraft gibt. Dann gibt der Beschäftigte z.B. an Abteilung –
-        Fertigung und Führungskraft – nein.
-        <p>
-        </p> 
-        <b>
-          Bitte achten Sie bei der Wahl Ihrer Auswertungsgruppen auf die Mindestgröße. Aus
-          Datenschutzgründen werden Ihnen nach Durchführung der Befragung nur Auswertungen von
-          Gruppen angezeigt, von denen mindestens sieben ausgefüllte „Fragebögen“ vorliegen.
-        </b>
+Zu jedem Oberbegriff gehören mehrere Auswertungsgruppen. Der Oberbegriff „Abteilung“ würde als 
+Auswertungsgruppen alle Abteilungen Ihres Betriebes beinhalten, wie z.B. „Personalabteilung“, 
+„Produktion“, „Einkauf“ usw. Zum Oberbegriff „Führungskraft“ gehören die Auswertungsgruppen 
+„Führungskraft“ und „keine Führungskraft“.
         </p>
+        <p>
+Über die Funktion „Auswertungsgruppen anlegen“ auf der Startseite können Sie beliebig viele 
+Auswertungsgruppen für Ihre Befragung anlegen.
+        </p>
+        <p>
+Starten Ihre Beschäftigten die Befragungen, müssen Sie zunächst angeben, zu welcher 
+Auswertungsgruppe Sie gehören. Haben Sie bspw. „Abteilung“ angelegt, würden Ihre Beschäftigten 
+zunächst angeben, ob Sie zur „Personalabteilung“, zur „Produktion“, oder zum „Einkauf“ gehören.
+        </p>
+        <p>
+Zu jeder Auswertungsgruppe können Sie nach Abschluss der Befragung eine separate Auswertung 
+erzeugen. Sie haben auch die Möglichkeit, Auswertungsgruppen zu kombinieren. So könnten Sie sich 
+bspw. eine Auswertung für alle „Führungskräfte“ in der „Personalabteilung“ anzeigen lassen.
+        </p>
+        <p>
+           <b>
+             Bitte beachten Sie aber: Sie können sich aus Datenschutzgründen nur Befragungsergebnisse von 
+             Auswertungsgruppen oder Kombinationen anzeigen lassen, von denen mindestens sieben 
+             ausgefüllte „Fragebögen“ vorliegen.
+           </b>
+        </p>
+        <p>
+
+        </p>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>

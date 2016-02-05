@@ -778,7 +778,7 @@ class AnswerQuizz(Form):
         self.quizz = getUtility(IQuizz, name=course.quizz_type)
         startdate = course.sessions[self.context.session_id].startdate
         if datetime.date.today() < startdate:
-            self.flash(u'Der Kurs beginnt erst am %s deshalb werden Ihre ergebnisse nicht gespeichert' % startdate.strftime('%d.%m.%Y'))
+            self.flash(u'Die Befragung beginnt erst am %s deshalb werden Ihre Ergebnisse nicht gespeichert' % startdate.strftime('%d.%m.%Y'))
         Form.update(self)
 
     @property

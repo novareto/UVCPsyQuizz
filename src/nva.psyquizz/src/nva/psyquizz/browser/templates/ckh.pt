@@ -38,7 +38,7 @@
             <li tal:repeat="crit company.criterias">
               <span tal:content="crit.title"/> 
               <a tal:attributes="href str(company.id) + '/criterias/' + str(crit.id)"> <span class="glyphicon glyphicon-pencil"> </span>  </a>
-              <a tal:attributes="href str(company.id) + '/criterias/' + str(crit.id) + '/delete'"> <span class="glyphicon glyphicon-trash"> </span>  </a>
+              <!-- <a tal:attributes="href str(company.id) + '/criterias/' + str(crit.id) + '/delete'"> <span class="glyphicon glyphicon-trash"> </span>  </a> -->
             </li>
           </ul>
           <div tal:condition="len(list(company.criterias)) == 0">
@@ -84,9 +84,9 @@
 		    <span class="badge" tal:content="len(list(session.complete))"> </span> 
 		  </dd>
 		</dl>
-		<div class="actions pull-right">
-		</div>
+
               </fieldset>
+      <a href="" tal:attributes="href view.url(context, str(company.id) + '/' + str(course.id) + '/add.session')"> Kurs wiederholen  </a> 
             </div>
             <a href="" class="btn btn-danger" data-toggle="tooltip" data-placement="left" title="Unternehmen löschen" tal:attributes="href view.url(context, str(company.id) + '/delete')"> Betrieb löschen </a>
             <div tal:condition="len(list(company.courses)) == 0">
