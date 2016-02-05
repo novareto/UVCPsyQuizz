@@ -1,39 +1,25 @@
 <form id="result" method="POST"
       tal:attributes="action view.url(context) + '/pdf'">
 
-  <div class="panel" tal:define="data dict(viewlet.display());">
+  <div class="panel" tal:define="data dict(view.display());">
     
     <div tal:repeat="qname data.keys()" 
 	 tal:attributes="id qname;
-	                 class repeat['qname'].start and 'collapse in' or 'collapse'">
+	     class repeat['qname'].start and 'collapse in' or 'collapse'">
 
       <h2>
 	Anzahl ausgefüllte Fragebögen: <span tal:content="data[qname]['total']" />
       </h2>
-      
-      <dl>
-	<tal:criterias repeat="criteria data[qname]['criterias'].items()">
-	  <dt tal:content="criteria[1]['title']" />
-	  <dd>
-	    <ul>
-	      <li tal:repeat="answer criteria[1]['answers'].items()">
-		<strong tal:content="answer[0]" /> :
-		<span tal:content="answer[1]" />
-	      </li>
-	    </ul>
-	  </dd>
-	</tal:criterias>
-      </dl>
-
-      <input type="submit" class="btn btn-primary" value="Auswertung exportieren" />
+            
+      <input type="submit" class="btn btn-primary" value="Als PDF exportieren" />
       <tal:chart condition="data[qname]['chart'] is not None">
 	<textarea type="text" id="chart" name="chart" style="display: none"></textarea>
 	<canvas id="myChart" width="800" height="400"></canvas>
 
   <div class="legend" style="width: 550px; margin: 0 auto 5em auto; text-align: center; border: 2px solid #666;">
-    <em><b>> 3,5</b>: in diesem Bereich scheint alles in Ordnung</em><br>
-    <em><b>> 2,5 < 3,5</b>: diesen Bereich sollten Sie sich noch mal genauer ansehen</em><br>
-    <em><b> < 2,5  </b>: in diesem Bereich scheint Handlungsbedarf zu bestehen </em>&nbsp;&nbsp;
+    <em><b style="color: #62B645;">> 3,5</b>: in diesem Bereich scheint alles in Ordnung</em><br>
+    <em><b style="color: #FFCC00;">> 2,5 < 3,5</b>: diesen Bereich sollten Sie sich noch mal genauer ansehen</em><br>
+    <em><b style="color: #D8262B;"> < 2,5  </b>: in diesem Bereich scheint Handlungsbedarf zu bestehen </em>&nbsp;&nbsp;
   </div>
 
 	<script language="Javascript"
@@ -44,7 +30,7 @@
 	  labels: <span tal:replace="[k.encode('iso-8859-1') for k in data[qname]['chart'].keys()]" />,
 	  datasets: [
 	  {
-	      fillColor: "#afca06",
+	      fillColor: "#62B645",
 	      strokeColor: "rgba(120,120,120,0)",
 	      pointStrokeColor: "transparent",
               pointColor: "rgba(120,120,120,0)",
@@ -58,7 +44,7 @@
               data: <span tal:replace="[3.5] * length" />
           },
           {
-	      fillColor: "#F39200",
+	      fillColor: "#D8262B",
 	      strokeColor: "rgba(120,120,120,0)",
 	      pointStrokeColor: "transparent",
               pointColor: "rgba(120,120,120,0)",
@@ -113,14 +99,14 @@
 
     <textarea type="text" id="averages" name="averages" style="display:none">
       <tal:data
-           content="viewlet.jsonify(dict((res[0], '%.2f' % viewlet.avg(res[1])) for res in data[qname]['users'].items()))" />
+           content="view.jsonify(dict((res[0], '%.2f' % view.avg(res[1])) for res in data[qname]['users'].items()))" />
     </textarea>
   
       <p class="lead">Mittelwerte</p>
       <table id="mt" class="table table-bordered table-stripped">
 	<tr tal:repeat="res data[qname]['users'].items()">
 	  <th tal:content="res[0]" />
-	  <td tal:content="'%.2f' % viewlet.avg(res[1])" />
+	  <td tal:content="'%.2f' % view.avg(res[1])" />
 	</tr>
       </table>
 
@@ -137,18 +123,36 @@
 	    var data = {
 	      labels: <span tal:replace="[k.encode('iso-8859-1') for k in reversed(data[qname]['users'].keys())]" />,
 	      datasets: [
-	      <tal:datasets repeat="i reversed(range(1, 6))">
               {
-              title: "<tal:title content="viewlet.labels[repeat['i'].number]" />",
-              fillColor: "<tal:color content="viewlet.colors[i]" />",
+              title: "+",
+              fillColor: "<tal:color content="view.colors[1]" />",
               strokeColor: "rgba(120,120,120,1)",
               pointColor: "rgba(120,120,120,1)",
               pointStrokeColor: "#fff",
               pointHighlightFill: "#fff",
               pointHighlightStroke: "rgba(220,220,220,1)",
-              data: <span tal:replace="[v[i] for v in reversed(data[qname]['users'].values())]" />
+              data: <span tal:replace="[v[1] + v[2] for v in reversed(data[qname]['users'].values())]" />
               },
-	      </tal:datasets>
+              {
+              title: "+ / -",
+              fillColor: "<tal:color content="view.colors[3]" />",
+              strokeColor: "rgba(120,120,120,1)",
+              pointColor: "rgba(120,120,120,1)",
+              pointStrokeColor: "#fff",
+              pointHighlightFill: "#fff",
+              pointHighlightStroke: "rgba(220,220,220,1)",
+              data: <span tal:replace="[v[3] for v in reversed(data[qname]['users'].values())]" />
+              },
+	      {
+              title: "-",
+              fillColor: "<tal:color content="view.colors[5]" />",
+              strokeColor: "rgba(120,120,120,1)",
+              pointColor: "rgba(120,120,120,1)",
+              pointStrokeColor: "#fff",
+              pointHighlightFill: "#fff",
+              pointHighlightStroke: "rgba(220,220,220,1)",
+              data: <span tal:replace="[v[4] + v[5] for v in reversed(data[qname]['users'].values())]" />
+              },
 	      ]
           };
 

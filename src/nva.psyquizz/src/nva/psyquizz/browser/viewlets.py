@@ -2,7 +2,9 @@
 
 import json
 import uvclight
+
 from random import *
+from .results import Results
 from .forms import ClassStats, CourseStats, CourseDiff
 from ..apps import anonymous
 from ..i18n import _
@@ -11,29 +13,28 @@ from ..interfaces import IQuizzLayer
 from ..interfaces import QuizzAlreadyCompleted, QuizzClosed
 from ..models import IQuizz, TrueOrFalse, IClassSession
 from ..models import Company, Course, Student, CriteriaAnswer
+
 from collections import OrderedDict
+from cromlech.browser import IPublicationRoot
 from cromlech.sqlalchemy import get_session
+from dolmen.breadcrumbs.renderer import BreadcrumbsRenderer
 from dolmen.menu import menuentry
-from uvc.design.canvas.menus import INavigationMenu
-from uvc.design.canvas import IAboveContent
-from uvc.design.canvas import menus
 from dolmen.message import receive
 from dolmen.template import ITemplate
 from grokcore.component import adapter, implementer
 from nva.psyquizz import quizzjs, quizzcss
+from siguvtheme.uvclight.viewlets import PersonalMenuViewlet
+from sqlalchemy import or_, and_
+from uvc.content import IDescriptiveSchema
 from uvc.design.canvas import IAboveContent, IBelowContent
 from uvc.design.canvas import IContextualActionsMenu
 from uvc.design.canvas import menus
+from uvc.design.canvas.menus import INavigationMenu
 from uvclight import Page, View, MenuItem
 from uvclight import layer, title, name, menu, context, get_template
 from uvclight.auth import require
 from zope.component import getUtilitiesFor, getUtility
 from zope.schema import getFieldsInOrder
-from sqlalchemy import or_, and_
-from dolmen.breadcrumbs.renderer import BreadcrumbsRenderer
-from cromlech.browser import IPublicationRoot
-from uvc.content import IDescriptiveSchema
-from siguvtheme.uvclight.viewlets import PersonalMenuViewlet
 
 
 def resolve_name(item):
@@ -86,162 +87,75 @@ def object_template(context, request):
     return uvclight.get_template('objectmenu.cpt', __file__)
 
 
+# class CompanyClassResults(uvclight.Viewlet, Results):
+#     uvclight.viewletmanager(IBelowContent)
+#     uvclight.view(ClassStats)
+#     uvclight.context(IClassSession)
+#     uvclight.name('results')
 
-class Results(object):
+#     template = uvclight.get_template('results.pt', __file__)
 
-    colors = {
-        1: 'rgba(212, 15, 20, 0.9)',
-        2: 'rgba(243, 146, 0, 0.9)',
-        3: 'rgba(255, 204, 0, 0.9)',
-        4: 'rgba(175, 202, 6, 0.9)',
-        5: 'rgba(81, 174, 49, 0.9)',
-        }
+#     def display(self):
+#         quizzjs.need()
+#         data = self.get_data(
+#             self.context.course.quizz_type,
+#             cid=self.context.course.id,
+#             sid=self.context.id,
+#             extra_questions=self.context.course.extra_questions)
 
-    labels = {
-        1: '+ +',
-        2: '+',
-        3: '+ / -',
-        4: '-',
-        5: '- -',
-        }
-
-    def jsonify(self, da):
-        return json.dumps(da)
-
-    def avg(self, res):
-        return (
-            (1.0 * res[1]) / 100.0 +
-            (2.0 * res[2]) / 100.0 +
-            (3.0 * res[3]) / 100.0 +
-            (4.0 * res[4]) / 100.0 +
-            (5.0 * res[5]) / 100.0)
-        
-    def students_ids(self, session):
-        criterias = self.view.criterias
-        if not criterias:
-            return None
-
-        students_ids = None
-        for criteria_id, values in criterias.items():
-            if values:
-                query = session.query(CriteriaAnswer.student_id).filter(
-                    CriteriaAnswer.criteria_id == criteria_id).filter(
-                        CriteriaAnswer.answer.in_(list(values)))
-                if students_ids is None:
-                    students_ids = set([q[0] for q in query.all()])
-                else:
-                    students_ids &= set([q[0] for q in query.all()])
-
-        return students_ids
-
-    def count_students(self, session, qtype, cid=None, sid=None, restrict=None):
-        students = session.query(Student).filter(Student.quizz_type == qtype)
-        if cid is not None:
-            students = students.filter(Student.course_id == cid)
-        if sid is not None:
-            students = students.filter(Student.session_id == sid)
-        if restrict:
-            students = students.filter(Student.access.in_(restrict))
-
-        return students.count()
-
-    def get_data(self, qtype, cid=None, sid=None, extra_questions=None):
-        session = get_session('school')
-        quizz = getUtility(IQuizz, name=qtype)
-        stats = quizz.__stats__
-        data = {}
-
-        restrict = self.students_ids(session)
-        if restrict is not None and not restrict:
-            nb_students = 0
-        else:
-            nb_students = self.count_students(session, qtype, cid, sid)
-            if nb_students:
-                answers = session.query(quizz)
-                if sid is not None:
-                    answers = answers.filter(quizz.session_id == sid)
-                if cid is not None:
-                    answers = answers.filter(quizz.course_id == cid)
-
-                if restrict is not None:
-                    answers = answers.filter(quizz.student_id.in_(restrict))
-
-                answers = list(answers)
-                if answers:
-                    data[self.context.quizz_type] = stats(
-                        nb_students, answers, extra_questions, quizz)
-        return data
+#         for name, result in data.items():
+#             compute_chart = getattr(result, 'compute_chart', None)
+#             if compute_chart is None:
+#                 yield name, {'results': result.get_answers(),
+#                              'total': result.total,
+#                              'criterias': result.criterias,
+#                              'all': result.total + result.missing,
+#                              'users': None, 'chart': None}
+#             else:
+#                 gbl, users = compute_chart()
+#                 yield name, {'results': result.get_answers(),
+#                              'total': result.percent_base,
+#                              'criterias': result.criterias,
+#                              'all': result.percent_base + result.missing,
+#                              'users': users,
+#                              'chart': gbl}
 
 
-class CompanyClassResults(uvclight.Viewlet, Results):
-    uvclight.viewletmanager(IBelowContent)
-    uvclight.view(ClassStats)
-    uvclight.context(IClassSession)
-    uvclight.name('results')
+# class CompanyCourseResults(uvclight.Viewlet, Results):
+#     uvclight.viewletmanager(IBelowContent)
+#     uvclight.view(CourseStats)
+#     uvclight.context(Course)
+#     uvclight.name('results')
 
-    template = uvclight.get_template('results.pt', __file__)
+#     template = uvclight.get_template('results.pt', __file__)
 
-    def display(self):
-        quizzjs.need()
-        data = self.get_data(
-            self.context.course.quizz_type,
-            cid=self.context.course.id,
-            sid=self.context.id,
-            extra_questions=self.context.course.extra_questions)
+#     def rN(self, value):
+#         from nva.psyquizz.models.interfaces import deferred
+#         return deferred('quizz_choice')(None).getTerm(self.context.quizz_type).title
 
-        for name, result in data.items():
-            compute_chart = getattr(result, 'compute_chart', None)
-            if compute_chart is None:
-                yield name, {'results': result.get_answers(),
-                             'total': result.total,
-                             'criterias': result.criterias,
-                             'all': result.total + result.missing,
-                             'users': None, 'chart': None}
-            else:
-                gbl, users = compute_chart()
-                yield name, {'results': result.get_answers(),
-                             'total': result.percent_base,
-                             'criterias': result.criterias,
-                             'all': result.percent_base + result.missing,
-                             'users': users,
-                             'chart': gbl}
+#     def display(self):
+#         quizzjs.need()
+#         data = self.get_data(
+#             self.context.quizz_type,
+#             cid=self.context.id,
+#             extra_questions=self.context.extra_questions)
 
-
-class CompanyCourseResults(uvclight.Viewlet, Results):
-    uvclight.viewletmanager(IBelowContent)
-    uvclight.view(CourseStats)
-    uvclight.context(Course)
-    uvclight.name('results')
-
-    template = uvclight.get_template('results.pt', __file__)
-
-    def rN(self, value):
-        from nva.psyquizz.models.interfaces import deferred
-        return deferred('quizz_choice')(None).getTerm(self.context.quizz_type).title
-
-    def display(self):
-        quizzjs.need()
-        data = self.get_data(
-            self.context.quizz_type,
-            cid=self.context.id,
-            extra_questions=self.context.extra_questions)
-
-        for name, result in data.items():
-            compute_chart = getattr(result, 'compute_chart', None)
-            if compute_chart is None:
-                yield name, {'results': result.get_answers(),
-                             'total': result.percent_base,
-                             'criterias': result.criterias,
-                             'all': result.percent_base + result.missing,
-                             'users': None, 'chart': None}
-            else:
-                gbl, users = compute_chart()
-                yield name, {'results': result.get_answers(),
-                             'total': result.percent_base,
-                             'criterias': result.criterias,
-                             'all': result.percent_base + result.missing,
-                             'users': users,
-                             'chart': gbl}
+#         for name, result in data.items():
+#             compute_chart = getattr(result, 'compute_chart', None)
+#             if compute_chart is None:
+#                 yield name, {'results': result.get_answers(),
+#                              'total': result.percent_base,
+#                              'criterias': result.criterias,
+#                              'all': result.percent_base + result.missing,
+#                              'users': None, 'chart': None}
+#             else:
+#                 gbl, users = compute_chart()
+#                 yield name, {'results': result.get_answers(),
+#                              'total': result.percent_base,
+#                              'criterias': result.criterias,
+#                              'all': result.percent_base + result.missing,
+#                              'users': users,
+#                              'chart': gbl}
 
 def colors(limit=15):
     h, s, v = random() * 6, .5, 243.2
@@ -262,7 +176,7 @@ class CompanyCourseDiffs(uvclight.Viewlet, Results):
     template = uvclight.get_template('diffs.pt', __file__)
 
     averages = [
-        u'Handlungssspielraum',
+        u'Handlungsspielraum',
         u'Vielseitiges Arbeiten',
         u'Ganzheitliches Arbeiten',
         u'Soziale Rückendeckung',
@@ -278,6 +192,10 @@ class CompanyCourseDiffs(uvclight.Viewlet, Results):
 
     coloring_set = colors()
 
+    @property
+    def criterias(self):
+        return self.view.criterias
+    
     def get_color(self):
         r, v, b = self.coloring_set.next()
         return ['rgba(%i, %i, %i, %s)' % (r, v, b, tr) for tr in [0.3, 1, 1]]
@@ -292,6 +210,8 @@ class CompanyCourseDiffs(uvclight.Viewlet, Results):
                 sid=session.id,
                 extra_questions=self.context.extra_questions)
 
+            #import pdb
+            #pdb.set_trace()
             for name, result in data.items():
                 diff = diffs.setdefault(name, {})
                 gbl, users = result.compute_chart()
@@ -305,6 +225,7 @@ class Home(uvclight.MenuItem):
     uvclight.menu(INavigationMenu)
     uvclight.layer(ICompanyRequest)
     uvclight.name('index')
+    uvclight.order(10)
 
     def action(self):
         return '%s' % (self.view.application_url())

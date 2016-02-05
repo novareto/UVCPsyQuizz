@@ -10,27 +10,18 @@ from zope.interface import invariant, Invalid, Interface
 from zope.location import ILocation
 from zope.schema.interfaces import IContextSourceBinder
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
+from uvc.validation.validation import validateZahl
 
-
-ABOUT_TEXT = u"""
-Liebe Kolleginnen und Kollegen, <br>
-<p> herzlich Willkommen zu unserer Befragung „Gemeinsam zu gesunden Arbeitsbedingungen“! </p>
-<p>Der Fragebogen besteht aus insgesamt 26 Fragen; das Ausfüllen wird ca. 5 Minuten dauern.</br>
-Bitte beantwortet Sie alle Fragen des Fragebogens. Beim Beantworten der Fragen kann es hilfreich sein,
-nicht zu lange über die einzelnen Fragen nachzudenken. Meist ist der erste Eindruck auch der treffendste.</p> </br>
-<p>Wir möchten nochmal darauf hinweisen, dass Ihre Angaben absolut vertraulich behandelt werden. </br>Ein Rückschluss auf einzelne Personen wird nicht möglich sein.</p>
-<p>Sollten Sie Fragen oder Anmerkungen haben, wenden Sie sich bitte an:</p> </br>
-    <span style="background-color: rgb(255, 255, 0);"> Ansprechpartner und Kontaktdaten </span> </br>
-    Wir freuen uns auf Ihre Rückmeldungen!
-"""
 
 ABOUT_TEXT = u"""
 <p>Liebe Kolleginnen und Kollegen,</p>
 <p> herzlich Willkommen zu unserer Befragung „Gemeinsam zu gesunden Arbeitsbedingungen“! </p>
-<p>Der Fragebogen besteht aus insgesamt 26 Fragen; das Ausfüllen wird ca. 5 Minuten dauern. Bitte beantworteten Sie alle Fragen des Fragebogens. Beim Beantworten der Fragen kann es hilfreich sein, nicht zu lange über die einzelnen Fragen nachzudenken. Meist ist der erste Eindruck auch der treffendste.</p>
+<p>Der Fragebogen umfasst 26 Fragen. Bitte beantworteten Sie alle Fragen des Fragebogens.
+Beim Beantworten der Fragen kann es hilfreich sein, nicht zu lange über die einzelnen Fragen
+nachzudenken. Meist ist der erste Eindruck auch der treffendste.“</p> </br>
 <p>Wir möchten nochmal darauf hinweisen, dass Ihre Angaben absolut vertraulich behandelt werden. Ein Rückschluss auf einzelne Personen wird nicht möglich sein.</p>
 <p>Sollten Sie Fragen oder Anmerkungen haben, wenden Sie sich bitte an:</p>
-<p> <span style="background-color: rgb(255, 255, 0);">Ansprechpartner und Kontaktdaten </span></p>
+ <p>   <span> A n s p r e c h p a r t n e r   &nbsp;    und   &nbsp     K o n t a k t d a t e n </span> </p>
 <p>Wir freuen uns auf Ihre Rückmeldungen!</p>
 """
 
@@ -59,6 +50,7 @@ def vocab_type(context):
           SimpleTerm('12', '12', u'Herstellung von Wellpappe, Kartonagen'),
           SimpleTerm('13', '13', u'Papierverarbeitung'),
           SimpleTerm('14', '14', u'Fotografie und Bildjournalismus'),
+          SimpleTerm('15', '15', u'sonstige'),
           ]
     return SimpleVocabulary(rc)
 
@@ -85,14 +77,16 @@ class ICriterias(IContent):
 class ICriteria(IContent):
 
     title = schema.TextLine(
-        title=_(u"Label"),
-        description=_(u"Description Label"),
+        title=_(u"Oberbegriff"),
+        #description=_(u"Description Label"),
+        description=_(u"Bitte geben Sie hier den Oberbegriff für Ihre Auswertungsgruppen an."),
         required=True,
     )
 
     items = schema.Text(
+        description=_(u"Bitte geben Sie jede Auswertungsgruppe in eine neue Zeile ein, indem Sie die Eingabetaste („Return“) betätigen."),
         title=_(u"Please enter one criteria per line"),
-        description=_(u"Description items"),
+        #description=_(u"Description items"),
         required=True,
     )
 
@@ -160,8 +154,9 @@ class ICompany(ILocation, IContent):
 
     mnr = schema.TextLine(
         title=_(u"Company ID"),
-        description=u"Bitte tragen Sie hier die achtstellige Mitgliedsnummer Ihres Unternehmens bei der BG ETEM ein.",
+        description=u"Bitte geben Sie hier die ersten acht Stellen Ihrer Mitgliedsnummer bei der BG ETEM ein.",
         required=True,
+        constraint=validateZahl,
     )
 
     courses = schema.Set(
@@ -228,7 +223,7 @@ class ICourse(ILocation, IContent):
 
     name = schema.TextLine(
         title=_(u"Course name"),
-        description=u"Bitte geben Sie Ihrer Befragung eine eindeutige Bezeichnung wie z.B. Beurteilung Psychischer Belastung 2015 – Werk Bexbach",
+        description=u"Bitte geben Sie Ihrer Befragung eine eindeutige Bezeichnung wie z.B. Beurteilung Psychischer Belastung – Gesamtbetrieb",
         required=True,
         )
 

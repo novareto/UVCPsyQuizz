@@ -103,15 +103,15 @@ class TrueFalseQuizzStats(QuizzStats):
 class ChartedQuizzStats(QuizzStats):
 
     averages = OrderedDict((
-        (u'Handlungssspielraum', ('1', '2', '3')),
-        (u'Vielseitiges Arbeiten', ('4', '5', '6')),
-        (u'Ganzheitliches Arbeiten', ('7', '8')),
-        (u'Soziale Rückendeckung', ('9', '10', '11')),
-        (u'Zusammenarbeit', ('12', '13', '14')),
-        (u'Passende inhaltliche Arbeitsanforderungen', ('15', '16')),
-        (u'Passende mengenmäßige Arbeit', ('17', '18')),
-        (u'Passende Arbeitsabläufe', ('19', '20')),
-        (u'Passende Arbeitsumgebung', ('21', '22')),
+        (u'Vielseitiges Arbeiten', ('1', '2', '3')),
+        (u'Ganzheitliches Arbeiten', ('4', '5')),
+        (u'Passende inhaltliche Arbeitsanforderungen', ('6', '7')),
+        (u'Passende mengenmäßige Arbeit', ('8', '9')),
+        (u'Passende Arbeitsabläufe', ('10', '11')),
+        (u'Passende Arbeitsumgebung', ('12', '13')),
+        (u'Handlungsspielraum', ('14', '15', '16')),
+        (u'Soziale Rückendeckung', ('17', '18', '19')),
+        (u'Zusammenarbeit', ('20', '21', '22')),
         (u'Information und Mitsprache', ('23', '24')),
         (u'Entwicklungsmöglichkeiten', ('25', '26')),
         ))
