@@ -858,11 +858,11 @@ class CriteriaFiltering(Form, Results):
     @property
     def fields(self):
         return Fields(*list(company_criterias(self)))
-    
+
     def update(self):
         self.data = dict(self.display())
         Form.update(self)
-    
+
     def render(self):
         form = Form.render(self)
         description = self.description_pt.render(
@@ -870,6 +870,19 @@ class CriteriaFiltering(Form, Results):
         filtering = self.results_pt.render(
             self, target_language=self.target_language, **self.namespace())
         return description + form + filtering
+
+    @property
+    def json_criterias(self):
+        dump = []
+        all_criterias = self.data[self.context.quizz_type]['criterias']
+        for id, filtered in self.criterias.items():
+            criterias = all_criterias.get(id)
+            if criterias is not None:
+                criterias = criterias['answers']
+                for filter in filtered:
+                    if filter in criterias:
+                        dump.append((filter, criterias[filter]))
+        return json.dumps(dump)
 
     @property
     def action_url(self):

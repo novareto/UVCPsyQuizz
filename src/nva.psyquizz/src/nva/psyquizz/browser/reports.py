@@ -55,6 +55,8 @@ class GeneratePDF(uvclight.Page):
             NamedTemporaryFile(), pagesize=landscape(letter))
         parts = []
 
+        criterias = dict(json.loads(self.request.form['criterias']))
+
         avg = json.loads(self.request.form['averages'])
 
         chart = read_data_uri(self.request.form['chart'])
