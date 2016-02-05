@@ -24,6 +24,7 @@ install_requires = [
     'html2text',
     'reportlab',
     'uvc.composedview',
+    'pysqlite',
     ]
 
 tests_require = [
