@@ -13,7 +13,7 @@
     Schritte unter 4. Lösungsworkshops beschrieben.
   </p>
 </div>
-<div><a name="checkall">Check</a> / <a name="uncheckall">Uncheck</a></div>
+<div><a name="checkall">Alle auswählen</a> <!--/ <a name="uncheckall">Uncheck</a> --></div>
 <script language="javascript">
   $("a[name='checkall']").click(function () {
      $("input:checkbox").prop('checked', true);
