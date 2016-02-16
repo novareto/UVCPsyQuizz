@@ -9,6 +9,7 @@
 	 tal:attributes="id qname;
 	     class repeat['qname'].start and 'collapse in' or 'collapse'">
 
+      <input type="hidden" tal:attributes="value data[qname]['total']" name="total"/>
       <h2>
 	Anzahl ausgefüllte Fragebögen: <span tal:content="data[qname]['total']" />
       </h2>

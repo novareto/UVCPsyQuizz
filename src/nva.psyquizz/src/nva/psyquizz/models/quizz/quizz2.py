@@ -44,7 +44,7 @@ class IQuizz2(Interface):
 
     question5 = schema.Choice(
         title=u"5",
-        description=u"Meine Arbeit ist so gestaltet, dass ich die Möglichkeit habe, ein vollständiges Arbeitsprodukt eine vollständige Arbeitsaufgabe von Anfang bis Ende herzustellen.",
+        description=u"Meine Arbeit ist so gestaltet, dass ich die Möglichkeit habe, ein vollständiges Arbeitsprodukt/eine vollständige Arbeitsaufgabe von Anfang bis Ende herzustellen.",
         vocabulary=MoreToLess,
         required=True,
         )
@@ -86,7 +86,7 @@ class IQuizz2(Interface):
 
     question11 = schema.Choice(
         title=u"11",
-        description=u"Ich werde bei meiner eigentlichen Arbeit immer wieder von anderen Personen unterbrochen.",
+        description=u"Ich werde bei meiner eigentlichen Arbeit immer wieder durch andere Personen unterbrochen.",
         vocabulary=MoreToLessN,
         required=True,
         )
@@ -170,14 +170,14 @@ class IQuizz2(Interface):
 
     question23 = schema.Choice(
         title=u"23",
-        description=u"Über wichtige Dinge und Vorgänge in unserer Organistaion sind wir ausreichend informiert.",
+        description=u"Über wichtige Dinge und Vorgänge in unserer Organisation sind wir ausreichend informiert.",
         vocabulary=MoreToLess,
         required=True,
         )
 
     question24 = schema.Choice(
         title=u"24",
-        description=u"Die Leitung der Organisation ist bereit, Ideen und Vorschläge der Beschäftigten zu berücksichtigen.",
+        description=u"Die Leitung unserer Organisation ist bereit, die Ideen und Vorschläge der Beschäftigten zu berücksichtigen.",
         vocabulary=MoreToLess,
         required=True,
         )
@@ -191,7 +191,7 @@ class IQuizz2(Interface):
 
     question26 = schema.Choice(
         title=u"26",
-        description=u"Bei uns gibt es gute Aufstiegschancen (z.B. auch durch Erweiterung des bisherigen Tätigkeitsfeldes).",
+        description=u"Bei uns gibt es gute Aufstiegschancen (z.B. auch durch Erweiterung des bisherigen Tätigkeitsfeldes).",
         vocabulary=MoreToLess,
         required=True,
         )

@@ -68,12 +68,13 @@ class GeneratePDF(uvclight.Page):
             NamedTemporaryFile(), pagesize=landscape(letter))
         parts = []
         rc = []
-
         criterias = dict(json.loads(self.request.form['criterias']))
         for k,v in criterias.items():
             rc.append(
                 "<li> %s: %s </li>" %(k, v)
                 )
+        if not rc:
+            rc.append('alle')
         crit_style = "<ul> %s </ul>" % "".join(rc)
 
         avg = json.loads(self.request.form['averages'])
@@ -81,9 +82,9 @@ class GeneratePDF(uvclight.Page):
         chart = read_data_uri(self.request.form['chart'])
         userschart = read_data_uri(self.request.form['userschart'])
         parts.append(Spacer(0, 2*cm))
+        parts.append(Paragraph(u'Anzahl Fragebögen %s' % self.request.form['total'], styles['Normal']))
         parts.append(Paragraph(u'Auswertungsgruppe', styles['Normal']))
         parts.append(Paragraph(crit_style, styles['Normal']))
-        parts.append(Paragraph(u'Mittelwerte der Antworten', styles['Normal']))
         image = Image(chart, width=650, height=650, kind='proportional')
         parts.append(image)
         parts.append(Paragraph(LEGEND, styles['Normal']))
