@@ -123,3 +123,8 @@ h4.panel-title span#oca::after {
 h4.panel-title span#oca.collapsed::after {
     content: "-";
 }
+
+.popover {
+    max-width: 600px;
+    width: auto;
+}
