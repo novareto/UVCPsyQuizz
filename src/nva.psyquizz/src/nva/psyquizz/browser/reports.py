@@ -28,9 +28,9 @@ def read_data_uri(uri):
 
 
 LEGEND = """
-    <em><b style="color: #62B645;">> 3,5</b>: in diesem Bereich scheint alles in Ordnung</em><br/>
-    <em><b style="color: #FFCC00;">> 2,5 < 3,5</b>: diesen Bereich sollten Sie sich noch mal genauer ansehen</em><br/>
-    <em><b style="color: #D8262B;"> < 2,5  </b>: in diesem Bereich scheint Handlungsbedarf zu bestehen </em>
+    <em><font color="#62B645"><b> > 3,5: </b></font> in diesem Bereich scheint alles in Ordnung</em><br/>
+    <em><font color="#FFCC00"><b> > 2,5 < 3,5: </b></font> diesen Bereich sollten Sie sich noch mal genauer ansehen</em><br/>
+    <em><font color="#D8262B"><b> < 2,5:  </b> </font> in diesem Bereich scheint Handlungsbedarf zu bestehen </em>
   </div>
 """
 
