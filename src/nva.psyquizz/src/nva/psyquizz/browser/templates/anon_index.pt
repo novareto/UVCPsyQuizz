@@ -58,7 +58,8 @@
     <div class="panel-heading" role="tab" id="headingOne">
       <h4 class="panel-title">
         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-1. Vorbereitung und Planung
+	  1. Vorbereitung und Planung
+	  <span class="sign">&nbsp;</span>
         </a>
       </h4>
     </div>
@@ -155,7 +156,8 @@ Berücksichtigen Sie bei der Bildung von Auswertungsgruppen zudem die folgenden 
     <div class="panel-heading" role="tab" id="headingTwo">
       <h4 class="panel-title">
         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-2. Information und Kommunikation
+	  2. Information und Kommunikation
+	  <span class="sign">&nbsp;</span>
         </a>
       </h4>
     </div>
@@ -204,7 +206,8 @@ TIPP: Informieren Sie in einem ersten Schritt Ihrer Führungskräfte möglichst 
     <div class="panel-heading" role="tab" id="headingThree">
       <h4 class="panel-title">
         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-3. Online-Befragung
+	  3. Online-Befragung
+	  <span class="sign">&nbsp;</span>
         </a>
       </h4>
     </div>
@@ -352,7 +355,8 @@ Hier haben Sie die Möglichkeit, sich für Ihre Auswertungsgruppen entsprechende
     <div class="panel-heading" role="tab" id="headingThree">
       <h4 class="panel-title">
         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-4. Lösungsworkshop
+	  4. Lösungsworkshop
+	  <span class="sign">&nbsp;</span>
         </a>
       </h4>
     </div>
@@ -437,7 +441,8 @@ Nach dem Lösungsworkshop werden die Ergebnisse an die Führungskraft, die Steue
     <div class="panel-heading" role="tab" id="headingThree">
       <h4 class="panel-title">
         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-5. Maßnahmenumsetzung
+	  5. Maßnahmenumsetzung
+	  <span class="sign">&nbsp;</span>
         </a>
       </h4>
     </div>
@@ -470,7 +475,8 @@ Denken Sie auch daran, Ihre Beschäftigten regelmäßig über den Stand der Maß
     <div class="panel-heading" role="tab" id="headingThree">
       <h4 class="panel-title">
         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
-6. Wirksamkeit
+	  6. Wirksamkeit
+	  <span class="sign">&nbsp;</span>
         </a>
       </h4>
     </div>
@@ -501,7 +507,8 @@ TIPP: Gehen Sie offen mit Misserfolgen um.  Wenn Maßnahmen nicht wirkungsvoll w
     <div class="panel-heading" role="tab" id="headingThree">
       <h4 class="panel-title">
         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
-7. Dokumentation
+	  7. Dokumentation
+	  <span class="sign">&nbsp;</span>
         </a>
       </h4>
     </div>

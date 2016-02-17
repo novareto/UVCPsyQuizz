@@ -13,12 +13,16 @@
     Schritte unter 4. Lösungsworkshops beschrieben.
   </p>
 </div>
-<div><a name="checkall">Check</a> / <a name="uncheckall">Uncheck</a></div>
-<script language="javascript">
-  $("a[name='checkall']").click(function () {
-     $("input:checkbox").prop('checked', true);
-     });
-      $("a[name='uncheckall']").click(function () {
-     $("input:checkbox").prop('checked', false);
-     });
-</script>
+<tal:checker tal:condition="len(view.fields)">
+  <div><a name="checkall">Check</a> / <a name="uncheckall">Uncheck</a></div>
+  <script language="javascript">
+    $("a[name='checkall']").click(function () {
+    $("input:checkbox").prop('checked', true);
+    $("#form-action-filter").click();
+    });
+    $("a[name='uncheckall']").click(function () {
+    $("input:checkbox").prop('checked', false);
+    $("#form-action-filter").click();
+    });
+  </script>
+</tal:checker>
