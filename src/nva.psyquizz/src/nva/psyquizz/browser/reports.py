@@ -27,6 +27,15 @@ def read_data_uri(uri):
     return fd
 
 
+LEGEND = """
+    <em><font color="#62B645"><b> > 3,5: </b></font> in diesem Bereich scheint alles in Ordnung</em><br/>
+    <em><font color="#FFCC00"><b> > 2,5 < 3,5: </b></font> diesen Bereich sollten Sie sich noch mal genauer ansehen</em><br/>
+    <em><font color="#D8262B"><b> < 2,5:  </b> </font> in diesem Bereich scheint Handlungsbedarf zu bestehen </em>
+  </div>
+"""
+
+
+
 class GeneratePDF(uvclight.Page):
     uvclight.context(Interface)
     uvclight.name('pdf')
@@ -58,8 +67,14 @@ class GeneratePDF(uvclight.Page):
         doc = SimpleDocTemplate(
             NamedTemporaryFile(), pagesize=landscape(letter))
         parts = []
+        rc = []
 
         criterias = dict(json.loads(self.request.form['criterias']))
+        for k,v in criterias.items():
+            rc.append(
+                "<li> %s: %s </li>" %(k, v)
+                )
+        crit_style = "<ul> %s </ul>" % "".join(rc)
 
         avg = json.loads(self.request.form['averages'])
 
@@ -67,9 +82,11 @@ class GeneratePDF(uvclight.Page):
         userschart = read_data_uri(self.request.form['userschart'])
         parts.append(Spacer(0, 2*cm))
         parts.append(Paragraph(u'Auswertungsgruppe', styles['Normal']))
+        parts.append(Paragraph(crit_style, styles['Normal']))
         parts.append(Paragraph(u'Mittelwerte der Antworten', styles['Normal']))
-        image = Image(chart, width=700, height=700, kind='proportional')
+        image = Image(chart, width=650, height=650, kind='proportional')
         parts.append(image)
+        parts.append(Paragraph(LEGEND, styles['Normal']))
         parts.append(PageBreak())
         parts.append(Spacer(0, 4*cm))
         parts.append(Paragraph(u'Mittelwerte', styles['Normal']))

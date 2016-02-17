@@ -829,7 +829,7 @@ class AnswerQuizz(Form):
         return fields
 
 
-def company_criterias(view, limit=7):
+def company_criterias(view, limit=4):
     data = view.data[view.context.quizz_type]
     criterias = []
     for idx, answers in data['criterias'].items():
