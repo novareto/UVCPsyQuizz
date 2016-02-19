@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import base64
-from .. import quizzjs
+from .. import quizzjs, clipboard_js
 from ..i18n import _
 from ..interfaces import ICompanyRequest
 from ..models import Account, ClassSession
@@ -60,6 +60,10 @@ class ExampleText(Page):
     layer(ICompanyRequest)
     require('manage.company')
     template = get_template('example_text.pt', __file__)
+
+    def update(self):
+        clipboard_js.need()
+        Page.update(self)
 
     def generic_id(self, id):
         return base64.urlsafe_b64encode(str(id + 2098) + ' complexificator')

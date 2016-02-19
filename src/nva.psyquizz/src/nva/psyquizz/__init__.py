@@ -33,7 +33,7 @@ lbg = Group([lbjs, lbcss])
 charthjs = Resource(library, 'ChartNew.js')
 quizzcss = Resource(library, 'quizz.css')
 quizzjs = Resource(library, 'quizz.js', depends=[charthjs, ])
-
+clipboard_js = Resource(library, 'clipboard.min.js')
 wysiwyg_js = Resource(library, 'summernote.min.js', bottom=True)
 font_css = Resource(library, 'font-awesome.min.css')
 wysiwyg_css = Resource(library, 'summernote.css',

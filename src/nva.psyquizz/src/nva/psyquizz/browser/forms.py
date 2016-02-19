@@ -838,11 +838,12 @@ def company_criterias(view, limit=4):
                         token=base64.b64encode(criteria.encode('utf-8')))
              for criteria, number in answers['answers'].items()
              if number >= limit])
-        yield Set(
-            __name__= '%i' % idx,
-            title=answers['title'],
-            value_type=Choice(vocabulary=vocabulary),
-            required=False)
+        if len(vocabulary):
+            yield Set(
+                __name__= '%i' % idx,
+                title=answers['title'],
+                value_type=Choice(vocabulary=vocabulary),
+                required=False)
 
 
 class CriteriaFiltering(Form, Results):

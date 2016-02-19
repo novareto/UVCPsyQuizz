@@ -116,15 +116,27 @@ h4.panel-title span.status {
     padding: 0.5em 0.5em 0.5em 0;
 }
 
-h4.panel-title span#oca::after {
-    content: "+";
+h4.panel-title a {
+    display: block;
 }
 
-h4.panel-title span#oca.collapsed::after {
-    content: "-";
+h4.panel-title a span.sign {
+    float: right;
+    font-weight: bold;
+}
+
+h4.panel-title a span.sign::after {
+    content: " -";
 }
 
 .popover {
     max-width: 600px;
     width: auto;
+}
+h4.panel-title a.collapsed span.sign::after {
+    content: " +";
+}
+
+#form-action-filter {
+    display: none;
 }
