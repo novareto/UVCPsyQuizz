@@ -271,7 +271,7 @@ class CreateAccount(Form):
         session = get_session('school')
 
         if errors:
-            self.flash(_(u'An error occurred.'))
+            #self.flash(_(u'An error occurred.'))
             return FAILURE
 
         if not data['password'] == data['verif']:
