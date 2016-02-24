@@ -16,9 +16,13 @@ $( document ).ready(function() {
 
     var panel = sessionStorage.getItem("accordion");
     if (panel == null) {
-	$( ".panel-collapse" ).first().addClass('in');
+	var accordion = $(".panel-collapse").first();
+	accordion.addClass('in');
+	accordion.prev('.panel-heading').children('a').removeClass('collapsed');
     } else {
-	$('#' + sessionStorage.getItem("accordion")).addClass('in');
+	var accordion = $('#' + sessionStorage.getItem("accordion"));
+	accordion.addClass('in');
+	accordion.prev('.panel-heading').children('a').removeClass('collapsed');
     }
 
     $('input[type=checkbox]').change(function() {
