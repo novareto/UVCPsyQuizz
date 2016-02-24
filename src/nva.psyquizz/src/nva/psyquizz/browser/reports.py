@@ -49,6 +49,8 @@ class GeneratePDF(uvclight.Page):
         return response
 
     def headerfooter(self, canvas, doc):
+        import pdb; pdb.set_trace() 
+        canvas.setFont("Helvetica", 14)
         canvas.drawString(1 * cm, 2 * cm, u"Gemeinsam zu gesunden Arbeitsbedingungen")
         canvas.drawString(1 * cm, 1.5 * cm, u"Psychische Belastungen online beurteilen")
         canvas.drawString(1 * cm, 1.0 * cm, u"Ein Programm der BG ETEM")
@@ -101,7 +103,7 @@ class GeneratePDF(uvclight.Page):
         parts.append(table)
         parts.append(PageBreak())
         parts.append(Spacer(0, 1*cm))
-        parts.append(Paragraph(u'Mittelwerte', styles['Normal']))
+        parts.append(Paragraph(u'Verteilung der Antworten', styles['Normal']))
         parts.append(Image(userschart, width=500, height=400))
 
         doc.build(parts, onFirstPage=self.headerfooter, onLaterPages=self.headerfooter)

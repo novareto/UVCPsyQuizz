@@ -18,7 +18,7 @@ ABOUT_TEXT = u"""
 <p> herzlich Willkommen zu unserer Befragung „Gemeinsam zu gesunden Arbeitsbedingungen“! </p>
 <p>Der Fragebogen umfasst 26 Fragen. Bitte beantworteten Sie alle Fragen des Fragebogens.
 Beim Beantworten der Fragen kann es hilfreich sein, nicht zu lange über die einzelnen Fragen
-nachzudenken. Meist ist der erste Eindruck auch der treffendste.“</p> </br>
+nachzudenken. Meist ist der erste Eindruck auch der treffendste.“</p>
 <p>Wir möchten nochmal darauf hinweisen, dass Ihre Angaben absolut vertraulich behandelt werden. Ein Rückschluss auf einzelne Personen wird nicht möglich sein.</p>
 <p>Sollten Sie Fragen oder Anmerkungen haben, wenden Sie sich bitte an:</p>
  <p>   <span> A n s p r e c h p a r t n e r   &nbsp;    und   &nbsp     K o n t a k t d a t e n </span> </p>

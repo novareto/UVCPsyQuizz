@@ -830,20 +830,21 @@ class AnswerQuizz(Form):
 
 
 def company_criterias(view, limit=4):
-    data = view.data[view.context.quizz_type]
-    criterias = []
-    for idx, answers in data['criterias'].items():
-        vocabulary = SimpleVocabulary(
-            [SimpleTerm(value=criteria, title='%s (%s)' % (criteria, number),
-                        token=base64.b64encode(criteria.encode('utf-8')))
-             for criteria, number in answers['answers'].items()
-             if number >= limit])
-        if len(vocabulary):
-            yield Set(
-                __name__= '%i' % idx,
-                title=answers['title'],
-                value_type=Choice(vocabulary=vocabulary),
-                required=False)
+    data = view.data.get(view.context.quizz_type)
+    if data:
+        criterias = []
+        for idx, answers in data['criterias'].items():
+            vocabulary = SimpleVocabulary(
+                [SimpleTerm(value=criteria, title='%s (%s)' % (criteria, number),
+                            token=base64.b64encode(criteria.encode('utf-8')))
+                for criteria, number in answers['answers'].items()
+                if number >= limit])
+            if len(vocabulary):
+                yield Set(
+                    __name__= '%i' % idx,
+                    title=answers['title'],
+                    value_type=Choice(vocabulary=vocabulary),
+                    required=False)
 
 
 class CriteriaFiltering(Form, Results):
@@ -875,14 +876,16 @@ class CriteriaFiltering(Form, Results):
     @property
     def json_criterias(self):
         dump = []
-        all_criterias = self.data[self.context.quizz_type]['criterias']
-        for id, filtered in self.criterias.items():
-            criterias = all_criterias.get(id)
-            if criterias is not None:
-                criterias = criterias['answers']
-                for filter in filtered:
-                    if filter in criterias:
-                        dump.append((filter, criterias[filter]))
+        data = self.data.get(self.context.quizz_type)
+        if data:
+            all_criterias = data['criterias']
+            for id, filtered in self.criterias.items():
+                criterias = all_criterias.get(id)
+                if criterias is not None:
+                    criterias = criterias['answers']
+                    for filter in filtered:
+                        if filter in criterias:
+                            dump.append((filter, criterias[filter]))
         return json.dumps(dump)
 
     @property

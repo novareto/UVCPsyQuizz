@@ -9,7 +9,7 @@
                              class radio_class;
                              checked choice.checked;"
              />
-    <span tal:replace="'%s (%s)' %(choice.title, choice.token)" />
+    <span tal:replace="'%s' %(choice.title)" />
     </label>
   </div>
 </tal:widget>

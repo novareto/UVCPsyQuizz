@@ -23,7 +23,7 @@
 <p>Sollten Sie Fragen oder Anmerkungen haben, wenden Sie sich bitte an: <br> Ansprechpartner und Kontaktdaten</p>
 </div>
 <button class="clipbtn btn" data-clipboard-target="#copyable">
-    Copy to clipboard
+    In Zwischenablage kopieren 
 </button>
 <script language="Javascript">
   new Clipboard('.clipbtn');
