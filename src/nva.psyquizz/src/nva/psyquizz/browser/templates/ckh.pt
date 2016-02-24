@@ -88,7 +88,7 @@
               </fieldset>
       <a href="" tal:attributes="href view.url(context, str(company.id) + '/' + str(course.id) + '/add.session')"> Kurs wiederholen  </a> 
             </div>
-            <a href="" class="btn btn-danger" data-toggle="tooltip" data-placement="left" title="Unternehmen löschen" tal:attributes="href view.url(context, str(company.id) + '/delete')"> Betrieb löschen </a>
+            <a href="" class="pull-right btn btn-primary" data-toggle="tooltip" data-placement="left" title="Unternehmen löschen" tal:attributes="href view.url(context, str(company.id) + '/delete')"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Betrieb löschen </a>
             <div tal:condition="len(list(company.courses)) == 0">
               <p> Sie haben bis jetzt für Ihr Unternehmen <span tal:content="company.name"/> noch keine Befragung angelegt.
               Klicken Sie bitte <a href="" tal:attributes="href view.url(context, str(company.id) + '/add.course')">hier </a> um eine neue Befragung anzulegen.

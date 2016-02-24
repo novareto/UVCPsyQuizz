@@ -49,7 +49,11 @@
     Die Gesundheit der Beschäftigten ist die Voraussetzung für ihre Leistung. Und damit die Basis für den Erfolg jedes Betriebes.
     </p>
     <p>
-    Die BGETEM hilft Ihnen mit ihrem Programm Gemeinsam zu gesunden Arbeitsbedingungen (PopUp mit Text unten) dabei. Das Programm führt Sie ein sieben Schritten zur Gefährdungsbeurteilung psychischer Belastung: </p>
+    Die BGETEM hilft Ihnen mit ihrem Programm Gemeinsam zu gesunden 
+    <a data-toggle="popover" data-placement="left" title="Arbeitsschutzgesetz" data-content="Das Arbeitsschutzgesetz verpflichtet Arbeitgeber/-innen die Arbeit so zu gestalten, dass die psychische Gesundheit der Beschäftigten nicht gefährdet ist. Er muss daher die psychischen Belastungsfaktoren der Arbeitsbedingungen beurteilen und erforderlichenfalls Maßnahmen ableiten. Die Umsetzung und Wirksamkeit der Maßnahmen muss kontrolliert und der gesamte Vorgang dokumentiert werden (vgl. ArbSchG §§ 4,5,6).
+Psychische Gefährdungen resultieren häufig aus sehr hoher Arbeitsintensität, ungünstiger Dauer, Lage und Verteilung der Arbeitszeit, sozialen Konflikten, mangelhafter ergonomischer Gestaltung oder dem Zusammenwirken mehrerer psychischer Belastungsfaktoren wie zum Beispiel häufigen Störungen bei hohem Konzentrationserfordernis und hohem Zeitdruck.
+So vielfältig die Ursachen sein können, so vielfältig sind mögliche Ansatzpunkte für präventive Maßnahmen: Arbeitsmittel, Arbeitsumgebung, Arbeitsorganisation, Mitarbeiterqualifikation oder die Gestaltung der sozialen Umwelt kommen in Frage.">Arbeitsbedingungen</a>
+    dabei. Das Programm führt Sie ein sieben Schritten zur Gefährdungsbeurteilung psychischer Belastung: </p>
 
 
     <div metal:define-macro="panel">
