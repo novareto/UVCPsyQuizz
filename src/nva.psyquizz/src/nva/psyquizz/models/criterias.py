@@ -3,7 +3,7 @@
 from nva.psyquizz import Base
 from datetime import datetime
 from sqlalchemy import *
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, backref
 from zope.interface import implementer
 from .interfaces import ICriteria
 from uvc.content.interfaces import IDescriptiveSchema
@@ -45,5 +45,7 @@ class CriteriaAnswer(Base):
                              default=datetime.utcnow)
     answer = Column('answer', String)
 
-    criteria = relationship("Criteria", backref="answers")
-    student = relationship("Student", backref="criterias")
+    criteria = relationship("Criteria",
+                            backref=backref("answers", cascade="all,delete"))
+    student = relationship("Student",
+                           backref=backref("criterias", cascade="all,delete"))
