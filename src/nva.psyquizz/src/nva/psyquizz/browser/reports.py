@@ -49,8 +49,7 @@ class GeneratePDF(uvclight.Page):
         return response
 
     def headerfooter(self, canvas, doc):
-        import pdb; pdb.set_trace() 
-        canvas.setFont("Helvetica", 14)
+        canvas.setFont("Helvetica", 9)
         canvas.drawString(1 * cm, 2 * cm, u"Gemeinsam zu gesunden Arbeitsbedingungen")
         canvas.drawString(1 * cm, 1.5 * cm, u"Psychische Belastungen online beurteilen")
         canvas.drawString(1 * cm, 1.0 * cm, u"Ein Programm der BG ETEM")
@@ -58,6 +57,7 @@ class GeneratePDF(uvclight.Page):
         canvas.drawString(15 * cm, 1.5 *cm, u"zur Arbeitsanalyse")
         canvas.drawString(15 * cm, 1.0 * cm, u"Prümper, J., Hartmannsgruber, K. & Frese, M")
         canvas.line(0.5 * cm , 2.5 * cm, 26 * cm, 2.5 * cm)
+        canvas.setFont("Helvetica", 12)
         canvas.drawString(1 * cm, 20 * cm, self.context.company.name)
         canvas.drawString(1 * cm, 19.5 * cm, self.context.title)
         canvas.drawString(1 * cm, 19.0 * cm, u"Befragungszeitraum %s - %s" % (

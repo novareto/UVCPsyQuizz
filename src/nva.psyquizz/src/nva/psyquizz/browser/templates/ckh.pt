@@ -16,7 +16,7 @@
 	 role="tab" id="headingOne"
 	 tal:attributes="id string:heading${company.id}">
       <h4 class="panel-heading panel-title">
-        <a role="button" data-toggle="collapse"
+        <a role="button" class="collapsed" data-toggle="collapse"
 	      data-parent="#accordion" href="#collapseOne"
 	      aria-expanded="true" aria-controls="collapseOne"
 	      tal:attributes="href string:#collapse${company.id}">

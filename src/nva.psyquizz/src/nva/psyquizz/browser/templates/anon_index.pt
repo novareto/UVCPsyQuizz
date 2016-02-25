@@ -41,6 +41,7 @@
     </div>
   </div>
   <div class="col-md-9">
+    <a href="fanstatic/nva.psyquizz/BGETEM-7_Schritte.pdf" class="pull-right"> Download </a>
     <h1>
       Gemeinsam zu gesunden Arbeitsbedingungen <br> 
       <small>Psychische Belastung online beurteilen</small>
@@ -61,7 +62,7 @@ So vielfältig die Ursachen sein können, so vielfältig sind mögliche Ansatzpu
   <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingOne">
       <h4 class="panel-title">
-        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        <a role="button" class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
 	  1. Vorbereitung und Planung
 	  <span class="sign">&nbsp;</span>
         </a>
@@ -236,9 +237,6 @@ Den gesamten Fragebogen können Sie <a href="fanstatic/nva.psyquizz/KFzA.pdf"> h
 <p>
 Weitere Informationen zum KFZA finden Sie in der Toolbox der baua <a target="_blank" href="http://www.baua.de/de/Informationen-fuer-die-Praxis/Handlungshilfen-und-Praxisbeispiele/Toolbox/Suche/Datarecord_toolbox.html?idDatarecord=82529"> hier </a>.
 </p>
-<p>
-Anmerkung: Evtl. kann man die Screenshots als kleine Bilder in den Text einfügen die sich durch Anklicken vergrößern?
-</p>
 <p class="lead">
 Registrierung
 </p>
@@ -348,6 +346,19 @@ Auswertung
 Die Ergebnisse Ihrer Befragung können Sie unter dem Punkt „Auswertung“ aufrufen.
 </p>
 
+<p class="lead">
+Beurteilung der Ergebnisse
+</p>
+<p>
+In der Steuerungsgruppe entscheiden Sie, wie Sie weiter verfahren. In den Auswertungsgruppen, in denen alle Ergebnisse im „grünen Bereich“ sind, kann die Gefährdungsbeurteilung psychische Belastung mit der Dokumentation abgeschlossen werden. Bitte denken Sie daran, dieses positive Ergebnis Ihren Beschäftigten mitzuteilen. 
+</p>
+<p>
+In allen anderen Fällen ist eine tiefergehende Analyse erforderlich. Wir empfehlen Ihnen dann, <b>Lösungsworkshops</b> durchzuführen.
+</p>
+
+<a data-footer="A custom footer text" data-title="A random title" data-toggle="lightbox" href="/fanstatic/nva.psyquizz/abb10.jpg">
+  <img class="img-responsive img-thumbnail" src="/fanstatic/nva.psyquizz/abb11.jpg"/>
+</a>
 <p>
 Hier haben Sie die Möglichkeit, sich für Ihre Auswertungsgruppen entsprechende Auswertungen anzeigen zu lassen und als PDF Dokument zu exportieren.
 </p>
@@ -367,19 +378,45 @@ Hier haben Sie die Möglichkeit, sich für Ihre Auswertungsgruppen entsprechende
     <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
       <div class="panel-body">
         <p>
-        Ziel der Lösungsworkshops ist die Konkretisierung der Befragungsergebnisse und die Entwicklung von Lösungsideen in Kleingruppen. Das Vorgehen erschließt das Expertenwissen der Beschäftigten.  Durch ihre aktive Beteiligung wird die Akzeptanz der Maßnahmen erhöht.
-        </p> 
-        <p>
-        Die Gruppen werden durch interne oder externe Moderatoren geleitet.  Eine externe Moderation ist empfehlenswert, wenn soziale Konflikte oder Führungsfragen im Raum stehen.  Wenn die Moderation durch interne Mitarbeiter oder Führungskräfte durchgeführt wird, sollten Rollenkonflikte (Neutralität) vermieden werden.
+Ein Lösungsworkshop dient der Konkretisierung der Befragungsergebnisse und der Entwicklung von Lösungsideen. In moderierten Kleingruppen wird das Expertenwissen der Teilnehmer erschlossen.
         </p>
+
         <p>
-        Die Anwesenheit der Führungskraft zu Beginn des Lösungsworkshops kann helfen den Auftrag zu klären und damit das Engagement der Beteiligten zu erhöhen. Ist die Führungskraft am Ende bei der Präsentation der Ergebnisse anwesend, können mit ihrer Zustimmung erste Maßnahmen direkt auf den Weg gebracht werden. Während der Problembeschreibung und Lösungssuche wird meist freier gesprochen, wenn die direkte Führungskraft nicht im Raum ist.  
+Die Dauer des Lösungsworkshops liegt zwischen 1,5 und 4 Stunden. Sie hängt von der Teilnehmerzahl und Art und Anzahl der zu besprechenden Belastungsfaktoren ab.
         </p>
+
         <p>
-        Die Dauer liegt zwischen 1,5 und 4 Stunden. Sie hängt von der Teilnehmerzahl und der Anzahl zu besprechender Belastungsfaktoren ab.
+Die Moderation kann durch interne oder externe Moderatoren geleitet werden.  
+<ul>
+<li> Eine externe Moderation ist empfehlenswert, wenn soziale Konflikte oder Führungsfragen im Raum stehen. 
+</li>
+<li>
+Moderieren interne Mitarbeiter oder Führungskräfte, sollten sie eine neutrale, wertschätzende Haltung einnehmen. Ist dies nicht möglich, weil z.B. Rollenkonflikte oder Führungsthemen ins Blickfeld geraten, raten wir dazu, einen gesonderten Termin mit externen Moderatoren anzusetzen.
+</li>
+</ul>
         </p>
+Die Führungskraft wird aktiv.
+<ul>
+<li>
+Die Führungskraft erteilt zu Beginn des Lösungsworkshops der Gruppe den Auftrag, die Belastungssituation zu reflektieren und Ideen für Maßnahmen zu entwickeln.
+</li>
+<li>
+Die Führungskraft verlässt den Raum während der Problembeschreibung und Lösungssuche. Denn es wird häufig freier gesprochen, wenn die Führungskräfte nicht im Raum sind.
+</li>
+<li>
+Am Ende des Workshops ist die Führungskraft, bei der Präsentation der Ergebnisse anwesend. Dann können mit ihrer Zustimmung erste Maßnahmen direkt auf den Weg gebracht werden.
+</li>
+</ul>
         <p>
-        Die Teilnehmergruppe muss nicht exakt der Befragungsgruppe entsprechen. Es hat sich jedoch bewährt, entweder ein gesamtes Team im Lösungsworkshop zu haben oder eine repräsentative Anzahl Freiwilliger.  Die Gruppe sollte nicht weniger als fünf und nicht mehr als zwölf  Personen umfassen.  
+Die Teilnehmergruppe
+        </p>
+
+        <p>
+Die Teilnehmergruppe muss nicht exakt der Befragungsgruppe entsprechen. Es hat sich jedoch bewährt, entweder ein gesamtes Team im Lösungsworkshop zu haben oder eine repräsentative Anzahl Freiwilliger (Vertreterworkshop). Durch die aktive Beteiligung der Beschäftigten erhöht sich die Akzeptanz der Maßnahmen. Die Gruppe sollte nur im Ausnamefall weniger als fünf oder mehr als 15  Personen umfassen.
+        </p>
+
+        <p>
+Nach dem Lösungsworkshop werden die Ergebnisse an die Führungskraft, die Steuerungsgruppe bzw. die Geschäftsleitung weitergeleitet. Hier wird entschieden, welche Maßnahmen umgesetzt werden.
         </p>
 
         <table class="table table-bordered">
@@ -391,45 +428,110 @@ Hier haben Sie die Möglichkeit, sich für Ihre Auswertungsgruppen entsprechende
          <tr>
             <td>Begrüßung und Klärung der Rahmenbedingungen </td>
             <td> 
-Vorstellung von Moderator und Teilnehmern.  Ziel nennen:  Die Verbesserung der Arbeitsbedingungen. Vereinbarung zur Vertraulichkeit:  Das gesprochene Wort bleibt im Raum. Alles Schriftliche, das raus geht, wird am Ende gemeinsam beschlossen. 
+              <p> <b>Vorstellung</b> von Moderator und Teilnehmern.</p>
+              <p> <b>Führungskraft nennt das Ziel:</b> Die Verbesserung der Arbeitsbedingungen.</p>
+              <p>  Vereinbarung zur Vertraulichkeit des gesprochenen Wortes. Alles Schriftliche, das raus geht, wird am Ende gemeinsam beschlossen.</p>
             </td>
-            <td> 15- 30 Minuten</td>
+            <td> 15 Minuten</td>
          </tr>
          <tr>
             <td> Ergebnispräsentation</td>
             <td> 
-Erhebungsergebnisse aus der Onlinebefragung (z.B. auf Poster): 
-Was ist positiv? (Ressourcen)
-Wo muss genauer hingeschaut werden?
+              <b> Präsentation der Ergebnisse aus der Onlinebefragung</b> (z.B. mit Beamer): <br> Was ist positiv? (Ressourcen) Wo muss genauer hingeschaut werden?<br>  (Alle Themenfelder, die im roten Bereich liegen, sollten bearbeitet werden.)
 </td>
             <td>15 Minuten </td>
          </tr>
          <tr>
-            <td> Priorisierung </td>
-            <td>Schwerpunktthemen: Was sollten wir zunächst anpacken? 
-(Priorität wird auf dem Poster markiert. Jeder setzt Klebepunkte) </td>
-            <td> 5 - Minuten</td>
-         </tr>
-         <tr>
             <td> Problembeschreibung</td>
-            <td>(„Auswertungsposter: Lösungen finden“ oder Flipchart): Was sind typische Situationen, wo sich das Problem zeigt? 
-Was wurde  bisher getan?
-Wie bewältige ich die Anforderungen? </td>
-            <td> 15 - 30 Minuten</td>
+            <td>
+              Was sind <b>typische Situationen, in denen sich das Problem zeigt?</b> <br> Jede Person schreibt möglichst mindestens eine  Situation zu jedem „roten“ Themenfeld  (z.B. auf Moderationskarten).
+</td>
+            <td> 15 - 20 Minuten</td>
          </tr>
          <tr>
-            <td>Lösungssuche </td>
-            <td>Was ist die Ursache, das die Dinge falsch laufen?
-Was kann ich selbst tun?
-Welche betrieblichen Lösungen bieten sich an?
- (Sammeln in der Gruppe oder zu zweit. Kurze Ergebnisvorstellung) </td>
-            <td>15 - 45 Minuten </td>
+            <td>Ursachen</td>
+            <td>
+              <ul>
+                <li> Was ist die <b>Ursache der Belastung?</b></li>
+                <li> Sammeln der Belastungsursachen für alle Themenfelder im Plenum.</li>
+                <li> Der Moderator visualisiert (z.B. auf Flipchart).</li>
+              </ul>
+            </td>
+            <td>15 - 30 Minuten </td>
          </tr>
          <tr>
-            <td> Abschluss und Ausblick</td>
-            <td>  (ohne FK): Was soll in welcher Form weitergereicht werden? Wird noch ein weiterer Termin gebraucht? Beschreibung des weiteren Verfahrens. Hinweis auf die Vertraulichkeit des gesprochenen Wortes. Bedanken für die Teilnahme
-(mit FK): Was können wir hier beschließen? Was wird im Lenkungskreis besprochen?</td>
-            <td> 15 Minuten</td>
+           <td> Lösungssuche</td>
+           <td>
+             <ul>
+               <li>
+                 Bildung von Kleingruppen nach Interesse an den
+               </li>
+               <li>
+                 Themenfeldern (auf gleiche Gruppengröße achten). 
+               </li>
+               <li>
+                 Leitfragen: 
+               </li>
+               <li>
+                 <b> Was kann ich selbst tun?</b>
+               </li>
+               <li>
+                 <b>Was kann unser Team tun?</b> 
+               </li>
+               <li>
+                 <b>Was kann die Führung tun?</b> 
+               </li>
+               <li>
+                 (Moderationskarten -  je Frage eine Farbe)
+               </li>
+               <li>
+                 Bitte darauf achten, dass die Lösungen zu den eigenen Situationen passen.
+               </li>
+               <li>
+                 Vorstellung der Kleingruppenergebnisse im Plenum, 
+                 Ergänzungen werden vom Moderator aufgenommen.
+               </li>
+               <li>
+                 Eventuell: Priorisierung (Rangfolge) der besten 
+                 Lösungen
+               </li>
+             </ul>
+           </td>
+            <td> 15 -30 Minuten</td>
+         </tr>
+         <tr>
+           <th>Abschluss und Ausblick</th>
+           <td> <b>Führungskraft ist anwesend:</b>
+             <ul>
+               <li>
+                 Was können wir hier beschließen? 
+               </li>
+               <li>
+
+                 Was wird in der Steuerungsgruppe entschieden? 
+               </li>
+               <li>
+
+                 Beschreibung des weiteren Verfahrens, 
+               </li>
+
+               <b>Führungskraft ist nicht anwesend: 
+                 Gemeinsamer Beschluss
+               </b> 
+               <ul>
+                 <li>
+                   Was soll in welcher Form weitergereicht werden? (Fotoprotokoll)
+                 </li>
+                 <li>
+                   Wird noch ein weiterer Termin gebraucht?  
+                 </li>
+               </ul>
+               <p>
+               Hinweis auf die Vertraulichkeit des gesprochenen 
+               Wortes. Feedback. Bedanken für die Teilnahme.
+               </p>
+           </td>
+           <td> 15 - 45 Minuten</td>
          </tr>
       </table>
 
