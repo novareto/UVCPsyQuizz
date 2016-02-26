@@ -140,3 +140,7 @@ h4.panel-title a.collapsed span.sign::after {
 #form-action-filter {
     display: none;
 }
+
+td > ul {
+    padding-left: 0px;
+}

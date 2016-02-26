@@ -41,7 +41,6 @@
     </div>
   </div>
   <div class="col-md-9">
-    <a href="fanstatic/nva.psyquizz/BGETEM-7_Schritte.pdf" class="pull-right"> Download </a>
     <h1>
       Gemeinsam zu gesunden Arbeitsbedingungen <br> 
       <small>Psychische Belastung online beurteilen</small>
@@ -58,6 +57,7 @@ So vielfältig die Ursachen sein können, so vielfältig sind mögliche Ansatzpu
 
 
     <div metal:define-macro="panel">
+    <a href="fanstatic/nva.psyquizz/BGETEM-7_Schritte.pdf" class="pull-right"> Download </a>
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
   <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingOne">
@@ -500,7 +500,7 @@ Nach dem Lösungsworkshop werden die Ergebnisse an die Führungskraft, die Steue
             <td> 15 -30 Minuten</td>
          </tr>
          <tr>
-           <th>Abschluss und Ausblick</th>
+           <td>Abschluss und Ausblick</td>
            <td> <b>Führungskraft ist anwesend:</b>
              <ul>
                <li>
@@ -538,7 +538,6 @@ Nach dem Lösungsworkshop werden die Ergebnisse an die Führungskraft, die Steue
 
 
         <p>
-Nach dem Lösungsworkshop werden die Ergebnisse an die Führungskraft, die Steuerungsgruppe bzw. die Geschäftsleitung weitergeleitet. Nun wird entschieden, welche Ideen in welcher Form umgesetzt werden.  Werden Maßnahmen nicht umgesetzt, sollte den Beschäftigten gegenüber nachvollziehbare Gründe angegeben werden. Große Transparenz und Beteiligung der Beschäftigten erhöht die Akzeptanz des Verfahrens und der Maßnahmen. 
         </p>
       </div>
     </div>

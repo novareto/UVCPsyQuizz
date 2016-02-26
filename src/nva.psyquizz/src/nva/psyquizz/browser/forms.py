@@ -561,7 +561,7 @@ class EditCourse(Form):
     def fields(self):
         now = datetime.date.today()
         fields = Fields(ICourseSession).select('duration', 'about')
-        if self.getContentData().content.startdate < now:
+        if self.getContentData().content.startdate > now:
             fields += Fields(ICourseSession).select('startdate', 'criterias')
         return fields
     
