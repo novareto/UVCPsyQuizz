@@ -43,7 +43,7 @@
   <div class="col-md-9">
     <h1>
       Gemeinsam zu gesunden Arbeitsbedingungen <br> 
-      <small>Psychische Belastung online beurteilen</small>
+      <small>Psychische Belastung online erfassen</small>
     </h1>
     <p>
     Die Gesundheit der Beschäftigten ist die Voraussetzung für ihre Leistung. Und damit die Basis für den Erfolg jedes Betriebes.
@@ -57,7 +57,9 @@ So vielfältig die Ursachen sein können, so vielfältig sind mögliche Ansatzpu
 
 
     <div metal:define-macro="panel">
-    <a href="fanstatic/nva.psyquizz/BGETEM-7_Schritte.pdf" class="pull-right"> Download </a>
+      <div class="row">
+        <a href="fanstatic/nva.psyquizz/BGETEM-7_Schritte.pdf" class="pull-right"> Download </a>
+      </div>
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
   <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingOne">
@@ -451,53 +453,39 @@ Nach dem Lösungsworkshop werden die Ergebnisse an die Führungskraft, die Steue
          <tr>
             <td>Ursachen</td>
             <td>
-              <ul>
-                <li> Was ist die <b>Ursache der Belastung?</b></li>
-                <li> Sammeln der Belastungsursachen für alle Themenfelder im Plenum.</li>
-                <li> Der Moderator visualisiert (z.B. auf Flipchart).</li>
-              </ul>
+              Was ist die <b>Ursache der Belastung?</b> <br>
+              Sammeln der Belastungsursachen für alle Themenfelder im Plenum.<br>
+              Der Moderator visualisiert (z.B. auf Flipchart).<br>
             </td>
             <td>15 - 30 Minuten </td>
          </tr>
          <tr>
            <td> Lösungssuche</td>
            <td>
-             <ul>
-               <li>
                  Bildung von Kleingruppen nach Interesse an den
-               </li>
-               <li>
+                 <br>
                  Themenfeldern (auf gleiche Gruppengröße achten). 
-               </li>
-               <li>
+                 <br>
                  Leitfragen: 
-               </li>
-               <li>
+                 <br>
                  <b> Was kann ich selbst tun?</b>
-               </li>
-               <li>
+                 <br>
                  <b>Was kann unser Team tun?</b> 
-               </li>
-               <li>
+                 <br>
                  <b>Was kann die Führung tun?</b> 
-               </li>
-               <li>
+                 <br>
                  (Moderationskarten -  je Frage eine Farbe)
-               </li>
-               <li>
+                 <br>
                  Bitte darauf achten, dass die Lösungen zu den eigenen Situationen passen.
-               </li>
-               <li>
+                 <br>
                  Vorstellung der Kleingruppenergebnisse im Plenum, 
                  Ergänzungen werden vom Moderator aufgenommen.
-               </li>
-               <li>
+                 <br>
                  Eventuell: Priorisierung (Rangfolge) der besten 
                  Lösungen
-               </li>
-             </ul>
+                 <br>
            </td>
-            <td> 15 -30 Minuten</td>
+            <td> 30 - 60 Minuten</td>
          </tr>
          <tr>
            <td>Abschluss und Ausblick</td>
@@ -514,6 +502,7 @@ Nach dem Lösungsworkshop werden die Ergebnisse an die Führungskraft, die Steue
 
                  Beschreibung des weiteren Verfahrens, 
                </li>
+             </ul>
 
                <b>Führungskraft ist nicht anwesend: 
                  Gemeinsamer Beschluss

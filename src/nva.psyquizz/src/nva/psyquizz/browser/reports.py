@@ -51,7 +51,7 @@ class GeneratePDF(uvclight.Page):
     def headerfooter(self, canvas, doc):
         canvas.setFont("Helvetica", 9)
         canvas.drawString(1 * cm, 2 * cm, u"Gemeinsam zu gesunden Arbeitsbedingungen")
-        canvas.drawString(1 * cm, 1.5 * cm, u"Psychische Belastungen online beurteilen")
+        canvas.drawString(1 * cm, 1.5 * cm, u"Psychische Belastungen online erfassen")
         canvas.drawString(1 * cm, 1.0 * cm, u"Ein Programm der BG ETEM")
         canvas.drawString(15 * cm, 2 * cm, u"Grundlage der Befragung: KFZA - Kurzfragebogen")
         canvas.drawString(15 * cm, 1.5 *cm, u"zur Arbeitsanalyse")

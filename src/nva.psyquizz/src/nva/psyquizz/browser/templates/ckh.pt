@@ -86,7 +86,7 @@
 		</dl>
 
               </fieldset>
-      <a href="" tal:attributes="href view.url(context, str(company.id) + '/' + str(course.id) + '/add.session')"> Kurs wiederholen  </a> 
+      <a href="" tal:attributes="href view.url(context, str(company.id) + '/' + str(course.id) + '/add.session')"> Wiederholungsbefragung  </a> 
             </div>
             <a href="" class="pull-right btn btn-primary" data-toggle="tooltip" data-placement="left" title="Unternehmen löschen" tal:attributes="href view.url(context, str(company.id) + '/delete')"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Betrieb löschen </a>
             <div tal:condition="len(list(company.courses)) == 0">

@@ -29,9 +29,9 @@ $( document ).ready(function() {
 	$("#form-action-filter").click();
     });
 
-    $('#field-form-field-employees, #field-form-field-type').hide();
+    $('#form-field-form-field-employees, #form-field-form-field-type').hide();
     $('#form-field-exp_db').change( function(event){
-       $('#field-form-field-employees, #field-form-field-type').toggle();
+       $('#form-field-form-field-employees, #form-field-form-field-type').toggle();
     });
 
     $("a[href='http://localhost:8080/sevensteps']").attr('target','_blank');
