@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import base64
+import datetime
 from .. import quizzjs, clipboard_js
 from ..i18n import _
 from ..interfaces import ICompanyRequest
@@ -31,6 +32,14 @@ class AccountHomepage(Page):
 
     def generic_id(self, id):
         return base64.urlsafe_b64encode(str(id + 2098) + ' complexificator')
+
+    def checkDate(self, date):
+        now = datetime.datetime.now()
+        print now
+        print date
+        if date < now.date():
+            return True
+        return False
 
 
 class SevenSteps(MenuItem):

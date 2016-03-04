@@ -74,6 +74,10 @@ div.tab-content {
     }
 
 
+#mt th {
+    border-bottom: 2px solid #dddddd; !important;
+}
+
 /* PANEL STUFF */
 .panel-group .panel {
     -webkit-border-top-left-radius: 5px !important;
@@ -144,3 +148,4 @@ h4.panel-title a.collapsed span.sign::after {
 td > ul {
     padding-left: 0px;
 }
+

@@ -45,8 +45,3 @@ class HelpCourse(HelpPage):
 class HelpLetter(HelpPage):
     uvclight.view(ExampleText)
     template = uvclight.get_template('helpletter.cpt', __file__)
-
-
-class HelpResults(HelpPage):
-    uvclight.view(CourseStats)
-    template = uvclight.get_template('helpresults.cpt', __file__)
