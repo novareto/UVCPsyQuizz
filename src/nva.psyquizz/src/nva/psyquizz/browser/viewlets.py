@@ -4,6 +4,7 @@ import json
 import uvclight
 
 from random import *
+from zope.interface import Interface
 from .results import Results
 from .forms import ClassStats, CourseStats, CourseDiff
 from ..apps import anonymous
@@ -35,6 +36,7 @@ from uvclight import layer, title, name, menu, context, get_template
 from uvclight.auth import require
 from zope.component import getUtilitiesFor, getUtility
 from zope.schema import getFieldsInOrder
+from uvc.entities.browser.managers import IHeaders
 
 
 def resolve_name(item):
@@ -245,3 +247,9 @@ class PersonalMenuViewlet(PersonalMenuViewlet):
         if self.request.principal.id == "user.unauthenticated":
             return False
         return True
+
+
+class PiwikStatistik(uvclight.Viewlet):
+    uvclight.viewletmanager(IHeaders)
+    uvclight.context(Interface)
+    template = uvclight.get_template('piwikstatistik.cpt', __file__)
