@@ -253,3 +253,11 @@ class PiwikStatistik(uvclight.Viewlet):
     uvclight.viewletmanager(IHeaders)
     uvclight.context(Interface)
     template = uvclight.get_template('piwikstatistik.cpt', __file__)
+
+
+class FavIcon(uvclight.Viewlet):
+    uvclight.viewletmanager(IHeaders)
+    uvclight.order(0)
+
+    def render(self):
+        return '<link rel="shortcut icon" href="%s/fanstatic/nva.psyquizz/favicon.ico" />' % (self.request.host_url)

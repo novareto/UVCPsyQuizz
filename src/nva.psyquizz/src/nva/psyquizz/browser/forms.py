@@ -461,7 +461,6 @@ class CreateCourse(Form):
     @action(_(u'Add'))
     def handle_save(self):
         data, errors = self.extractData()
-        print data
         data['quizz_type'] = 'quizz2'  # XXX Remove temporary the FIELD
         if errors:
             self.flash(_(u'An error occurred.'))
@@ -888,10 +887,8 @@ class CriteriaFiltering(Form, Results):
                 models.criterias.CriteriaAnswer.criteria_id.in_(crit_id), 
                 models.criterias.CriteriaAnswer.student_id.in_(student_ids),
         )
-        print crit_id
         if values:
             query = query.filter(models.criterias.CriteriaAnswer.answer.in_(values))
-        print query.distinct(models.criterias.CriteriaAnswer.student_id, models.criterias.CriteriaAnswer.criteria_id)
         return query.distinct(models.criterias.CriteriaAnswer.student_id, models.criterias.CriteriaAnswer.criteria_id).count()
 
     def render(self):

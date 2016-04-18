@@ -35,8 +35,6 @@ class AccountHomepage(Page):
 
     def checkDate(self, date):
         now = datetime.datetime.now()
-        print now
-        print date
         if date < now.date():
             return True
         return False
