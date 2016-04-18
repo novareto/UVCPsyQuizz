@@ -877,13 +877,17 @@ class CriteriaFiltering(Form, Results):
         data, errors = self.extractData()
         session = get_session('school')
         crit_id = [x.id for x in self.context.criterias]
+        student_ids = [x[0] for x in session.query(models.quizz.quizz2.Quizz2.student_id).filter(models.quizz.quizz2.Quizz2.course_id==self.context.id).all()]
         values = []
         for crit in crit_id:
             if data.get(str(crit), NO_VALUE) != NO_VALUE:
                 value = data[str(crit)]
                 for x in value:
                     values.append(x)
-        query = session.query(models.criterias.CriteriaAnswer.student_id).filter(models.criterias.CriteriaAnswer.criteria_id.in_(crit_id))
+        query = session.query(models.criterias.CriteriaAnswer.student_id).filter(
+                models.criterias.CriteriaAnswer.criteria_id.in_(crit_id), 
+                models.criterias.CriteriaAnswer.student_id.in_(student_ids),
+        )
         print crit_id
         if values:
             query = query.filter(models.criterias.CriteriaAnswer.answer.in_(values))
