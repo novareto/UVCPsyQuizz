@@ -232,7 +232,7 @@ class AddSession(Form):
         session.flush()
         session.refresh(clssession)
         self.flash(_(u'Session added with success.'))
-        self.redirect('%s' % self.url(self.context))
+        self.redirect('%s' % self.application_url())
         return SUCCESS
 
 
@@ -834,8 +834,8 @@ class AnswerQuizz(Form):
 
         return fields
 
-
-def company_criterias(view, limit=4):
+LIMIT = 7 
+def company_criterias(view, limit=LIMIT):
     data = view.data.get(view.context.quizz_type)
     if data:
         criterias = []
@@ -870,6 +870,25 @@ class CriteriaFiltering(Form, Results):
     def update(self):
         self.data = dict(self.display())
         Form.update(self)
+
+    def getCurrentTotal(self):
+        from cromlech.sqlalchemy import get_session
+        from nva.psyquizz import models
+        data, errors = self.extractData()
+        session = get_session('school')
+        crit_id = [x.id for x in self.context.criterias]
+        values = []
+        for crit in crit_id:
+            if data.get(str(crit), NO_VALUE) != NO_VALUE:
+                value = data[str(crit)]
+                for x in value:
+                    values.append(x)
+        query = session.query(models.criterias.CriteriaAnswer.student_id).filter(models.criterias.CriteriaAnswer.criteria_id.in_(crit_id))
+        print crit_id
+        if values:
+            query = query.filter(models.criterias.CriteriaAnswer.answer.in_(values))
+        print query.distinct(models.criterias.CriteriaAnswer.student_id, models.criterias.CriteriaAnswer.criteria_id)
+        return query.distinct(models.criterias.CriteriaAnswer.student_id, models.criterias.CriteriaAnswer.criteria_id).count()
 
     def render(self):
         form = Form.render(self)

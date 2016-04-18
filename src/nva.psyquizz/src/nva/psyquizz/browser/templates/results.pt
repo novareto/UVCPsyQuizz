@@ -8,12 +8,10 @@
     <div tal:repeat="qname data.keys()" 
 	 tal:attributes="id qname;
 	     class repeat['qname'].start and 'collapse in' or 'collapse'">
-
-      <input type="hidden" tal:attributes="value data[qname]['total']" name="total"/>
-      <h2>
-	Anzahl ausgefüllte Fragebögen: <span tal:content="data[qname]['total']" />
-      </h2>
-            
+    <div>
+      <input type="hidden" tal:attributes="value view.getCurrentTotal()" name="total"/>
+      Grundlage dieser Auswertung sind <b tal:content="view.getCurrentTotal()"> </b> Fragebögen.
+    </div>
       <input type="submit" class="btn btn-primary" value="Als PDF exportieren" />
       <tal:chart condition="data[qname]['chart'] is not None">
 	<textarea type="text" id="chart" name="chart" style="display: none"></textarea>
