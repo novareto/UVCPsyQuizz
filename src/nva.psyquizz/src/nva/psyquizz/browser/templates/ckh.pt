@@ -52,7 +52,7 @@
             <a href="" data-toggle="tooltip" data-placement="left" title="weitere Erhebung anlegen" tal:attributes="href view.url(context, str(company.id) + '/add.course')"> (Neue Befragung anlegen)  </a>
               </small>
             </h3>
-            <div tal:repeat="course company.courses">
+            <div tal:repeat="course sorted(company.courses, key=lambda x: x.id, reverse=True)">
               <fieldset tal:repeat="session course.sessions">
                 <span class="lead" tal:content="course.title"> </span> 
 		  <a href="" data-toggle="tooltip" data-placement="left" title="Erhebung bearbeiten" tal:attributes="href view.url(context, str(company.id) + '/' + str(course.id) + '/sessions/' + str(session.id) + '/edit_course')"> <span class="glyphicon glyphicon-pencil"> </span> </a>

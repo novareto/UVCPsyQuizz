@@ -71,7 +71,7 @@ class Results(object):
         if restrict is not None and not restrict:
             nb_students = 0
         else:
-            nb_students = self.count_students(session, qtype, cid, sid)
+            nb_students = self.count_students(session, qtype, cid, sid, restrict)
             if nb_students:
                 answers = session.query(quizz)
                 if sid is not None:

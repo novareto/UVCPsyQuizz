@@ -14,7 +14,7 @@
   </p>
 </div>
 <tal:checker tal:condition="len(view.fields)">
-  <div><a name="checkall">Alle</a> </div>
+  <div><a name="uncheckall">Alle</a> </div>
   <script language="javascript">
     $("a[name='checkall']").click(function () {
     $("input:checkbox").prop('checked', true);
