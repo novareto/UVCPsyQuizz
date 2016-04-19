@@ -60,9 +60,12 @@ class GeneratePDF(uvclight.Page):
         canvas.setFont("Helvetica", 12)
         canvas.drawString(1 * cm, 20 * cm, self.context.company.name)
         canvas.drawString(1 * cm, 19.5 * cm, self.context.title)
-        canvas.drawString(1 * cm, 19.0 * cm, u"Befragungszeitraum %s - %s" % (
-            self.context.sessions[self.context.id].startdate.strftime('%d.%m.%Y'),
-            self.context.sessions[self.context.id].enddate.strftime('%d.%m.%Y')))
+        try:
+            canvas.drawString(1 * cm, 19.0 * cm, u"Befragungszeitraum %s - %s" % (
+                self.context.sessions[self.context.id].startdate.strftime('%d.%m.%Y'),
+                self.context.sessions[self.context.id].enddate.strftime('%d.%m.%Y')))
+        except:
+            print "ERROR"
         canvas.line(0.5 * cm , 18.5 * cm, 26 * cm, 18.5 * cm)
 
     def render(self):
