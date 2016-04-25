@@ -18,7 +18,7 @@ ABOUT_TEXT = u"""
 <p> herzlich Willkommen zu unserer Befragung „Gemeinsam zu gesunden Arbeitsbedingungen“! </p>
 <p>Der Fragebogen umfasst 26 Fragen. Bitte beantworteten Sie alle Fragen des Fragebogens.
 Beim Beantworten der Fragen kann es hilfreich sein, nicht zu lange über die einzelnen Fragen
-nachzudenken. Meist ist der erste Eindruck auch der treffendste.“</p>
+nachzudenken. Meist ist der erste Eindruck auch der treffendste.</p>
 <p>Wir möchten nochmal darauf hinweisen, dass Ihre Angaben absolut vertraulich behandelt werden. Ein Rückschluss auf einzelne Personen wird nicht möglich sein.</p>
 <p>Sollten Sie Fragen oder Anmerkungen haben, wenden Sie sich bitte an:</p>
  <p>   <span> A n s p r e c h p a r t n e r   &nbsp;    und   &nbsp     K o n t a k t d a t e n </span> </p>
@@ -58,9 +58,9 @@ def vocab_type(context):
 @provider(IContextSourceBinder)
 def vocab_employees(context):
     rc = [SimpleTerm('1', '1', u'Weniger als 10'),
-          SimpleTerm('2', '2', u'Mehr als 10 und weniger als 50'),
-          SimpleTerm('3', '3', u'Mehr als 50 und weniger als 250'),
-          SimpleTerm('4', '4', u'Mehr als 250 und weniger als 500'),
+          SimpleTerm('2', '2', u'Zwischen 10 und 50'),
+          SimpleTerm('3', '3', u'Zwischen 51 und 250'),
+          SimpleTerm('4', '4', u'Zwischen 251 und 500'),
           SimpleTerm('5', '5', u'Mehr als 500')
           ]
     return SimpleVocabulary(rc)

@@ -77,7 +77,7 @@
 		  </dd>
 		  <dt> Auswertung: </dt> 
 		  <dd> 
-      <a href="" tal:attributes="href view.url(context, str(company.id) + '/' + str(course.id) + '/course.stats')"> <span class="glyphicon glyphicon-stats"> </span> Grafische Darstellung   </a> 
+      <a href="" tal:attributes="href view.url(context, str(company.id) + '/' + str(course.id) + '/sessions/' + str(session.id) + '/session.stats')"> <span class="glyphicon glyphicon-stats"> </span> Grafische Darstellung   </a> 
 		  </dd>
 		  <dt> Ausgefüllte Fragebogen: </dt> 
 		  <dd>
