@@ -27,7 +27,7 @@ from nva.psyquizz import quizzjs, quizzcss
 from siguvtheme.uvclight.viewlets import PersonalMenuViewlet
 from sqlalchemy import or_, and_
 from uvc.content import IDescriptiveSchema
-from uvc.design.canvas import IAboveContent, IBelowContent
+from uvc.design.canvas import IFooter, IAboveContent, IBelowContent
 from uvc.design.canvas import IContextualActionsMenu
 from uvc.design.canvas import menus
 from uvc.design.canvas.menus import INavigationMenu
@@ -261,3 +261,16 @@ class FavIcon(uvclight.Viewlet):
 
     def render(self):
         return '<link rel="shortcut icon" href="%s/fanstatic/nva.psyquizz/favicon.ico" />' % (self.request.host_url)
+
+
+from uvc.design.canvas import IFooterMenu
+class Impressum(uvclight.MenuItem):
+    uvclight.menu(IFooterMenu)
+    uvclight.context(Interface)
+    uvclight.title(u'Impressum')
+    uvclight.auth.require('zope.Public')
+    uvclight.layer(ICompanyRequest)
+
+    @property
+    def action(self):
+        return "http://www.bgetem.de/impressum"

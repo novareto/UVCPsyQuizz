@@ -149,3 +149,6 @@ td > ul {
     padding-left: 0px;
 }
 
+h4 > a:focus {
+   outline: thin;
+}
