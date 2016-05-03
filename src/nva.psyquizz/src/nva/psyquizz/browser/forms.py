@@ -839,11 +839,21 @@ def company_criterias(view, limit=LIMIT):
     if data:
         criterias = []
         for idx, answers in data['criterias'].items():
-            vocabulary = SimpleVocabulary(
-                [SimpleTerm(value=criteria, title='%s (%s)' % (criteria, number),
-                            token=base64.b64encode(criteria.encode('utf-8')))
-                for criteria, number in answers['answers'].items()
-                if number >= limit])
+            rc = []
+            for criteria, number in answers['answers'].items():
+                if number >= limit:
+                    vocab = SimpleTerm(
+                            value=criteria, title='%s (%s)' % (criteria, number),
+                            token=base64.b64encode(criteria.encode('utf-8'))
+                            )
+                else:
+                    vocab = SimpleTerm(
+                            value=criteria, title='%s (%s)' % (criteria, number),
+                            token=base64.b64encode(criteria.encode('utf-8'))
+                            )
+                    vocab.disabled = "disabled" 
+                rc.append(vocab)
+            vocabulary = SimpleVocabulary(rc)
             if len(vocabulary):
                 yield Set(
                     __name__= '%i' % idx,
