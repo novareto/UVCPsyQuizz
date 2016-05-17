@@ -2,6 +2,7 @@
 
 import base64
 import datetime
+import binascii
 from .. import quizzjs, clipboard_js
 from ..i18n import _
 from ..interfaces import ICompanyRequest
@@ -31,7 +32,8 @@ class AccountHomepage(Page):
         return voc.getTermByToken(course.quizz_type).title
 
     def generic_id(self, id):
-        return base64.urlsafe_b64encode(str(id + 2098) + ' complexificator')
+        print id
+        return binascii.hexlify(base64.urlsafe_b64encode(str(id) + ' complexificator'))
 
     def checkDate(self, date):
         now = datetime.datetime.now()
@@ -73,4 +75,4 @@ class ExampleText(Page):
         Page.update(self)
 
     def generic_id(self, id):
-        return base64.urlsafe_b64encode(str(id + 2098) + ' complexificator')
+        return binascii.hexlify(base64.urlsafe_b64encode(str(id) + ' complexificator'))

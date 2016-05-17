@@ -857,7 +857,7 @@ def company_criterias(view, limit=LIMIT):
             if len(vocabulary):
                 yield Set(
                     __name__= '%i' % idx,
-                    title=answers['title'],
+                    title="%s: " % answers['title'],
                     value_type=Choice(vocabulary=vocabulary),
                     required=False)
 

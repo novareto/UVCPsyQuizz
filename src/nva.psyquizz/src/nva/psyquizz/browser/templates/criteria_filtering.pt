@@ -1,17 +1,19 @@
 <div class="criteria_filtering">
   <h1>Ergebnisse</h1>
-  <p>Hier sehen Sie die Auswertung für alle Beschäftigten.</p>
+  <p>Hier sehen Sie die Auswertung für alle Beschäftigten. 
+  <b> Diese Auswertung wird erst angezeigt, wenn mindestens sieben ausgefüllte Fragebögen vorliegen.</b>
+  </p>
+
   <p>
-    Durch Auswahl einer oder mehrerer Auswertungsgruppen haben Sie
-    die Möglichkeit sich eine detaillierte Auswertung anzeigen zu lassen
-    (Bitte beachten Sie: Auswertungsgruppen oder Kombinationen die
-    weniger als sieben ausgefüllte Fragebogen umfassen, können aus
-    Datenschutzgründen leider nicht angezeigt werden)
+  Durch Auswahl einer oder mehrerer Auswertungsgruppen haben Sie die Möglichkeit sich eine
+  detaillierte Auswertung anzeigen zu lassen. (Bitte beachten Sie: Einzelne Auswertungsgruppen 
+  können erst ausgewählt werden, wenn für diese Auswertungsgruppe mindestens sieben 
+  ausgefüllte Fragebögen vorliegen.)
   </p>
   <p>
-    Der weitere Umgang mit den Ergebnissen ist in der Übersicht 7
-    Schritte unter 4. Lösungsworkshops beschrieben.
+  Der weitere Umgang mit den Ergebnissen ist in der „Übersicht 7 Schritte“ unter 4.  Lösungsworkshops beschrieben.
   </p>
+
 </div>
 <tal:checker tal:condition="len(view.fields)">
   <div><a name="uncheckall">Alle</a> </div>

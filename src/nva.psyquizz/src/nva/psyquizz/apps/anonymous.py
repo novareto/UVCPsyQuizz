@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import binascii
 import base64
 from datetime import date
 from . import Site
@@ -15,7 +16,7 @@ from zope.interface import implementer
 
 
 def get_id(secret):
-    return int(base64.urlsafe_b64decode(secret).split(' ', 1)[0]) - 2098
+    return int(base64.urlsafe_b64decode(binascii.unhexlify(secret)).split(' ', 1)[0])
 
 
 @implementer(IContent, IPublicationRoot)
