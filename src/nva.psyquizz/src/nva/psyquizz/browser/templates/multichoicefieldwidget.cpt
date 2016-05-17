@@ -1,6 +1,6 @@
 <tal:widget>
   <tal:choice tal:repeat="choice widget.renderableChoice()">
-    <label for="#" tal:attributes="for choice.id" class="checkbox-inline">
+    <label for="#" tal:attributes="for choice.id; disabled choice.disabled" class="checkbox-inline">
     <input type="checkbox" id="#" name="#" value="#" checked="#" class="#"
            tal:attributes="name widget.identifier;
                            value choice.token;

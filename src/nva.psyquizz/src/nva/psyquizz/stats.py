@@ -44,12 +44,13 @@ class QuizzStats(object):
 
         criterias = {}
         for answer in completed:
-            for criteria_answer in answer.student.criterias:
-                criteria = criteria_answer.criteria
-                criteria_data = criterias.setdefault(
-                    criteria.id, {'title': criteria.title, 'answers': {}})
-                criteria_data['answers'][criteria_answer.answer] = (
-                    criteria_data['answers'].get(criteria_answer.answer, 0) + 1)
+            if answer.student:
+                for criteria_answer in answer.student.criterias:
+                    criteria = criteria_answer.criteria
+                    criteria_data = criterias.setdefault(
+                        criteria.id, {'title': criteria.title, 'answers': {}})
+                    criteria_data['answers'][criteria_answer.answer] = (
+                        criteria_data['answers'].get(criteria_answer.answer, 0) + 1)
 
         self.criterias = criterias
 

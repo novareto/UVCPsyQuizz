@@ -34,7 +34,8 @@ $( document ).ready(function() {
        $('#form-field-form-field-employees, #form-field-form-field-type').toggle();
     });
 
-    $("a[href='http://localhost:8080/sevensteps']").attr('target','_blank');
+    $("a[href='https://gbpb.bgetem.de/sevensteps']").attr('target','_blank');
+    $("a[href='http://www.bgetem.de/die-bgetem/impressum']").attr('target','_blank');
 
 });
 

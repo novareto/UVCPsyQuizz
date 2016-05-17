@@ -273,4 +273,4 @@ class Impressum(uvclight.MenuItem):
 
     @property
     def action(self):
-        return "http://www.bgetem.de/impressum"
+        return "http://www.bgetem.de/die-bgetem/impressum"

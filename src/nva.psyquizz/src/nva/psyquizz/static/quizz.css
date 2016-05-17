@@ -152,3 +152,7 @@ td > ul {
 h4 > a:focus {
    outline: thin;
 }
+
+label[disabled="disabled"] {
+  color: gray !important;
+}
