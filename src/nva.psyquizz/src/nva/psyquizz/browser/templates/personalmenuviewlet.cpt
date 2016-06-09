@@ -12,7 +12,7 @@
     <ul class="nav navbar-nav navbar-right" tal:condition="entries">
       <li class="dropdown">
 	<a data-toggle="dropdown" id="dropdown-user" class="dropdown-toggle"> 
-    <a href="" tal:attributes="href string: ${viewlet.view.application_url()}/myprefs"> <span class="glyphicon glyphicon-user"></span> Mein Profil </a> 
+    <a tal:condition="viewlet.iavailable()" href="" tal:attributes="href string: ${viewlet.view.application_url()}/myprefs"> <span class="glyphicon glyphicon-user"></span> Mein Profil </a> 
 	</a>
 <!--
 	<ul class="dropdown-menu" role="menu" aria-labelledby="dropdown-user">

@@ -240,10 +240,9 @@ class Home(uvclight.MenuItem):
 class PersonalMenuViewlet(PersonalMenuViewlet):
     uvclight.layer(ICompanyRequest)
     template = uvclight.get_template('personalmenuviewlet.cpt', __file__)
-    uvclight.auth.require('manage.company')
+    uvclight.auth.require('zope.Public')
 
-    @property
-    def available(self):
+    def iavailable(self):
         if self.request.principal.id == "user.unauthenticated":
             return False
         return True
