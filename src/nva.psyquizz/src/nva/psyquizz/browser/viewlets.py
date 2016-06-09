@@ -269,8 +269,21 @@ class Impressum(uvclight.MenuItem):
     uvclight.context(Interface)
     uvclight.title(u'Impressum')
     uvclight.auth.require('zope.Public')
-    uvclight.layer(ICompanyRequest)
+    #uvclight.layer(ICompanyRequest)
 
     @property
     def action(self):
         return "http://www.bgetem.de/die-bgetem/impressum"
+
+
+class Kontakt(uvclight.MenuItem):
+    uvclight.menu(IFooterMenu)
+    uvclight.context(Interface)
+    uvclight.title(u'Kontakt')
+    uvclight.auth.require('zope.Public')
+    uvclight.layer(ICompanyRequest)
+
+    @property
+    def action(self):
+        return "mailto://gzga@bgetem.de"
+

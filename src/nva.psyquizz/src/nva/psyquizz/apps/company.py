@@ -76,14 +76,20 @@ def activate_url(url, **data):
     url_parts[4] = urllib.urlencode(query)
     return urlparse.urlunparse(url_parts)
 
-
+from sqlalchemy import func
 @implementer(ICredentials)
 class Access(GlobalUtility):
     name('access')
     
     def log_in(self, request, username, password, **kws):
         session = get_session('school')
-        account = session.query(Account).get(username)
+        account = session.query(Account).filter(
+            func.lower(Account.email) == username.lower()).all()
+
+        if len(account) == 1:
+            account = account[0]
+        else:
+            account = None
         
         if account is not None and account.password == password:
             if account.activated is not None:
