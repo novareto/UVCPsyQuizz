@@ -278,7 +278,9 @@ class Application(SQLPublication, SecurePublication):
 
     def publish_traverse(self, request):
         user = self.get_credentials(request.environment)
-        request.principal = self.principal_factory(user.lower())
+        if user:
+            user = user.lower()
+        request.principal = self.principal_factory(user)
         try:
             with self.site_manager(request) as site:
                 with Interaction(request.principal):
