@@ -7,8 +7,7 @@ from zope.interface import Interface
 from grokcore.component import adapts
 from dolmen.forms.ztk.widgets import choice
 from uvc.themes.btwidgets.widgets.choice import RadioFieldWidget
-from uvc.themes.btwidgets.widgets.collection import MultiChoiceFieldWidget
-from dolmen.forms.ztk.widgets.collection import SetField
+from dolmen.forms.ztk.widgets.collection import SetField, MultiChoiceFieldWidget
 from nva.psyquizz.interfaces import IQuizzLayer
 
 
@@ -24,7 +23,6 @@ class MultiChoiceFieldWidget(MultiChoiceFieldWidget):
     def renderableChoice(self):
         current = self.inputValue()
         base_id = self.htmlId()
-        print "YES I AM IN THE GAME"
         for i, choicet in enumerate(self.choices()):
             yield {'token': choicet.token,
                    'title': choicet.title,
