@@ -275,6 +275,18 @@ class Impressum(uvclight.MenuItem):
         return "http://www.bgetem.de/die-bgetem/impressum"
 
 
+class Datenschutz(uvclight.MenuItem):
+    uvclight.menu(IFooterMenu)
+    uvclight.context(Interface)
+    uvclight.title(u'Datenschutz')
+    uvclight.auth.require('zope.Public')
+    #uvclight.layer(ICompanyRequest)
+
+    @property
+    def action(self):
+        return "https://www.bgetem.de/die-bgetem/impressum/oeffentliches-verfahrensverzeichnis/verfahrensverzeichnis-gemeinsam-zu-gesunden-arbeitsbedingungen-online"
+
+
 class Kontakt(uvclight.MenuItem):
     uvclight.menu(IFooterMenu)
     uvclight.context(Interface)

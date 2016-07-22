@@ -247,7 +247,7 @@ Die Befragung erfolgt durch die Online Hilfe der BG ETEM. Hierzu ist zunächst e
 </p>
 
 
-<a  data-footer="A custom footer text" data-title="A random title" data-toggle="lightbox" href="/fanstatic/nva.psyquizz/abb1.jpg">
+<a  data-footer="" data-title="Registrierung" data-toggle="lightbox" href="/fanstatic/nva.psyquizz/abb1.jpg">
   <img class="img-responsive img-thumbnail" src="/fanstatic/nva.psyquizz/abb1.jpg"/>
 </a>
 
@@ -258,7 +258,7 @@ Nach der Anmeldung legen Sie zunächst die Stammdaten Ihres Betriebes an. Hierzu
 </p>
 
 
-<a data-footer="A custom footer text" data-title="A random title" data-toggle="lightbox" href="/fanstatic/nva.psyquizz/abb2.jpg">
+<a data-footer="" data-title="Stammdaten" data-toggle="lightbox" href="/fanstatic/nva.psyquizz/abb2.jpg">
   <img class="img-responsive img-thumbnail" src="/fanstatic/nva.psyquizz/abb2.jpg"/>
 </a>
 
@@ -266,7 +266,7 @@ Nach der Anmeldung legen Sie zunächst die Stammdaten Ihres Betriebes an. Hierzu
 Zusätzlich haben Sie die Möglichkeit, uns Ihre Daten für Forschungszwecke freizugeben. Diese Angaben helfen uns bei der Entwicklung von branchenspezifischen Präventionsangeboten.
 </p>
 
-<a data-footer="A custom footer text" data-title="A random title" data-toggle="lightbox" href="/fanstatic/nva.psyquizz/abb3.jpg">
+<a data-footer="" data-title="Datenfreigabe" data-toggle="lightbox" href="/fanstatic/nva.psyquizz/abb3.jpg">
   <img class="img-responsive img-thumbnail" src="/fanstatic/nva.psyquizz/abb3.jpg"/>
 </a>
 <p class="lead">
@@ -276,7 +276,7 @@ Auswertungsgruppen erfassen
 Im nächsten Schritt erfassen Sie für Ihren Betrieb die Auswertungsgruppen. Diese haben Sie idealerweise bereits in Ihrer Steuerungsgruppe festgelegt
 </p>
 
-<a data-footer="A custom footer text" data-title="A random title" data-toggle="lightbox" href="/fanstatic/nva.psyquizz/abb4.jpg">
+<a data-footer="" data-title="Auswertungsgruppen" data-toggle="lightbox" href="/fanstatic/nva.psyquizz/abb4.jpg">
   <img class="img-responsive img-thumbnail" src="/fanstatic/nva.psyquizz/abb4.jpg"/>
 </a>
 <p>Haben Sie sich bspw. für eine Analyse der psychischen Belastung nach Abteilungen entschieden, würden Sie unter Kriterium „Abteilung“ und unter Auswertungsgruppen die Bezeichnungen Ihrer einzelnen Abteilunge eingeben.
@@ -293,14 +293,14 @@ Die Auswertungsgruppen werden später auf dem „Fragebogen“ angezeigt, und di
 Im nächsten Schritt erfolgt die Eingabe der Rahmendaten Ihrer Befragung. 
 </p>
 
-<a data-footer="A custom footer text" data-title="A random title" data-toggle="lightbox" href="/fanstatic/nva.psyquizz/abb5.jpg">
+<a data-footer="" data-title="Rahmendaten" data-toggle="lightbox" href="/fanstatic/nva.psyquizz/abb5.jpg">
   <img class="img-responsive img-thumbnail" src="/fanstatic/nva.psyquizz/abb5.jpg"/>
 </a>
 <p>
 Hierzu vergeben Sie eine eindeutige Bezeichnung für Ihre Befragung, den Startzeitpunkt und die Dauer der Befragung. In diesem Zeitraum ist der „Fragebogen“ Ihres Betriebes für Ihre Beschäftigten erreichbar und die Angaben werden gespeichert. Zudem haben Sie die Möglichkeit, den Einführungstext, den Ihre Beschäftigten beim Aufruf des „Fragebogens“ angezeigt bekommen, entsprechend Ihren Bedürfnissen anzupassen.
 </p>
 
-<a data-footer="A custom footer text" data-title="A random title" data-toggle="lightbox" href="/fanstatic/nva.psyquizz/abb6.jpg">
+<a data-footer="" data-title="Einführungstext" data-toggle="lightbox" href="/fanstatic/nva.psyquizz/abb6.jpg">
   <img class="img-responsive img-thumbnail" src="/fanstatic/nva.psyquizz/abb6.jpg"/>
 </a>
 
@@ -312,7 +312,7 @@ Als nächstes verteilen Sie den Link zum „Fragebogen“ an Ihre Beschäftigten
 Zur Verteilung des Links können Sie das hinterlegte Musteranschreiben nutzen. Hier werden automatisch Zeitraum und Dauer der Befragung sowie der Link zum „Fragebogen“ hinterlegt. 
 </p>
 
-<a data-footer="A custom footer text" data-title="A random title" data-toggle="lightbox" href="/fanstatic/nva.psyquizz/abb7.jpg">
+<a data-footer="" data-title="Musteranschreiben" data-toggle="lightbox" href="/fanstatic/nva.psyquizz/abb7.jpg">
   <img class="img-responsive img-thumbnail" src="/fanstatic/nva.psyquizz/abb7.jpg"/>
 </a>
 
@@ -325,14 +325,14 @@ Idealerweise fügen Sie das Musteranschreiben per Copy&Paste in Ihrer E-Mailsoft
 Der nächste Schritt besteht darin, dass Ihre Beschäftigten die Befragung bearbeiten. Hierzu muss zunächst der Link zum „Fragebogen“ aufgerufen werden. 
 </p>
 
-<a data-footer="A custom footer text" data-title="A random title" data-toggle="lightbox" href="/fanstatic/nva.psyquizz/abb8.jpg">
+<a data-footer="" data-title="Fragebogen" data-toggle="lightbox" href="/fanstatic/nva.psyquizz/abb8.jpg">
   <img class="img-responsive img-thumbnail" src="/fanstatic/nva.psyquizz/abb8.jpg"/>
 </a>
 <p>
 Anschließend erscheint zunächst ein Einführungstext den Sie beim Anlegen der Befragung festgelegt haben. Danach werden die einzelnen Fragen angezeigt.
 </p>
 
-<a data-footer="A custom footer text" data-title="A random title" data-toggle="lightbox" href="/fanstatic/nva.psyquizz/abb9.jpg">
+<a data-footer="" data-title="Einführungstext" data-toggle="lightbox" href="/fanstatic/nva.psyquizz/abb9.jpg">
   <img class="img-responsive img-thumbnail" src="/fanstatic/nva.psyquizz/abb9.jpg"/>
 </a>
 <p class="lead">
@@ -341,7 +341,7 @@ Auswertung
 
 <p> Fertig ausgefüllte „Fragebögen“ werden auf der Übersichtsseite unter ausgefüllte „Fragebögen“ angezeigt.</p>
 
-<a data-footer="A custom footer text" data-title="A random title" data-toggle="lightbox" href="/fanstatic/nva.psyquizz/abb10.jpg">
+<a data-footer="" data-title="Übersichtsseite" data-toggle="lightbox" href="/fanstatic/nva.psyquizz/abb10.jpg">
   <img class="img-responsive img-thumbnail" src="/fanstatic/nva.psyquizz/abb10.jpg"/>
 </a>
 <p>
@@ -358,7 +358,7 @@ In der Steuerungsgruppe entscheiden Sie, wie Sie weiter verfahren. In den Auswer
 In allen anderen Fällen ist eine tiefergehende Analyse erforderlich. Wir empfehlen Ihnen dann, <b>Lösungsworkshops</b> durchzuführen.
 </p>
 
-<a data-footer="A custom footer text" data-title="A random title" data-toggle="lightbox" href="/fanstatic/nva.psyquizz/abb10.jpg">
+<a data-footer="" data-title="Analyse" data-toggle="lightbox" href="/fanstatic/nva.psyquizz/abb11.jpg">
   <img class="img-responsive img-thumbnail" src="/fanstatic/nva.psyquizz/abb11.jpg"/>
 </a>
 <p>
