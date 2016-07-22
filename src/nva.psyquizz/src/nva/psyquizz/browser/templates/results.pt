@@ -104,15 +104,17 @@
     <textarea type="text" id="averages" name="averages" style="display:none">
       <tal:data
            content="view.jsonify(dict((res[0], '%.2f' % view.avg(res[1])) for res in data[qname]['users'].items()))" />
-    </textarea>
+    </textarea>data[qname]['chart'].keys()
 
     <div class="row"> 
     <p class="lead">Mittelwerte</p>
     <div class="col-md-offset-2 col-md-8"> 
     <table  id="mt" class="table table-bordered table-stripped">
-      <tr tal:repeat="res data[qname]['users'].items()">
-        <th style="border-bottom: 2px solid #dddddd;" tal:content="res[0]"> </th>
-        <th style="border-bottom: 2px solid #dddddd;" tal:content="str('%.2f' % view.avg(res[1])).replace('.', ',')"> </th>
+      <tr tal:repeat="res data[qname]['chart'].items()">
+        <th style="border-bottom: 2px solid #dddddd;"
+	    tal:content="res[0]" />
+        <td style="border-bottom: 2px solid #dddddd;"
+	    tal:content="str('%.2f' % res[1]['avg'])" />
       </tr>
     </table>
     </div>
