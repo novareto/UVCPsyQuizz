@@ -27,6 +27,7 @@ install_requires = [
     'uvclight[sql]',
     'zope.cachedescriptors',
     'uvc.validation',
+    'psycopg2',
     ]
 
 tests_require = [

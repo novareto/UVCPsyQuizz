@@ -238,10 +238,9 @@ class Home(uvclight.MenuItem):
 class PersonalMenuViewlet(PersonalMenuViewlet):
     uvclight.layer(ICompanyRequest)
     template = uvclight.get_template('personalmenuviewlet.cpt', __file__)
-    uvclight.auth.require('manage.company')
+    uvclight.auth.require('zope.Public')
 
-    @property
-    def available(self):
+    def iavailable(self):
         if self.request.principal.id == "user.unauthenticated":
             return False
         return True
@@ -267,8 +266,21 @@ class Impressum(uvclight.MenuItem):
     uvclight.context(Interface)
     uvclight.title(u'Impressum')
     uvclight.auth.require('zope.Public')
-    uvclight.layer(ICompanyRequest)
+    #uvclight.layer(ICompanyRequest)
 
     @property
     def action(self):
         return "http://www.bgetem.de/die-bgetem/impressum"
+
+
+class Kontakt(uvclight.MenuItem):
+    uvclight.menu(IFooterMenu)
+    uvclight.context(Interface)
+    uvclight.title(u'Kontakt')
+    uvclight.auth.require('zope.Public')
+    uvclight.layer(ICompanyRequest)
+
+    @property
+    def action(self):
+        return "mailto://gzga@bgetem.de"
+

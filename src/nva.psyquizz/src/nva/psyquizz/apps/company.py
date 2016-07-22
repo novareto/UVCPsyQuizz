@@ -76,15 +76,21 @@ def activate_url(url, **data):
     url_parts[4] = urllib.urlencode(query)
     return urlparse.urlunparse(url_parts)
 
-
+from sqlalchemy import func
 @implementer(ICredentials)
 class Access(GlobalUtility):
     name('access')
     
     def log_in(self, request, username, password, **kws):
         session = get_session('school')
-        account = session.query(Account).get(username)
-        
+        account = session.query(Account).filter(
+            func.lower(Account.email) == username.lower())
+
+        if account.count() == 1:
+            account = account.first()
+        else:
+            account = None
+
         if account is not None and account.password == password:
             if account.activated is not None:
                 return account
@@ -253,10 +259,17 @@ class Application(SQLPublication, SecurePublication):
         return principal
 
     def site_manager(self, request):
-        username = request.principal.id
+        username = request.principal.id.lower()
         if username != unauthenticated_principal.id:
             session = get_session(self.name)
-            account = session.query(Account).get(username)
+            account = session.query(Account).filter(
+                func.lower(Account.email) == username)
+
+            if account.count() == 1:
+                account = account.first()
+            else:
+                account = None
+
             if account is not None:
                 account.getSiteManager = getGlobalSiteManager
                 alsoProvides(account, IPublicationRoot)
@@ -265,6 +278,8 @@ class Application(SQLPublication, SecurePublication):
 
     def publish_traverse(self, request):
         user = self.get_credentials(request.environment)
+        if user:
+            user = user.lower()
         request.principal = self.principal_factory(user)
         try:
             with self.site_manager(request) as site:
