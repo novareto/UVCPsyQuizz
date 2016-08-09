@@ -32,7 +32,6 @@ class AccountHomepage(Page):
         return voc.getTermByToken(course.quizz_type).title
 
     def generic_id(self, id):
-        print id
         return binascii.hexlify(base64.urlsafe_b64encode(str(id) + ' complexificator'))
 
     def checkDate(self, date):
@@ -49,6 +48,10 @@ class SevenSteps(MenuItem):
     order(100)
     require('manage.company')
     title(u'Übersicht 7 Schritte')
+
+    @property
+    def url(self):
+        return "https://www.bgetem.de/arbeitssicherheit-gesundheitsschutz/themen-von-a-z-1/psychische-belastung-und-beanspruchung/gemeinsam-zu-gesunden-arbeitsbedingungen-beurteilung-psychischer-belastung"
 
 
 class SevenStepsView(Page):

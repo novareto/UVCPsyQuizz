@@ -34,7 +34,7 @@ $( document ).ready(function() {
        $('#form-field-form-field-employees, #form-field-form-field-type').toggle();
     });
 
-    $("a[href='https://gbpb.bgetem.de/sevensteps']").attr('target','_blank');
+    $("a[href='https://www.bgetem.de/arbeitssicherheit-gesundheitsschutz/themen-von-a-z-1/psychische-belastung-und-beanspruchung/gemeinsam-zu-gesunden-arbeitsbedingungen-beurteilung-psychischer-belastung']").attr('target','_blank');
     $("a[href='http://www.bgetem.de/die-bgetem/impressum']").attr('target','_blank');
 
 });

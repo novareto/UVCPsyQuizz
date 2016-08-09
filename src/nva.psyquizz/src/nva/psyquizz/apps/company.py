@@ -222,7 +222,7 @@ class AnonIndex(Page):
     baseclass()
     __component_name__ = 'index'
    
-    template = get_template('anon_index.pt', browser.__file__)
+    template = get_template('anon_index_new.pt', browser.__file__)
 
     def update(self):
         lbg.need()
