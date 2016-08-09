@@ -1,1 +1,0 @@
-Novareto Anonymous Quizz

@@ -1,2 +1,0 @@
-<h1> Übersicht </h1>
-<div metal:use-macro="view.panel"/>
