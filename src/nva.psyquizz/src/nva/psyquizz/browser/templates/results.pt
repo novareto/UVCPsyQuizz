@@ -104,7 +104,7 @@
     <textarea type="text" id="averages" name="averages" style="display:none">
       <tal:data
            content="view.jsonify(dict((res[0], '%.2f' % view.avg(res[1])) for res in data[qname]['users'].items()))" />
-    </textarea>data[qname]['chart'].keys()
+    </textarea>
 
     <div class="row"> 
     <p class="lead">Mittelwerte</p>
