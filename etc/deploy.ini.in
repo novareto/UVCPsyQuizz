@@ -43,10 +43,10 @@ use = egg:repoze.vhm#vhm_xheaders
 next = session
 
 [filter-app:session]
-use = egg:cromlech.wsgistate#file_session
+use = egg:nva.psyquizz#file_session
 session_key = nva
 session_cache = ${settings:cachedir}/sessions
-timeout = 12000
+timeout = 10
 next = courses
 
 [app:courses]
@@ -55,6 +55,7 @@ files = ${settings:datadir}
 session_key = nva
 zcml = ${zcml:output}
 langs = de,fr,en
+dsn = postgresql+psycopg2://quizz:quizz@localhost/quizz
 
 [server:main]
 use = egg:Paste#http
