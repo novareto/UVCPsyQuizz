@@ -46,7 +46,7 @@ next = session
 use = egg:nva.psyquizz#file_session
 session_key = nva
 session_cache = ${settings:cachedir}/sessions
-timeout = 10
+timeout = 3000
 next = courses
 
 [app:courses]
@@ -55,7 +55,7 @@ files = ${settings:datadir}
 session_key = nva
 zcml = ${zcml:output}
 langs = de,fr,en
-dsn = postgresql+psycopg2://asd:asd@localhost/quizz
+dsn = ${settings:DSN}
 
 [server:main]
 use = egg:Paste#http

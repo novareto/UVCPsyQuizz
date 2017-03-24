@@ -1,7 +1,13 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
     i18n_domain="treegital.af.input_invoices">
 
   <include package="nva.psyquizz" />
+<include package="uvc.protectionwidgets" />
+<browser:recaptcha
+   public_key="6LeOKRgUAAAAAHPZWtxYUdKNl_zr3aUCJFlwBfw-"
+   private_key="6LeOKRgUAAAAAKbCkrE_pkvf6kLJLuFx3YQwhgns"
+/>
 
 </configure>
