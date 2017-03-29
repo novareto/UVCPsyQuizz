@@ -6,8 +6,8 @@
   <include package="nva.psyquizz" />
 <include package="uvc.protectionwidgets" />
 <browser:recaptcha
-   public_key="6LfuRAwUAAAAAH-kmwCYhpty2YyIA1SNXnZuqgO9"
-   private_key="6LfuRAwUAAAAALS_AhNjhmsi2fxjm4n5Ym1IE75u"
+   public_key="6LeOKRgUAAAAAHPZWtxYUdKNl_zr3aUCJFlwBfw-"
+   private_key="6LeOKRgUAAAAAKbCkrE_pkvf6kLJLuFx3YQwhgns"
 />
 
 </configure>
