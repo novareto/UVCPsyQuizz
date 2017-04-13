@@ -21,4 +21,4 @@ script:
 
 after_success:
   - pip install -q coveralls python-coveralls==2.5.0
-- coveralls
+  - coveralls
