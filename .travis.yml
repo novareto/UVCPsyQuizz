@@ -1,3 +1,4 @@
+dist: trusty
 language: python
 # with next we get on container based infrastructure, this enables caching
 sudo: false
@@ -14,6 +15,7 @@ before_install:
   - bin/pip install --upgrade pip setuptools zc.buildout
 
 install:
+  - pip --version
   - bin/buildout -N -t 20 -c buildout.cfg
 
 script:
