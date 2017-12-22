@@ -56,7 +56,7 @@ session_key = nva
 zcml = ${zcml:output}
 langs = de,fr,en
 dsn = ${settings:DSN} 
-layer = nva.psyquizz.interfaces:ISomeLayer
+layer = psyquizz.vbgtheme.interfaces:IVBGTheme
 
 [server:main]
 use = egg:Paste#http
