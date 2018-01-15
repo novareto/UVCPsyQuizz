@@ -40,19 +40,12 @@ next = vhm
 
 [filter-app:vhm]
 use = egg:repoze.vhm#vhm_xheaders
-next = session
-
-[filter-app:session]
-use = egg:nva.psyquizz#file_session
-session_key = nva
-session_cache = ${settings:cachedir}/sessions
-timeout = 10000
 next = courses
 
 [app:courses]
 use = egg:nva.psyquizz#app
 files = ${settings:datadir}
-session_key = nva
+root = ${buildout:directory}
 zcml = ${zcml:output}
 langs = de,fr,en
 dsn = ${settings:DSN} 
