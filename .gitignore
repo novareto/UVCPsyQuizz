@@ -1,0 +1,13 @@
+var/
+tmp/
+parts/
+bin/
+.installed.cfg
+.mr.developer.cfg
+checkouts/
+buildout.cfg
+cache/
+conf/
+develop-eggs/
+eggs/
+jwt.key
