@@ -49,9 +49,11 @@ root = ${buildout:directory}
 zcml = ${zcml:output}
 langs = de,fr,en
 dsn = ${settings:DSN} 
+smtp = ${settings:SMTP}
 layer = nva.psyquizz.interfaces:ISomeLayer
 
 [server:main]
 use = egg:Paste#http
 host = ${settings:host}
 port = ${settings:port}
+

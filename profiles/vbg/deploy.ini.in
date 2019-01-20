@@ -49,7 +49,9 @@ root = ${buildout:directory}
 zcml = ${zcml:output}
 langs = de,fr,en
 dsn = ${settings:DSN} 
-layer = psyquizz.vbgtheme.interfaces:IVBGTheme
+smtp = ${settings:SMTP}
+#layer = psyquizz.vbgtheme.interfaces:IVBGTheme
+layer = nva.psyquizz.interfaces:ISomeLayer
 
 [server:main]
 use = egg:Paste#http
