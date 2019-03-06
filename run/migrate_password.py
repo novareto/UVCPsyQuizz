@@ -35,7 +35,7 @@ def connection_info(uri):
 
 def hash_password(pwd):
     salt = uuid.uuid4().hex
-    return salt, hashlib.sha512(password + salt).hexdigest()
+    return salt, hashlib.sha512(pwd + salt).hexdigest()
 
 
 def create_column(cursor):
@@ -58,6 +58,7 @@ def migrate_passwords(conn):
         cursor.execute('UPDATE accounts '
                        'SET salt=%s, password=%s '
                        'WHERE email=%s;', (salt, hashed, row['email']))
+        conn.commit()
 
 
 if __name__ == "__main__":
