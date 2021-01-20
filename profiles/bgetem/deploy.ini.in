@@ -52,6 +52,7 @@ dsn = ${settings:DSN}
 smtp = ${settings:SMTP}
 emitter = ${settings:emitter}
 layer = nva.psyquizz.interfaces:ISomeLayer
+resources = ${settings:resources}
 
 [server:main]
 use = egg:Paste#http
