@@ -50,8 +50,7 @@ zcml = ${zcml:output}
 langs = de,fr,en
 dsn = ${settings:DSN}
 smtp = ${settings:SMTP}
-emitter = ${settings:emitter}
-layer = nva.psyquizz.interfaces:ISomeLayer
+layer = psyquizz.rcitheme.interfaces:IRCITheme
 resources = ${settings:resources}
 
 [server:main]
