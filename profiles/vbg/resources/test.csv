@@ -1,0 +1,21 @@
+index,Belastung,Schwellenwert (50%ige Risikoerhöhung),Leichte Risikoerhöhung/ Optimierunsgbedarf ,Niedrigere Werte/Höhere Werte (Ressourcen),invert
+1,Vollständigkeit der Aufgabe,</=1,"3,1102","3,1102",1
+2,Handlungsspielraum,<1.9,"3,0160","3,0160",1
+3,Variabilität,</=1,"2,9035","2,9035",1
+4,Informationsmängel,>3.4,"2,6064","2,6064",0
+5,Informationsüberflutung,>3.1,"2,2987","2,2987",0
+6,Fehlende Rollenklarheit,>2.8,"2,0832","2,0832",0
+7,Qualifikationsmängel,>2.8,"2,0613","2,0613",0
+8,Qualifikationsunterforderung,>3.7,"1,9655","1,9655",0
+9,Soziale Belastungen durch Kunden,>2.9,"2,1489","2,1489",0
+10,Emotionale Dissonanz,>3.1,"2,2906","2,2906",0
+11,belastende Arbeitszeit,>3.1,"1,8295","1,8295",0
+12,entgrenzte Arbeitszeiten,>3.1,"2,2140","2,2140",0
+13,Arbeitsintensität,>3.2,"2,3968","2,3968",0
+14,Unterbrechungen,>3.7,"2,9388","2,9388",0
+15,fehlende Kommunikationsmöglichkeiten,>2.7,"1,6655","1,6655",0
+16,Soziale Unterstützung durch Kollegen und Kolleginnen,<2.2,"3,0542","3,0542",1
+17,Soziale Stressoren durch Kollegen und Kolleginnen,<2.2,"2,9450","2,9450",1
+18,Soziale Unterstützung durch Führungskräfte,<1.9,"2,7098","2,7098",1
+19,Feedback und Anerkennung,>2.5,"1,8002","1,8002",0
+20,Umgebung (Gesamt),>2.5,"1,8038","1,8038",0
