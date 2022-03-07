@@ -52,6 +52,7 @@ dsn = ${settings:DSN}
 smtp = ${settings:SMTP}
 emitter = psylastung@bg-kooperation.de
 layer = psyquizz.vbgtheme.interfaces:IVBGTheme
+reg_layer = psyquizz.vbgtheme.interfaces:IVBGRegTheme
 resources = ${settings:resources}
 
 [server:main]
