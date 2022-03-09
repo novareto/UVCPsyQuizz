@@ -1,0 +1,21 @@
+index;Belastung;Titel;Tooltip;Schwellenwert (50%ige Risikoerh”hung);Leichte Risikoerh”hung/ Optimierunsgbedarf ;Niedrigere Werte/H”here Werte (Ressourcen);invert
+1;Vollst„ndigkeit der Aufgabe (Ressource - hohe Werte wirken positiv auf die Gesundheit);Arbeitsinhalt;Ganzheitlichkeit der Arbeitst„tigkeit. Beteiligung an Planung, Ausfhrung und Kontrolle der T„tigkeit/Produkte;</=1;3,1102;3,1102;1
+2;Handlungsspielraum (Ressource - hohe Werte wirken positiv auf die Gesundheit);;Der individuelle Einfluss auf die Arbeit und den Arbeitsablauf.;<1.9;3,016;3,016;1
+3;Variabilit„t (Abwechslungsreichtum) (Ressource - hohe Werte wirken positiv auf die Gesundheit);;Ausmaá abwechselnder Anforderungen/T„tigkeiten und der Notwendigkeit verschiedene F„higkeiten zu nutzen.;</=1;2,9035;2,9035;1
+4;Informationsm„ngel;;Die fr die Arbeit notwendigen Informationen sind nur schwer oder umst„ndlich zu beschaffen oder schlecht dargeboten.;>3.4;2,6064;2,6064;0
+5;Informationsberflutung;;Art, Umfang oder Darbietung der Informationen sind ungnstig gestaltet (Qualitativ und Quantitativ). ;>3.1;2,2987;2,2987;0
+6;Klarheit der Kompetenzen und Verantwortlichkeiten;;Unklarheit ber Priorit„ten und Befugnisse sowie wechselnde oder unklare Anweisungen.;>2.8;2,0832;2,0832;0
+7;Qualifikationsm„ngel;;Das Leistungsverm”gen des Mitarbeiters entspricht nicht den T„tigkeitsanforderungen.;>2.8;2,0613;2,0613;0
+8;Qualifikationsunterforderung;;Die T„tigkeit entspricht nicht dem Leistungsverm”gen des Mitarbeiters.;>3.7;1,9655;1,9655;0
+9;Soziale und Emotionale Belastungen;;Emotional belastende Arbeitssituationen und unangemessene, unangenehme Kundenkontakte.;>2.9;2,1489;2,1489;0
+10;Emotionsarbeit;;Notwendigkeit. die eigenen Gefhle w„hrend der Arbeit zu verbergen oder abweichend darzustellen.;>3.1;2,2906;2,2906;0
+11;Belastende Arbeitszeit;Arbeitsorganisation;Variierende, ungnstige Arbeitszeit oder schlecht gestaltete Schichtarbeit.;>3.1;1,8295;1,8295;0
+12;Entgrenzte Arbeitszeiten;;šberschreitung der eigentlichen Arbeitszeit und Notwendigkeit der Erreichbarkeit auáerhalb der Arbeitszeit.;>3.1;2,214;2,214;0
+13;Zeitdruck/hohe Arbeitsintensit„t;;Wieviel Arbeit (Quantit„t), auf welche Art und Weise (Qualit„t), in welcher Zeit (Arbeitstempo), geleistet werden muss.;>3.2;2,3968;2,3968;0
+14;Unterbrechungen/Multitasking;;Multitasking und H„ufigkeit von Unterbrechungen bei der Arbeit.;>3.7;2,9388;2,9388;0
+15;Kommunikation/Kooperation;;Grad der M”glichkeit zum direkten pers”nlichen Austausch unter Kollegen.;>2.7;1,6655;1,6655;0
+16;Soziale Untersttzung (Ressource - hohe Werte wirken positiv auf die Gesundheit);Soziale Beziehungen;Offenheit des Austausches und der Hilfe unter Kollegen;<2.2;3,0542;3,0542;1
+17;Soziale Drucksituationen;;Konflikte, Streitigkeiten und unangemessene Kritik unter Kollegen;<2.2;2,945;2,945;0
+18;Soziale Untersttzung durch Fhrungskr„fte (Ressource - hohe Werte wirken positiv auf die Gesundheit);;Verl„ssliche Hilfe und Bereitschaft der Fhrungskraft bei Problemen zu untersttzen.;<1.9;2,7098;2,7098;1
+19;Feedback und Anerkennung (Ressource - hohe Werte wirken positiv auf die Gesundheit);;Die Rckmeldung zur und Wrdigung der Arbeitsleistung.;>2.5;1,8002;1,8002;1
+20;Arbeitsumgebung und Arbeitsplatzgestaltung;Arbeitsumgebung;Belastungen durch „uáere T„tigkeitsbedingungen.;>2.5;1,8038;1,8038;0
